@@ -21,6 +21,10 @@ public class BaseFragment extends Fragment {
     * 消息处理Handler
     */
     protected BaseHandler mHandler;
+
+    /*测试Git 提交*/
+    private int id;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
