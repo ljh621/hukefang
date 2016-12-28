@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">EasyDear</string>
+
+    <!--Main Tab-->
+    <string name="main_home_tab">首页</string>
+    <string name="main_find_tab">发现</string>
+    <string name="main_code_tab">会员码</string>
+    <string name="main_message_tab">消息</string>
+    <string name="main_mine_tab">我的易兑</string>
+
+    <!--设置-->
+    <string name="set_user_info">个人信息</string>
+    <string name="set_msg_info">消息提醒</string>
+    <string name="set_track_info">足迹记录</string>
+    <string name="set_idea_str">意见反馈</string>
+    <string name="set_about">关于</string>
+    <string name="exit">退出</string>
+    <string name="change_user">切换用户</string>
+
+    <!-- Dilaog -->
+    <string name="dialog_defalut_title">标题</string>
+    <string name="dialog_defalut_confirm_text">确定</string>
+    <string name="dialog_defalut_cancel_text">取消</string>
+    <string name="loading_defalut_dialog_text">加载中&#8230;</string>
+    <string name="exit_msg">你确定要退出</string>
+    <string name="switch_user_msg">是否注销当前用户?</string>
+    <string name="login_dialog">登录&#8230;</string>
+
+    <!--Dialog title-->
+    <string name="dialog_title_exit">退出提示</string>
+    <string name="dialog_title_switch_user">切换提示</string>
+    
+    <!--Toast-->
+    <string name="invalid_network">当前网络不可用!</string>
+
+    <!--登录-->
+    <string name="account_not_null">账号不能为空</string>
+    <string name="pwd_not_null">密码不能为空</string>
+    <string name="login_failure">登录失败</string>
+    <string name="account_pwd_error">账号或密码错误</string>
+
+    <string name="empty_str">暂无数据</string>
+    <string name="recycler_view_item_foot_loading">加载更多</string>
+
+
+    <array name="tab_tiltle">
+        <item>精选</item>
+        <item>美食</item>
+        <item>娱乐</item>
+        <item>时尚</item>
+        <item>爱车</item>
+        <item>婚礼</item>
+    </array>
+    <array name="track_mode">
+        <item>步行</item>
+        <item>骑行</item>
+        <item>驾驶</item>
+    </array>
+</resources>
