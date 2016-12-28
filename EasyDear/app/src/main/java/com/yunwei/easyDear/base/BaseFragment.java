@@ -22,9 +22,6 @@ public class BaseFragment extends Fragment {
     */
     protected BaseHandler mHandler;
 
-    /*测试Git 提交*/
-    private int id;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
