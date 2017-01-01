@@ -1,11 +1,11 @@
-package com.yunwei.easyDear.base;
+package com.jingan.easydearbusiness.base;
 
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import com.yunwei.easyDear.common.handler.BaseHandler;
+import com.jingan.easydearbusiness.common.handler.BaseHandler;
 
 /**
  * @author hezhiWu
@@ -21,8 +21,6 @@ public class BaseFragment extends Fragment {
     * 消息处理Handler
     */
     protected BaseHandler mHandler;
-
-    private int id;/*测试*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,0 +1,44 @@
+android{
+    /**
+     * 配制参数
+     */
+    buildTypes {
+        release {
+            buildConfigField "String", "DOMAI", "\"http://10.10.10.182/\""
+            buildConfigField "boolean", "LOGSWITCH", "true"
+        }
+        debug {
+            buildConfigField "String", "DOMAI", "\"http://sszx.wayto.com.cn:8081/\""
+            buildConfigField "boolean", "LOGSWITCH", "false"
+        }
+    }
+
+    defaultConfig{
+        /**
+         * manifest文件配制
+         */
+        /*高德地图Key*/
+        resValue "string", "GAODE_MAP_KEY", "\"9fc3112964842a231039a468c7614867\""
+        /*腾讯Bugly ID*/
+        resValue "string", "BUGLY_ID", "\"590a3b733e\""
+        /*逆向地理编码Key*/
+        buildConfigField "String", "REGEO_MAP_KEY", "\"a7313eca70306f96eb6a3e6341a12355\""
+
+        /**
+         * Base配制
+         */
+        /*七年Token URL*/
+        buildConfigField "String", "QINIU_TOKEN_URL", "\"v2/config/qiniu_token\""
+
+        /**
+         * 登录、用户信息相关
+         */
+        /*登录*/
+        buildConfigField "String", "LOGIN_URL", "\"token\""
+        /*修改用户信息*/
+        buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
+        /*修改用户密码*/
+        buildConfigField "String", "UPDATE_USER_PWD_URL", "\"v2/account/changepwd/\""
+
+    }
+}

@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.base;
+package com.jingan.easydearbusiness.base;
 
 import android.app.Application;
 
@@ -18,6 +18,7 @@ public class DataApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
     }
 
     public static DataApplication getInstance() {
