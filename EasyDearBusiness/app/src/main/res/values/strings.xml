@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">EasyDearBusiness</string>
+
+    <!-- Dilaog -->
+    <string name="dialog_defalut_title">标题</string>
+    <string name="dialog_defalut_confirm_text">确定</string>
+    <string name="dialog_defalut_cancel_text">取消</string>
+    <string name="loading_defalut_dialog_text">加载中&#8230;</string>
+    <string name="exit_msg">你确定要退出</string>
+    <string name="switch_user_msg">是否注销当前用户?</string>
+    <string name="login_dialog">登录&#8230;</string>
+
+    <!--EditView-->
+    <string name="default_editView_hint">请输入</string>
+
+    <!--Toast-->
+    <string name="invalid_network">当前网络不可用!</string>
+
+    <!--登录-->
+    <string name="account_not_null">账号不能为空</string>
+    <string name="pwd_not_null">密码不能为空</string>
+    <string name="login_failure">登录失败</string>
+    <string name="account_pwd_error">账号或密码错误</string>
+
+    <string name="main_tab_bill">验卷</string>
+    <string name="main_tab_order">账单</string>
+
+    <string name="empty_str">暂无数据</string>
+    <string name="recycler_view_item_foot_loading">加载更多</string>
+</resources>
