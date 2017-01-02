@@ -22,6 +22,8 @@ public class BaseFragment extends Fragment {
     */
     protected BaseHandler mHandler;
 
+    private int id;/*测试*/
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
