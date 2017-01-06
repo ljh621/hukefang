@@ -8,8 +8,11 @@ import android.view.View;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.yunwei.easyDear.R;
+import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.dialog.DialogFactory;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.common.eventbus.EventConstant;
+import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.HomeFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.MineFragment;
@@ -18,7 +21,10 @@ import com.yunwei.easyDear.function.mainFuncations.messageFuncation.MessageFragm
 import com.yunwei.easyDear.function.mainFuncations.traingCodeFuncation.TrackFragment;
 import com.yunwei.easyDear.utils.IActivityManage;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.MainBottomNavigationBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -117,6 +123,10 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     @Override
     public void locationSuccess(AMapLocation location) {
         ILog.d(TAG,"city="+location.getCity());
+        ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
+        NoticeEvent event = new NoticeEvent();
+        event.setFlag(EventConstant.NOTICE11);
+        EventBus.getDefault().post(event);
     }
 
     @Override

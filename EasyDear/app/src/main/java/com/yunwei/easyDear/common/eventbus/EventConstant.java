@@ -40,6 +40,6 @@ public class EventConstant {
     public static final int NOTICE8=8;
     public static final int NOTICE9=9;
     public static final int NOTICE10=10;
-    public static final int NOTICE11=11;
+    public static final int NOTICE11=11;  /*获取位置所在城市后通知HomeFragment更新*/
 
 }

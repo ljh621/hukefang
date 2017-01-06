@@ -32,6 +32,11 @@ public class Constant {
     public static final long LIVEBACK_TOTAL_TO_MILLSECONDS = 3 * 24 * 60 * 60 * 1000;// 3d
 
     /**
+     * SharedPreference Key
+     */
+    public static final String AMAP_LOCATION_CITY = "amap_location_city"; /*地图获取城市*/
+
+    /**
      * 设置通知相关
      */
     public static final String MESSAGE_VOICE_SIGN = "message_voice";/*消息任务语音*/
