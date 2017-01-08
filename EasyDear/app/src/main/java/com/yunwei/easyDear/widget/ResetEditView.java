@@ -68,6 +68,7 @@ public class ResetEditView extends LinearLayout implements TextWatcher, View.OnC
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ResetEditView, defStyle, 0);
         Drawable drawable = typedArray.getDrawable(R.styleable.ResetEditView_edite_icon);
         int type = typedArray.getInt(R.styleable.ResetEditView_edit_inputType, InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        String hint=typedArray.getString(R.styleable.ResetEditView_edit_hint);
         if (drawable != null) {
             resetEditViewIconIv.setImageDrawable(drawable);
         }
@@ -76,7 +77,9 @@ public class ResetEditView extends LinearLayout implements TextWatcher, View.OnC
         } else {
             resetEditView.setInputType(type);
         }
-
+        if (!TextUtils.isEmpty(hint)){
+            resetEditView.setHint(hint);
+        }
         typedArray.recycle();
     }
 
