@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.yunwei.easyDear.function.account.SplashActivity"
+            android:name=".function.account.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NotitleTheme">
             <intent-filter>
@@ -39,19 +39,27 @@
         </activity>
 
         <activity
-            android:name="com.yunwei.easyDear.function.mainFuncations.MainActivity"
+            android:name=".function.mainFuncations.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.yunwei.easyDear.function.account.LoginActivity"
+            android:name=".function.account.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name="com.yunwei.easyDear.function.mainFuncations.mineFuncation.SetingInfoActivity"
+            android:name=".function.mainFuncations.mineFuncation.SetingInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity android:name=".function.account.LoginRegistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity android:name=".function.account.RestPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
 
         <!-- 高德地图配制[吴和志] -->

@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="发现"
+                    android:text="专属权益"
                     android:gravity="center"
                     android:layout_centerInParent="true"
                     android:textSize="18sp"

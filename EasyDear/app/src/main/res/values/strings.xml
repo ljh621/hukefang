@@ -3,10 +3,11 @@
 
     <!--Main Tab-->
     <string name="main_home_tab">首页</string>
-    <string name="main_find_tab">发现</string>
+    <string name="main_find_tab">专属权益</string>
     <string name="main_code_tab">会员码</string>
     <string name="main_message_tab">消息</string>
     <string name="main_mine_tab">我的易兑</string>
+    <string name="main_qr_tab">扫一扫</string>
 
     <!--设置-->
     <string name="set_user_info">个人信息</string>

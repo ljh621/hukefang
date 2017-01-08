@@ -18,6 +18,7 @@ import com.yunwei.easyDear.function.mainFuncations.homeFuncation.HomeFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.MineFragment;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindFragment;
 import com.yunwei.easyDear.function.mainFuncations.messageFuncation.MessageFragment;
+import com.yunwei.easyDear.function.mainFuncations.qrcode.ScanQrFragment;
 import com.yunwei.easyDear.function.mainFuncations.traingCodeFuncation.TrackFragment;
 import com.yunwei.easyDear.utils.IActivityManage;
 import com.yunwei.easyDear.utils.ILog;
@@ -77,8 +78,8 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
      */
     private void initBottomNavigationBar() {
         mainBottomNavigationBar.initConfig(this, R.id.main_container_FrameLayout);
-        mainBottomNavigationBar.addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_home_tab).addTabItem(R.mipmap.main_tab_mission_n, R.string.main_find_tab).addTabItem(R.mipmap.ic_location_on_white_24dp, R.string.main_code_tab).addTabItem(R.mipmap.main_tab_record_n, R.string.main_message_tab).addTabItem(R.mipmap.main_tab_mine_n, R.string.main_mine_tab);
-        mainBottomNavigationBar.addFragment(HomeFragment.newInstance()).addFragment(FindFragment.newInstance()).addFragment(TrackFragment.newInstance()).addFragment(MessageFragment.newInstance()).addFragment(MineFragment.newInstance());
+        mainBottomNavigationBar.addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_home_tab).addTabItem(R.mipmap.main_tab_mission_n, R.string.main_qr_tab).addTabItem(R.mipmap.ic_location_on_white_24dp, R.string.main_code_tab).addTabItem(R.mipmap.main_tab_record_n, R.string.main_find_tab).addTabItem(R.mipmap.main_tab_mine_n, R.string.main_mine_tab);
+        mainBottomNavigationBar.addFragment(HomeFragment.newInstance()).addFragment(ScanQrFragment.newInstance()).addFragment(TrackFragment.newInstance()).addFragment(FindFragment.newInstance()).addFragment(MineFragment.newInstance());
         mainBottomNavigationBar.setDefaultFragment(0);
         mainBottomNavigationBar.setTabSelectedListener(this);
     }

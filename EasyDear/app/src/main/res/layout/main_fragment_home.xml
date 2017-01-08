@@ -44,7 +44,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:minWidth="45dip"
-                    android:text="二维码"/>
+                    android:text="消息"/>
 
                 <EditText
                     android:id="@+id/main_home_search_editText"

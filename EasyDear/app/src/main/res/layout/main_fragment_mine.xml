@@ -14,124 +14,280 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/mineFragment_login_rigest_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="25dp"
+                android:paddingTop="25dp"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/mineFragment_login_btn"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="登录" />
+
+                <Button
+                    android:id="@+id/mineFragment_regist_btn"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:text="注册" />
+            </LinearLayout>
+
             <RelativeLayout
+                android:id="@+id/mineFragment_userInfo_layout"
                 android:layout_width="match_parent"
                 android:layout_height="120dip"
-                android:background="@color/colorPrimary">
+                android:background="@color/colorPrimary"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/mine_user_nick_tv"
+                    android:id="@+id/mineFragment_user_nick_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="LEO"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="5dp"
+                    android:padding="10dp"
+                    android:text="LEO"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/mineFragment_setting_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/item_seletor"
                     android:padding="10dp"
                     android:text="设置"
-                    android:layout_alignParentRight="true"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
-<!--                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">-->
+                <ImageView
+                    android:id="@+id/mineFragment_user_headview_iv"
+                    android:layout_width="60dip"
+                    android:layout_height="60dip"
+                    android:layout_below="@id/mineFragment_user_nick_tv"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/homepage_headimg_defaut" />
 
-                    <ImageView
-                        android:id="@+id/mine_user_headview_iv"
-                        android:layout_width="60dip"
-                        android:layout_height="60dip"
-                        android:layout_below="@id/mine_user_nick_tv"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:src="@mipmap/homepage_headimg_defaut" />
-
-<!--                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dip"
-                        android:gravity="center"
-                        android:text="设置"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />-->
-              <!--  </LinearLayout>-->
                 <RelativeLayout
-                    android:id="@+id/mine_consumer_coupon_container"
+                    android:id="@+id/mineFragment_consumer_coupon_container"
                     android:layout_width="90dp"
                     android:layout_height="60dp"
-                    android:layout_toRightOf="@id/mine_user_headview_iv"
-                    android:layout_alignTop="@id/mine_user_headview_iv"
+                    android:layout_alignTop="@id/mineFragment_user_headview_iv"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="20dp">
-                    
+                    android:layout_toRightOf="@id/mineFragment_user_headview_iv"
+                    android:background="@drawable/item_seletor">
+
                     <ImageView
-                        android:id="@+id/mine_consumer_coupon_iv"
+                        android:id="@+id/mineFragment_consumer_coupon_iv"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
+
                     <TextView
-                        android:id="@+id/mine_consumer_coupon_text"
+                        android:id="@+id/mineFragment_consumer_coupon_text"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:layout_toRightOf="@id/mine_consumer_coupon_iv"
+                        android:layout_toRightOf="@id/mineFragment_consumer_coupon_iv"
+                        android:gravity="center"
                         android:text="消费券"
-                        android:gravity="center"
                         android:textColor="@color/white"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:layout_below="@id/mine_consumer_coupon_text"
-                        android:layout_toRightOf="@id/mine_consumer_coupon_iv"
-                        android:text="8"
+                        android:layout_below="@id/mineFragment_consumer_coupon_text"
+                        android:layout_toRightOf="@id/mineFragment_consumer_coupon_iv"
                         android:gravity="center"
+                        android:text="8"
                         android:textColor="@color/white"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/mine_equity_merchant_container"
+                    android:id="@+id/mineFragment_equity_merchant_container"
                     android:layout_width="90dp"
                     android:layout_height="60dp"
-                    android:layout_toRightOf="@id/mine_consumer_coupon_container"
-                    android:layout_alignTop="@id/mine_user_headview_iv"
+                    android:layout_alignTop="@id/mineFragment_user_headview_iv"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="20dp">
+                    android:layout_toRightOf="@id/mineFragment_consumer_coupon_container"
+                    android:background="@drawable/item_seletor">
 
                     <ImageView
-                        android:id="@+id/mine_equity_merchant_iv"
+                        android:id="@+id/mineFragment_equity_merchant_iv"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
-                    <TextView
-                        android:id="@+id/mine_equity_merchant_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_toRightOf="@id/mine_equity_merchant_iv"
-                        android:text="权益商家"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_below="@id/mine_equity_merchant_text"
-                        android:layout_toRightOf="@id/mine_equity_merchant_iv"
-                        android:text="21"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"/>
-                </RelativeLayout>
 
+                    <TextView
+                        android:id="@+id/mineFragment_equity_merchant_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_toRightOf="@id/mineFragment_equity_merchant_iv"
+                        android:gravity="center"
+                        android:text="权益商家"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_below="@id/mineFragment_equity_merchant_text"
+                        android:layout_toRightOf="@id/mineFragment_equity_merchant_iv"
+                        android:gravity="center"
+                        android:text="21"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
             </RelativeLayout>
 
+            <View style="@style/line" />
+
+            <RelativeLayout
+                android:id="@+id/mineFragment_all_order_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_seletor"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="我的订单"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:gravity="center"
+                    android:text="查看全部订单"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                android:id="@+id/mineFragment_all_business_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_seletor"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="会员商家"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:gravity="center"
+                    android:text="查看全部"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <GridView
+                android:id="@+id/mineFragment_business_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="4"
+                android:background="@color/white"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                android:id="@+id/mineFragment_tontact_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_seletor"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="联系客户"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:gravity="center"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View style="@style/line" />
+
+            <RelativeLayout
+                android:id="@+id/mineFragment_into_business_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_seletor"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="联系客户"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:gravity="center"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View style="@style/line" />
         </LinearLayout>
     </com.yunwei.easyDear.view.ReboundScrollView>
 </LinearLayout>

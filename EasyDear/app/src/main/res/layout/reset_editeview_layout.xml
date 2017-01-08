@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/defualt_editeview_height"
-        android:background="@drawable/editeview_style">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/reset_editView_icon_iv"
@@ -25,10 +25,10 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/reset_editView_close_iv"
             android:layout_toRightOf="@+id/reset_editView_icon_iv"
-            android:hint="请输入"
             android:background="@color/transparency"
-            android:textSize="16sp"
-            android:singleLine="true" />
+            android:hint="请输入"
+            android:singleLine="true"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/reset_editView_close_iv"
@@ -41,6 +41,8 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+
+    <View style="@style/line" />
 
 
 </LinearLayout>
