@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:edit="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+
+        <com.yunwei.easyDear.widget.ResetEditView
+            android:id="@+id/loginFragment_account_editView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            edit:edit_hint="输入手机号码"
+            edit:edite_icon="@mipmap/login_user" />
+
+        <com.yunwei.easyDear.widget.ResetEditView
+            android:id="@+id/loginFragment_password_editView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            edit:edit_hint="输入密码"
+            edit:edit_inputType="password"
+            edit:edite_icon="@mipmap/login_mima" />
+
+        <TextView
+            android:id="@+id/loginFragment_forget_password_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="10dp"
+            android:text="忘记密码?" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/loginFragment_login_button"
+        style="@style/default_button_style"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/button_white_selector"
+        android:text="登录" />
+</LinearLayout>

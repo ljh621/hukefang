@@ -24,9 +24,8 @@ import java.util.List;
  */
 
 public class MainBottomNavigationBar extends BottomNavigationBar implements BottomNavigationBar.OnTabSelectedListener {
-    /**
-     * Fragment集合
-     */
+    /* Fragment集合
+    */
     private List<BaseFragment> fragments;
     /**
      * Activity
@@ -156,7 +155,8 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
      * @param position
      */
     public void setDefaultFragment(int position) {
-        switchTab(position);
+        onTabSelected(position);
+        setFirstSelectedPosition(position).initialise();
     }
 
     @Override

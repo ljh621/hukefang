@@ -19,7 +19,7 @@
     </dimen><!-- 6(Top Padding) - 12/2(extra padding due to badges) = 0 -->
     <dimen name="fixed_height_bottom_padding">10dp</dimen>
 
-    <dimen name="fixed_label_active">14sp</dimen>
+    <dimen name="fixed_label_active">12sp</dimen>
     <dimen name="fixed_label_inactive">12sp</dimen>
     <item name="fixed_label_active_to_inactive_ratio" format="float" type="dimen">0.857</item>
 
@@ -76,6 +76,9 @@
     <dimen name="ksw_md_thumb_solid_size">20dp</dimen>
     <dimen name="ksw_md_thumb_shadow_size">21dp</dimen>
     <dimen name="ksw_md_thumb_shadow_offset">2dp</dimen>
+
+    <dimen name="standard_padding">8dip</dimen>
+    <dimen name="half_padding">4dip</dimen>
 
     <dimen name="progress_foot">30dp</dimen>
 </resources>

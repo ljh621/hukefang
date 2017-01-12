@@ -18,6 +18,13 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>  <!--闪关灯-->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!-- unavailable in API 23 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <application
         android:name=".base.DataApplication"
@@ -28,7 +35,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.yunwei.easyDear.function.account.SplashActivity"
+            android:name=".function.account.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NotitleTheme">
             <intent-filter>
@@ -39,19 +46,31 @@
         </activity>
 
         <activity
-            android:name="com.yunwei.easyDear.function.mainFuncations.MainActivity"
+            android:name=".function.mainFuncations.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.yunwei.easyDear.function.account.LoginActivity"
+            android:name=".function.account.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name="com.yunwei.easyDear.function.mainFuncations.mineFuncation.SetingInfoActivity"
+            android:name=".function.mainFuncations.mineFuncation.SetingInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity android:name=".function.account.LoginRegistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity android:name=".function.account.RestPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name="com.google.zxing.client.android.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
 
         <!-- 高德地图配制[吴和志] -->

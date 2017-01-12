@@ -39,7 +39,7 @@ public class SplashActivity extends BaseActivity implements AccountContract.Logi
         super.dispatchMessage(msg);
         switch (msg.what) {
             case HandlerValue.START_PAGE_DELAYED:
-                ISkipActivityUtil.startIntent(this, LoginActivity.class);
+                ISkipActivityUtil.startIntent(this, MainActivity.class);
                 break;
         }
     }
