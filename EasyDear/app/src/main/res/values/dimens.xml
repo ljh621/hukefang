@@ -77,5 +77,8 @@
     <dimen name="ksw_md_thumb_shadow_size">21dp</dimen>
     <dimen name="ksw_md_thumb_shadow_offset">2dp</dimen>
 
+    <dimen name="standard_padding">8dip</dimen>
+    <dimen name="half_padding">4dip</dimen>
+
     <dimen name="progress_foot">30dp</dimen>
 </resources>

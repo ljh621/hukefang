@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
+import com.google.zxing.client.android.CaptureActivity;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.dialog.DialogFactory;
@@ -15,13 +15,13 @@ import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.HomeFragment;
+import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.MembershipCodeFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.MineFragment;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindFragment;
-import com.yunwei.easyDear.function.mainFuncations.messageFuncation.MessageFragment;
 import com.yunwei.easyDear.function.mainFuncations.qrcode.ScanQrFragment;
-import com.yunwei.easyDear.function.mainFuncations.traingCodeFuncation.TrackFragment;
 import com.yunwei.easyDear.utils.IActivityManage;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.MainBottomNavigationBar;
 
@@ -54,6 +54,8 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
     private MainPresenter mMainPresenter;
 
+    private int currentTab=0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,12 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         ButterKnife.bind(this);
 
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     /**
@@ -79,7 +87,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     private void initBottomNavigationBar() {
         mainBottomNavigationBar.initConfig(this, R.id.main_container_FrameLayout);
         mainBottomNavigationBar.addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_home_tab).addTabItem(R.mipmap.main_tab_mission_n, R.string.main_qr_tab).addTabItem(R.mipmap.ic_location_on_white_24dp, R.string.main_code_tab).addTabItem(R.mipmap.main_tab_record_n, R.string.main_find_tab).addTabItem(R.mipmap.main_tab_mine_n, R.string.main_mine_tab);
-        mainBottomNavigationBar.addFragment(HomeFragment.newInstance()).addFragment(ScanQrFragment.newInstance()).addFragment(TrackFragment.newInstance()).addFragment(FindFragment.newInstance()).addFragment(MineFragment.newInstance());
+        mainBottomNavigationBar.addFragment(HomeFragment.newInstance()).addFragment(ScanQrFragment.newInstance()).addFragment(MembershipCodeFragment.newInstance()).addFragment(FindFragment.newInstance()).addFragment(MineFragment.newInstance());
         mainBottomNavigationBar.setDefaultFragment(0);
         mainBottomNavigationBar.setTabSelectedListener(this);
     }
@@ -104,18 +112,25 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     public void onTabSelected(int position) {
         switch (position) {
             case TAB_HOME:
+                this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_home_tab);
                 break;
             case TAB_FIND:
                 setToolbarCenterTitle(R.string.main_find_tab);
+
+                ISkipActivityUtil.startIntent(this, CaptureActivity.class);
+                mainBottomNavigationBar.setFirstSelectedPosition(currentTab).initialise();
                 break;
             case TAB_TRAINGCODE:
+                this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_code_tab);
                 break;
             case TAB_MESSAGE:
+                this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_message_tab);
                 break;
             case TAB_MINE:
+                this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_mine_tab);
                 break;
         }
