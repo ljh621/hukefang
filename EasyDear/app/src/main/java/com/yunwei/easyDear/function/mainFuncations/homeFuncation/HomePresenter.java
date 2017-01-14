@@ -1,5 +1,7 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
+import android.widget.LinearLayout;
+
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeDataSource;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
 
@@ -25,5 +27,9 @@ public class HomePresenter implements HomeContract.Presenter, HomeDataSource.Req
     @Override
     public void getScrollImageUrlSuccess(String urls) {
         mHomeView.initImageUrl(urls);
+    }
+
+    public void addLayoutIntoScroll(LinearLayout layout) {
+        mRemoteRepo.addLayoutIntoScroll(layout);
     }
 }
