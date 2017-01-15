@@ -50,7 +50,6 @@ public class ArticleListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-        Log.d("11111" , "--------> getView");
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.article_list_item, null);
@@ -61,7 +60,6 @@ public class ArticleListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        Log.d("11111" , "--------> mArticleItemList.get(position).getTitle()" + mArticleItemList.get(position).getTitle());
         holder.typeTextView.setText(mArticleItemList.get(position).getType());
         holder.titleTextView.setText(mArticleItemList.get(position).getTitle());
         holder.dateTextView.setText(mArticleItemList.get(position).getDate());

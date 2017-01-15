@@ -10,7 +10,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +21,15 @@ import java.util.List;
  * Created by LJH on 2017/1/3.
  */
 
-public class ScrollPagerAdapter extends PagerAdapter {
+public class ScrollPagerAdapter extends PagerAdapter implements View.OnClickListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
     private Context mContext;
     private List<String> mUrlList;
     private List<ImageView> mImageViewList;
+
+    private int mImagePosition;
 
     public ScrollPagerAdapter(Context context, List<String> urlList) {
         mContext = context;
@@ -77,12 +81,14 @@ public class ScrollPagerAdapter extends PagerAdapter {
             position += mImageViewList.size();
         }
         ILog.d(TAG, "instantiateItem position = " + position);
+        mImagePosition = position;
         ImageView iv = mImageViewList.get(position);
         ViewParent vp = iv.getParent();
         if (vp != null) {
             ViewGroup parent = (ViewGroup) vp;
             parent.removeView(iv);
         }
+        iv.setOnClickListener(this);
         container.addView(iv);
         return iv;
     }
@@ -90,5 +96,11 @@ public class ScrollPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
 //        super.destroyItem(container, position, object);
+    }
+
+    @Override
+    public void onClick(View view) {
+        ILog.d(TAG, "--------> ViewPager Position = " + mImagePosition);
+        ISkipActivityUtil.startIntent(mContext, ArticleActivity.class);
     }
 }

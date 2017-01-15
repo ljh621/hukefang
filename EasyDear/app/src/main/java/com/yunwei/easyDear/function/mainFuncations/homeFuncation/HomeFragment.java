@@ -22,7 +22,9 @@ import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.messageFuncation.MessageActivity;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
@@ -34,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 /**
@@ -133,6 +136,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         String city = (String)ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
         mLocationTextView.setText(city);
         ILog.v(TAG, "setLocationCity: " + city);
+    }
+
+    @OnClick(R.id.main_home_msg_textView)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.main_home_msg_textView:
+                ISkipActivityUtil.startIntent(getActivity(), MessageActivity.class);
+                break;
+        }
     }
 
     /**
@@ -268,6 +280,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 //                ILog.v(TAG, "onPageScrollStateChanged state = " + state);
             }
         });
+
     }
 
     @Override

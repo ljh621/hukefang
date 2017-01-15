@@ -35,7 +35,7 @@
                     android:text=""/>
 
                 <TextView
-                    android:id="@+id/main_home_qr_textView"
+                    android:id="@+id/main_home_msg_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -48,7 +48,7 @@
 
                 <EditText
                     android:id="@+id/main_home_search_editText"
-                    android:layout_toLeftOf="@+id/main_home_qr_textView"
+                    android:layout_toLeftOf="@+id/main_home_msg_textView"
                     android:layout_toRightOf="@+id/main_home_location_textView"
                     android:background="@color/white"
                     android:textColor="@color/black"
