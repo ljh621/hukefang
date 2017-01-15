@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
+import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
@@ -67,6 +69,7 @@ public class MembershipCodeFragment extends BaseFragment {
             case R.id.MembershipFragment_block_layout:
                 break;
             case R.id.MembershipFragment_order_layout:
+                ISkipActivityUtil.startIntent(getActivity(), MyOrderActivity.class);
                 break;
         }
     }

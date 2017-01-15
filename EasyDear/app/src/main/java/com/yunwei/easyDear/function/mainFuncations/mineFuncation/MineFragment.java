@@ -16,6 +16,8 @@ import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.function.account.LoginRegistActivity;
 import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.adapter.BusinessAdapter;
+import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +94,7 @@ public class MineFragment extends BaseFragment {
             case R.id.mineFragment_setting_tv:
                 break;
             case R.id.mineFragment_all_order_layout:
+                ISkipActivityUtil.startIntent(getActivity(), MyOrderActivity.class);
                 break;
             case R.id.mineFragment_all_business_layout:
                 break;

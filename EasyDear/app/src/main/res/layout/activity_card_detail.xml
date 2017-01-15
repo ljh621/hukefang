@@ -229,7 +229,7 @@
             </LinearLayout>
 
             <ListView
-                android:id="@+id/article_listview"
+                android:id="@+id/card_listview"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/white"
