@@ -25,6 +25,13 @@
                 android:gravity="center"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/message_back"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/arrow_left" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

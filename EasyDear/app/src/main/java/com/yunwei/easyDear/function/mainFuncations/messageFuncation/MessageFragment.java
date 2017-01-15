@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author hezhiWu
@@ -53,6 +54,15 @@ public class MessageFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
         initRecyclerView();
         return rootView;
+    }
+
+    @OnClick({R.id.message_back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.message_back:
+                getActivity().onBackPressed();
+                break;
+        }
     }
 
     private void initRecyclerView() {

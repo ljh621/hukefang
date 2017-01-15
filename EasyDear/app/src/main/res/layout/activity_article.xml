@@ -26,7 +26,7 @@
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/main_tab_track_n" />
+                    android:src="@mipmap/arrow_left" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,6 +38,7 @@
 
 
                 <ImageView
+                    android:id="@+id/article_send"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
@@ -144,7 +145,7 @@
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical|right"
-                    android:text="商家活动详情>>"
+                    android:text="卡券详情>>"
                     android:textColor="@color/gray"
                     android:textSize="15sp" />
 
@@ -205,9 +206,11 @@
                 android:id="@+id/article_listview"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scrollbars="none"
                 android:background="@color/white"
-                android:padding="15dp"></ListView>
+                android:padding="15dp"
+                android:scrollbars="none">
+
+            </ListView>
 
             <TextView
                 android:id="@+id/article_more_info"

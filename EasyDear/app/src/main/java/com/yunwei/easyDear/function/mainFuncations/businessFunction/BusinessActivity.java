@@ -1,6 +1,5 @@
-package com.yunwei.easyDear.function.mainFuncations.articleFunction;
+package com.yunwei.easyDear.function.mainFuncations.businessFunction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,9 +7,8 @@ import android.widget.ListView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
-import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
-import com.yunwei.easyDear.function.mainFuncations.cardDetailFunction.CardDetailActivity;
-import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItem;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +18,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by LJH on 2017/1/12.
+ * Created by LJH on 2017/1/15.
  */
 
-public class ArticleActivity extends BaseActivity {
+public class BusinessActivity extends BaseActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    @BindView(R.id.article_listview)
-    ListView mArticleListView;
+    @BindView(R.id.business_article_listview)
+    ListView mBusinessArticleListView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_article);
+        super.setContentView(R.layout.activity_business);
         setToolbarVisibility(View.GONE);
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
@@ -73,36 +71,18 @@ public class ArticleActivity extends BaseActivity {
         articleItemList.add(item4);
 
         adapter.setArticleItemList(articleItemList);
-        mArticleListView.setAdapter(adapter);
+        mBusinessArticleListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.article_back, R.id.article_send, R.id.article_to_discount_detail, R.id.article_more_info})
+    @OnClick({R.id.business_back, R.id.business_activity_purchase})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.article_back:
+            case R.id.business_back:
                 onBackPressed();
                 break;
-            case R.id.article_send:
-                startToSend();
-                break;
-            case R.id.article_to_discount_detail:
-                ISkipActivityUtil.startIntent(this, CardDetailActivity.class);
-                break;
-            case R.id.article_more_info:
-                ISkipActivityUtil.startIntent(this, BusinessActivity.class);
+            case R.id.business_activity_purchase:
                 break;
         }
     }
-
-    private void startToSend() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
-        intent.putExtra(Intent.EXTRA_TEXT, "http://society.qq.com/a/20161222/035882.htm#p=1");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(Intent.createChooser(intent, "类名"));
-    }
-
-
 }
