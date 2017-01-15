@@ -4,13 +4,13 @@ package com.yunwei.easyDear.function.mainFuncations.articleFunction;
  * Created by LJH on 2017/1/14.
  */
 
-public class ArticleItem {
+public class ArticleItemEntity {
 
     private String type;
     private String title;
     private String date;
 
-    public ArticleItem() {
+    public ArticleItemEntity() {
     }
 
     public String getType() {

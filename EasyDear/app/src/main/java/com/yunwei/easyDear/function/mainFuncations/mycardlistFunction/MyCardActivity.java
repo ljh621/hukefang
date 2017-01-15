@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.myorderlistFunction;
+package com.yunwei.easyDear.function.mainFuncations.mycardlistFunction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,17 +19,17 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class MyOrderActivity extends BaseActivity {
+public class MyCardActivity extends BaseActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    @BindView(R.id.myorder_recyclerView)
+    @BindView(R.id.mycard_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_myorder);
+        super.setContentView(R.layout.activity_mycard);
         setToolbarVisibility(View.GONE);
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
@@ -37,31 +37,29 @@ public class MyOrderActivity extends BaseActivity {
         initRecyclerView();
     }
 
-    @OnClick({R.id.myorder_back})
+    @OnClick({R.id.mycard_back})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.myorder_back:
+            case R.id.mycard_back:
                 onBackPressed();
                 break;
         }
     }
 
     private void initRecyclerView() {
-        List<OrderItemEntity> list = new ArrayList<>();
+        List<CardItemEntity> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            OrderItemEntity entity = new OrderItemEntity();
+            CardItemEntity entity = new CardItemEntity();
             if (i < 2) {
                 list.add(entity);
             } else {
-                entity.setBusinessName("星巴克咖啡");
-                entity.setCardType("净饮双计");
-                entity.setValidateDate("有效期至2017-1-31");
-                entity.setCardPrice("¥30");
-                entity.setCardAmount("90");
+                entity.setViceTitle("中杯饮品");
+                entity.setCardName("星巴克咖啡");
+                entity.setValidate("2017-3-12");
                 list.add(entity);
             }
         }
-        MyOrderAdapter adapter = new MyOrderAdapter(this);
+        MyCardAdapter adapter = new MyCardAdapter(this);
         adapter.addItems(list);
         mRecyclerView.setRecyclerViewAdapter(adapter);
     }

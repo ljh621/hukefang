@@ -2,7 +2,6 @@ package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.yunwei.easyDear.R;
-import com.yunwei.easyDear.base.ArrayListAdapter;
 
 import java.util.List;
 
@@ -21,13 +19,13 @@ import java.util.List;
 public class ArticleListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<ArticleItem> mArticleItemList;
+    private List<ArticleItemEntity> mArticleItemList;
 
     public ArticleListAdapter(Activity context) {
         mContext = context;
     }
 
-    public void setArticleItemList(List<ArticleItem> list) {
+    public void setArticleItemList(List<ArticleItemEntity> list) {
         mArticleItemList = list;
     }
 

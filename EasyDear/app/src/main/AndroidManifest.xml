@@ -88,6 +88,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
+        <activity android:name=".function.mainFuncations.mycardlistFunction.MyCardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.mymemberlistFunction.MyMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
         <activity android:name="com.google.zxing.client.android.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>

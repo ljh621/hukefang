@@ -46,27 +46,27 @@ public class ArticleActivity extends BaseActivity {
 
     private void setArticleListView() {
         ArticleListAdapter adapter = new ArticleListAdapter(this);
-        List<ArticleItem> articleItemList = new ArrayList<ArticleItem>();
+        List<ArticleItemEntity> articleItemList = new ArrayList<ArticleItemEntity>();
 
-        ArticleItem item1 = new ArticleItem();
+        ArticleItemEntity item1 = new ArticleItemEntity();
         item1.setType("[促销]");
         item1.setTitle("现车热卖");
         item1.setDate("10.14");
         articleItemList.add(item1);
 
-        ArticleItem item2 = new ArticleItem();
+        ArticleItemEntity item2 = new ArticleItemEntity();
         item2.setType("[促销]");
         item2.setTitle("购奔驰E级敞篷");
         item2.setDate("10.14");
         articleItemList.add(item2);
 
-        ArticleItem item3 = new ArticleItem();
+        ArticleItemEntity item3 = new ArticleItemEntity();
         item3.setType("[促销]");
         item3.setTitle("现车热卖");
         item3.setDate("10.16");
         articleItemList.add(item3);
 
-        ArticleItem item4 = new ArticleItem();
+        ArticleItemEntity item4 = new ArticleItemEntity();
         item4.setType("[促销]");
         item4.setTitle("现车热卖");
         item4.setDate("10.18");
