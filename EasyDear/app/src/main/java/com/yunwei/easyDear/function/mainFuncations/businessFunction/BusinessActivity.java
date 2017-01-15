@@ -1,14 +1,21 @@
 package com.yunwei.easyDear.function.mainFuncations.businessFunction;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItem;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleListAdapter;
+import com.yunwei.easyDear.function.mainFuncations.homeFuncation.ScrollPagerAdapter;
+import com.yunwei.easyDear.utils.ILog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,13 @@ public class BusinessActivity extends BaseActivity {
 
     @BindView(R.id.business_article_listview)
     ListView mBusinessArticleListView;
+    @BindView(R.id.business_scroll_vp)
+    ViewPager mScrollViewPager;
+    @BindView(R.id.business_scroll_dot_layout)
+    LinearLayout mDotLayout;
+
+    private static final int BUSINESS_SCROLL_IMAGE = 1001;
+    private List<ImageView> dots = new ArrayList<ImageView>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +50,11 @@ public class BusinessActivity extends BaseActivity {
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
         initUI();
+
+        //TODO To be deleted!
+        String[] urls = new String[4];
+        initScrollImages(urls);
+        setScrollViewListener();
     }
 
     private void initUI() {
@@ -75,6 +94,69 @@ public class BusinessActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * 初始化ScrollImage
+     * @param urls
+     */
+    private void initScrollImages(String[] urls) {
+        if (urls == null) {
+            return;
+        }
+        List<String> urlList = new ArrayList<String>();
+        int len = urls.length;
+        for (int i = 0; i < len; i++) {
+            urlList.add(urls[i]);
+        }
+        ScrollPagerAdapter adapter = new ScrollPagerAdapter(this, urlList);
+        mScrollViewPager.setAdapter(adapter);
+        for (int i = 0; i < 4; i++) {
+            ImageView img = new ImageView(this);
+            if (i == 0) {
+                img.setImageResource(R.drawable.dot_focus);
+            } else {
+                img.setImageResource(R.drawable.dot_normal);
+            }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
+            params.setMargins(5, 0, 5, 30);
+
+            // 加载到布局容器
+            mDotLayout.addView(img, params);
+            dots.add(img);
+        }
+        mHandler.sendEmptyMessageDelayed(BUSINESS_SCROLL_IMAGE, Constant.FIVE_SECONDES);
+    }
+
+    /**
+     * 设置轮播ViewPager监听
+     */
+    private void setScrollViewListener() {
+        mScrollViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                ILog.v(TAG, "onPageScrolled position = " + position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                int size = dots.size();
+                ILog.d(TAG, "onPageSelected position = " + position);
+                for (int i = 0; i < size; i++) {
+                    ImageView img = dots.get(i);
+                    if (i == position % size) {
+                        img.setImageResource(R.drawable.dot_focus);
+                    } else {
+                        img.setImageResource(R.drawable.dot_normal);
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+//                ILog.v(TAG, "onPageScrollStateChanged state = " + state);
+            }
+        });
+    }
+
     @OnClick({R.id.business_back, R.id.business_activity_purchase})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -82,6 +164,24 @@ public class BusinessActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.business_activity_purchase:
+                break;
+        }
+    }
+
+    @Override
+    protected void dispatchMessage(Message msg) {
+        super.dispatchMessage(msg);
+        ILog.v(TAG, "dispatchMessage msg.what = " + msg.what);
+        switch (msg.what) {
+            case BUSINESS_SCROLL_IMAGE:
+                mHandler.removeMessages(BUSINESS_SCROLL_IMAGE);
+                int pos = mScrollViewPager.getCurrentItem();
+//                ILog.v(TAG, "dispatchMessage pos1 = " + pos);
+                mScrollViewPager.setCurrentItem(++pos);
+                ILog.d(TAG, "dispatchMessage pos2 = " + mScrollViewPager.getCurrentItem());
+                mHandler.sendEmptyMessageDelayed(BUSINESS_SCROLL_IMAGE, Constant.FIVE_SECONDES);
+                break;
+            default:
                 break;
         }
     }

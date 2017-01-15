@@ -280,7 +280,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 //                ILog.v(TAG, "onPageScrollStateChanged state = " + state);
             }
         });
-
     }
 
     @Override
