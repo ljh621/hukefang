@@ -1,0 +1,76 @@
+package com.yunwei.easyDear.function.mainFuncations.articleFunction;
+
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.yunwei.easyDear.R;
+import com.yunwei.easyDear.base.ArrayListAdapter;
+
+import java.util.List;
+
+/**
+ * Created by LJH on 2017/1/14.
+ */
+
+public class ArticleListAdapter extends BaseAdapter {
+
+    private Context mContext;
+    private List<ArticleItem> mArticleItemList;
+
+    public ArticleListAdapter(Activity context) {
+        mContext = context;
+    }
+
+    public void setArticleItemList(List<ArticleItem> list) {
+        mArticleItemList = list;
+    }
+
+    @Override
+    public int getCount() {
+        return mArticleItemList == null ? 0 : mArticleItemList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return mArticleItemList == null ? null : mArticleItemList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        ViewHolder holder = null;
+        Log.d("11111" , "--------> getView");
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.article_list_item, null);
+            holder.typeTextView = (TextView) convertView.findViewById(R.id.article_list_type);
+            holder.titleTextView = (TextView) convertView.findViewById(R.id.article_list_title);
+            holder.dateTextView = (TextView) convertView.findViewById(R.id.article_list_date);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        Log.d("11111" , "--------> mArticleItemList.get(position).getTitle()" + mArticleItemList.get(position).getTitle());
+        holder.typeTextView.setText(mArticleItemList.get(position).getType());
+        holder.titleTextView.setText(mArticleItemList.get(position).getTitle());
+        holder.dateTextView.setText(mArticleItemList.get(position).getDate());
+        return convertView;
+    }
+
+    private class ViewHolder {
+        TextView typeTextView;
+        TextView titleTextView;
+        TextView dateTextView;
+    }
+}

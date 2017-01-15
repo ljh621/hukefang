@@ -33,18 +33,18 @@ public class ScrollPagerAdapter extends PagerAdapter {
         mImageViewList = new ArrayList<ImageView>();
         initImageViewList();
 
-        ImageView iv1 = new ImageView(mContext);
-        iv1.setImageResource(R.mipmap.scene_1);
-        mImageViewList.add(iv1);
-        ImageView iv2 = new ImageView(mContext);
-        iv2.setImageResource(R.mipmap.scene_2);
-        mImageViewList.add(iv2);
-        ImageView iv3 = new ImageView(mContext);
-        iv3.setImageResource(R.mipmap.scene_3);
-        mImageViewList.add(iv3);
-        ImageView iv4 = new ImageView(mContext);
-        iv4.setImageResource(R.mipmap.scene_4);
-        mImageViewList.add(iv4);
+//        ImageView iv1 = new ImageView(mContext);
+//        iv1.setBackgroundResource(R.mipmap.scene_1);
+//        mImageViewList.add(iv1);
+//        ImageView iv2 = new ImageView(mContext);
+//        iv2.setBackgroundResource(R.mipmap.scene_2);
+//        mImageViewList.add(iv2);
+//        ImageView iv3 = new ImageView(mContext);
+//        iv3.setBackgroundResource(R.mipmap.scene_3);
+//        mImageViewList.add(iv3);
+//        ImageView iv4 = new ImageView(mContext);
+//        iv4.setBackgroundResource(R.mipmap.scene_4);
+//        mImageViewList.add(iv4);
     }
 
     private void initImageViewList() {
@@ -52,9 +52,11 @@ public class ScrollPagerAdapter extends PagerAdapter {
             return;
         }
         for (String url : mUrlList) {
+            url = "http://pic38.nipic.com/20140228/3822951_135521683000_2.jpg";
             ImageView iv = new ImageView(mContext);
+            iv.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(mContext).load(url).into(iv);
-//            mImageViewList.add(iv);
+            mImageViewList.add(iv);
         }
     }
 
@@ -75,14 +77,14 @@ public class ScrollPagerAdapter extends PagerAdapter {
             position += mImageViewList.size();
         }
         ILog.d(TAG, "instantiateItem position = " + position);
-        ImageView view = mImageViewList.get(position);
-        ViewParent vp = view.getParent();
+        ImageView iv = mImageViewList.get(position);
+        ViewParent vp = iv.getParent();
         if (vp != null) {
             ViewGroup parent = (ViewGroup) vp;
-            parent.removeView(view);
+            parent.removeView(iv);
         }
-        container.addView(view);
-        return view;
+        container.addView(iv);
+        return iv;
     }
 
     @Override
