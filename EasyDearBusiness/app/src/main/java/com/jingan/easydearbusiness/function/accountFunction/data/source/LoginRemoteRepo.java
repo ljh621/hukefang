@@ -4,11 +4,14 @@ package com.jingan.easydearbusiness.function.accountFunction.data.source;
 import com.jingan.easydearbusiness.R;
 import com.jingan.easydearbusiness.base.DataApplication;
 import com.jingan.easydearbusiness.common.Constant;
+import com.jingan.easydearbusiness.entity.ResponseModel;
 import com.jingan.easydearbusiness.function.accountFunction.data.UserInfoEntity;
 import com.jingan.easydearbusiness.utils.ILog;
 import com.jingan.easydearbusiness.utils.INetWorkUtil;
 import com.jingan.easydearbusiness.utils.IUtil;
 import com.jingan.easydearbusiness.vender.retrofit.RetrofitManager;
+
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -28,7 +31,7 @@ public class LoginRemoteRepo implements LoginDataSoure {
     private final String TAG = getClass().getSimpleName();
 
     private static LoginRemoteRepo remoteRepo;
-    private Call<UserInfoEntity> call;
+    private Call<ResponseModel<List<UserInfoEntity>>> call;
 
     public static LoginRemoteRepo newInstance() {
         if (remoteRepo == null) {
@@ -43,23 +46,19 @@ public class LoginRemoteRepo implements LoginDataSoure {
             callBack.onLoginFailure(IUtil.getStrToRes(R.string.invalid_network));
             return;
         }
-        String body = "grant_type=password&client_id=wt&client_secret=123456&username=" + account + "&password=" + password;
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
-        call = RetrofitManager.getInstance().getService().loginRepo(requestBody);
-        call.enqueue(new Callback<UserInfoEntity>() {
+        call = RetrofitManager.getInstance().getService().loginRepo(account, password);
+        call.enqueue(new Callback<ResponseModel<List<UserInfoEntity>>>() {
             @Override
-            public void onResponse(Call<UserInfoEntity> call, Response<UserInfoEntity> response) {
-                if (response.code() == Constant.HTTP_SUCESS_CODE) {
-                    callBack.onLoginSuccess(response.body());
-                } else if (response.code() == Constant.HTTP_PASSWORD_ERROR_CODE) {
-                    callBack.onLoginFailure(IUtil.getStrToRes(R.string.account_pwd_error));
+            public void onResponse(Call<ResponseModel<List<UserInfoEntity>>> call, Response<ResponseModel<List<UserInfoEntity>>> response) {
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.onLoginSuccess(response.body().getData().get(0));
                 } else {
-                    callBack.onLoginFailure(IUtil.getStrToRes(R.string.login_failure));
+                    callBack.onLoginFailure(response.body().getMessage());
                 }
             }
 
             @Override
-            public void onFailure(Call<UserInfoEntity> call, Throwable t) {
+            public void onFailure(Call<ResponseModel<List<UserInfoEntity>>> call, Throwable t) {
                 callBack.onLoginFailure(IUtil.getStrToRes(R.string.login_failure));
             }
         });
@@ -72,7 +71,7 @@ public class LoginRemoteRepo implements LoginDataSoure {
     public void cancelRequest() {
         if (call != null && !call.isCanceled()) {
             call.cancel();
-            ILog.d(TAG,"isCanceled=="+call.isCanceled());
+            ILog.d(TAG, "isCanceled==" + call.isCanceled());
         }
     }
 }

@@ -8,39 +8,39 @@ package com.jingan.easydearbusiness.entity;
 
 public class ResponseModel<T> {
 
-    private boolean success;
+    private int Code;
 
-    private String message;
+    private String Message;
 
-    private T data;
+    private T Data;
 
-    public ResponseModel(boolean success, String message, T data) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
+    public ResponseModel(int Code, String message, T data) {
+        this.Code = Code;
+        this.Message = message;
+        this.Data = data;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public int getCode() {
+        return Code;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setCode(int code) {
+        Code = code;
     }
 
     public String getMessage() {
-        return message;
+        return Message;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.Message = message;
     }
 
     public T getData() {
-        return data;
+        return Data;
     }
 
     public void setData(T data) {
-        this.data = data;
+        this.Data = data;
     }
 }

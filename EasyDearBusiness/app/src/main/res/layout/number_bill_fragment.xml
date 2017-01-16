@@ -125,7 +125,7 @@
         <View style="@style/line_vertical" />
 
         <Button
-            android:id="@+id/number_bill_button"
+            android:id="@+id/BillFragment_number_bill_button"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
