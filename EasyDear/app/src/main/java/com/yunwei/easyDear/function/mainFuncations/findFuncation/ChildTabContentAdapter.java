@@ -51,11 +51,7 @@ public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> 
 
     @Override
     public void onItemClick(View view, Object data, int position) {
-        switch (view.getId()) {
-            case R.id.item_tab_child_readall_textview:
-                Log.d(TAG, "----------> onClick  Read All, position = " + position);
-                break;
-        }
+
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -74,8 +70,10 @@ public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> 
 
         @OnClick({R.id.item_tab_child_readall_textview})
         public void onClick(View view) {
+            int position = getAdapterPosition();
             switch (view.getId()) {
                 case R.id.item_tab_child_readall_textview:
+                    Log.d(TAG, "----------> onClick  Read All, position = " + position);
                     ISkipActivityUtil.startIntent(mContent, ArticleActivity.class);
                     break;
             }

@@ -1,13 +1,15 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
+import com.yunwei.easyDear.function.mainFuncations.cardDetailFunction.CardDetailActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import java.util.ArrayList;
@@ -39,32 +41,32 @@ public class ArticleActivity extends BaseActivity {
     }
 
     private void initUI() {
-        setListView();
+        setArticleListView();
     }
 
-    private void setListView() {
+    private void setArticleListView() {
         ArticleListAdapter adapter = new ArticleListAdapter(this);
-        List<ArticleItem> articleItemList = new ArrayList<ArticleItem>();
+        List<ArticleItemEntity> articleItemList = new ArrayList<ArticleItemEntity>();
 
-        ArticleItem item1 = new ArticleItem();
+        ArticleItemEntity item1 = new ArticleItemEntity();
         item1.setType("[促销]");
         item1.setTitle("现车热卖");
         item1.setDate("10.14");
         articleItemList.add(item1);
 
-        ArticleItem item2 = new ArticleItem();
+        ArticleItemEntity item2 = new ArticleItemEntity();
         item2.setType("[促销]");
         item2.setTitle("购奔驰E级敞篷");
         item2.setDate("10.14");
         articleItemList.add(item2);
 
-        ArticleItem item3 = new ArticleItem();
+        ArticleItemEntity item3 = new ArticleItemEntity();
         item3.setType("[促销]");
         item3.setTitle("现车热卖");
         item3.setDate("10.16");
         articleItemList.add(item3);
 
-        ArticleItem item4 = new ArticleItem();
+        ArticleItemEntity item4 = new ArticleItemEntity();
         item4.setType("[促销]");
         item4.setTitle("现车热卖");
         item4.setDate("10.18");
@@ -75,16 +77,31 @@ public class ArticleActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.article_back, R.id.article_more_info})
+    @OnClick({R.id.article_back, R.id.article_send, R.id.article_to_discount_detail, R.id.article_more_info})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.article_back:
                 onBackPressed();
                 break;
+            case R.id.article_send:
+                startToSend();
+                break;
+            case R.id.article_to_discount_detail:
+                ISkipActivityUtil.startIntent(this, CardDetailActivity.class);
+                break;
             case R.id.article_more_info:
-                onBackPressed();
+                ISkipActivityUtil.startIntent(this, BusinessActivity.class);
                 break;
         }
+    }
+
+    private void startToSend() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+        intent.putExtra(Intent.EXTRA_TEXT, "http://society.qq.com/a/20161222/035882.htm#p=1");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, "类名"));
     }
 
 

@@ -2,7 +2,6 @@ package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.yunwei.easyDear.R;
-import com.yunwei.easyDear.base.ArrayListAdapter;
 
 import java.util.List;
 
@@ -21,13 +19,13 @@ import java.util.List;
 public class ArticleListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<ArticleItem> mArticleItemList;
+    private List<ArticleItemEntity> mArticleItemList;
 
     public ArticleListAdapter(Activity context) {
         mContext = context;
     }
 
-    public void setArticleItemList(List<ArticleItem> list) {
+    public void setArticleItemList(List<ArticleItemEntity> list) {
         mArticleItemList = list;
     }
 
@@ -50,7 +48,6 @@ public class ArticleListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-        Log.d("11111" , "--------> getView");
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.article_list_item, null);
@@ -61,7 +58,6 @@ public class ArticleListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        Log.d("11111" , "--------> mArticleItemList.get(position).getTitle()" + mArticleItemList.get(position).getTitle());
         holder.typeTextView.setText(mArticleItemList.get(position).getType());
         holder.titleTextView.setText(mArticleItemList.get(position).getTitle());
         holder.dateTextView.setText(mArticleItemList.get(position).getDate());

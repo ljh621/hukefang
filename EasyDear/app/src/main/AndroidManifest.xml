@@ -72,6 +72,30 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
+        <activity android:name=".function.mainFuncations.cardDetailFunction.CardDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.messageFuncation.MessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.businessFunction.BusinessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.myorderlistFunction.MyOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.mycardlistFunction.MyCardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.mymemberlistFunction.MyMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
         <activity android:name="com.google.zxing.client.android.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
