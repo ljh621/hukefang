@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     private void init() {
         UserInfoEntity userInfoEntity = DataApplication.getInstance().getUserInfoEntity();
         if (userInfoEntity != null) {
-            setToolbarCenterTitle(userInfoEntity.getNickName());
+            setToolbarCenterTitle(userInfoEntity.getBusinessName());
         }
         initBottomNavigationBar();
     }

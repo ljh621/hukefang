@@ -48,6 +48,6 @@ public class BillPresenter implements BillDataSource.BillCallBack ,BillConstacts
 
     @Override
     public String getUserNo() {
-        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+        return DataApplication.getInstance().getUserInfoEntity().getBusinessNO();
     }
 }

@@ -10,36 +10,33 @@ package com.jingan.easydearbusiness.function.accountFunction.data;
 
 public class UserInfoEntity {
 
-    private String UserNo;
+    private String BusinessNO;
 
-    private String Mobile;
+    private String Logo ;
 
-    private String NickName;
+    private String BusinessName;
 
-    private String Imagery;
+    public String getBusinessNO() {
+        return BusinessNO;
+    }
 
-    public void setUserNo(String UserNo){
-        this.UserNo = UserNo;
+    public void setBusinessNO(String businessNO) {
+        BusinessNO = businessNO;
     }
-    public String getUserNo(){
-        return this.UserNo;
+
+    public String getLogo() {
+        return Logo;
     }
-    public void setMobile(String Mobile){
-        this.Mobile = Mobile;
+
+    public void setLogo(String logo) {
+        Logo = logo;
     }
-    public String getMobile(){
-        return this.Mobile;
+
+    public String getBusinessName() {
+        return BusinessName;
     }
-    public void setNickName(String NickName){
-        this.NickName = NickName;
-    }
-    public String getNickName(){
-        return this.NickName;
-    }
-    public void setImagery(String Imagery){
-        this.Imagery = Imagery;
-    }
-    public String getImagery(){
-        return this.Imagery;
+
+    public void setBusinessName(String businessName) {
+        BusinessName = businessName;
     }
 }

@@ -34,7 +34,7 @@ android {
          * 登录、用户信息相关
          */
         /*登录*/
-        buildConfigField "String", "LOGIN_URL", "\"login/loginUser\""
+        buildConfigField "String", "LOGIN_URL", "\"login/loginBussiness\""
         /*修改用户信息*/
         buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
         /*修改用户密码*/
