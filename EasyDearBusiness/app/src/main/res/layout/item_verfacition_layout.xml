@@ -24,6 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="今天"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
@@ -32,6 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12:30"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
         </LinearLayout>

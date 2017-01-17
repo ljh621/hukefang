@@ -173,6 +173,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onBackGroundUserEvent(NoticeEvent event) {
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMainThreadUserEvent(NoticeEvent event){
+
+    }
+
     /**
      * 设置监听器
      */

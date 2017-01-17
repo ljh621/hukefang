@@ -466,7 +466,7 @@ public class BottomNavigationBar extends FrameLayout {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @param tabSelectedListener callback clickListener for tabs
+     * @param tabSelectedListener callback listener for tabs
      * @return this, to allow builder pattern
      */
     public BottomNavigationBar setTabSelectedListener(OnTabSelectedListener tabSelectedListener) {
@@ -515,7 +515,7 @@ public class BottomNavigationBar extends FrameLayout {
      * Should be called only after initialization of BottomBar(i.e after calling initialize method)
      *
      * @param newPosition  to select a tab after bottom navigation bar is initialised
-     * @param callListener should this change call clickListener callbacks
+     * @param callListener should this change call listener callbacks
      */
     public void selectTab(int newPosition, boolean callListener) {
         selectTabInternal(newPosition, false, callListener, callListener);
@@ -560,7 +560,7 @@ public class BottomNavigationBar extends FrameLayout {
      *
      * @param newPosition     to select a tab after bottom navigation bar is initialised
      * @param firstTab        if firstTab the no ripple animation will be done
-     * @param callListener    is clickListener callbacks enabled for this change
+     * @param callListener    is listener callbacks enabled for this change
      * @param forcedSelection if bottom navigation bar forced to select tab (in this case call on selected irrespective of previous state
      */
     private void selectTabInternal(int newPosition, boolean firstTab, boolean callListener, boolean forcedSelection) {
@@ -603,7 +603,7 @@ public class BottomNavigationBar extends FrameLayout {
     }
 
     /**
-     * Internal method used to send callbacks to clickListener
+     * Internal method used to send callbacks to listener
      *
      * @param oldPosition     old selected tab position, -1 if this is first call
      * @param newPosition     newly selected tab position

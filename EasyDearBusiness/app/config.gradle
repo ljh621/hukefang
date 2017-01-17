@@ -39,8 +39,12 @@ android {
         buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
         /*修改用户密码*/
         buildConfigField "String", "UPDATE_USER_PWD_URL", "\"v2/account/changepwd/\""
-
+        /*验证序列号*/
         buildConfigField "String", "QUERY_CODE", "\"business/insertCardBill\""
+        /*账单列表*/
+        buildConfigField "String", "QUERY_VERFICATION_LIST", "\"business/listCardBill\""
+        /*账单详情*/
+        buildConfigField "String", "VERFICATION_DETAIL", "\"business/detailCardBill?\""
 
     }
 }
