@@ -9,7 +9,7 @@ import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemote
  * Created by LJH on 2017/1/4.
  */
 
-public class HomePresenter implements HomeContract.Presenter, HomeDataSource.RequestScrollImageUrlCallBack {
+public class HomePresenter implements HomeContract.Presenter, HomeDataSource.RequestHome {
 
     private HomeRemoteRepo mRemoteRepo;
     private HomeContract.HomeView mHomeView;
@@ -25,8 +25,18 @@ public class HomePresenter implements HomeContract.Presenter, HomeDataSource.Req
     }
 
     @Override
+    public void requestHomeArticleList() {
+        mRemoteRepo.requestHomeArticleList(this);
+    }
+
+    @Override
     public void getScrollImageUrlSuccess(String urls) {
         mHomeView.initImageUrl(urls);
+    }
+
+    @Override
+    public void getHomeArticleListSuccess() {
+
     }
 
     public void addLayoutIntoScroll(LinearLayout layout) {

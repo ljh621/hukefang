@@ -1,7 +1,6 @@
-package com.yunwei.easyDear.function.mainFuncations.messageFuncation;
+package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +13,8 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
-import com.yunwei.easyDear.function.mainFuncations.messageFuncation.data.ItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.ItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messagedetailFunction.MessageDetailActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
@@ -72,12 +72,12 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> i
         public void onClick(View view) {
             int position = getAdapterPosition();
             switch (view.getId()) {
-                case R.id.item_tab_child_content_textView:
-                    Log.d(TAG, "----------> onClick  Read All, position = " + position);
+                case R.id.item_message_content_textView:
+                    Log.d(TAG, "----------> onClick  Read Message Detail, position = " + position);
                     String msgUrl = mLists.get(position).getContentUrl();
                     Bundle bundle = new Bundle();
                     bundle.putString("msg_usl", msgUrl);
-                    ISkipActivityUtil.startIntent(mContent, ArticleActivity.class);
+                    ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class);
                     break;
             }
         }

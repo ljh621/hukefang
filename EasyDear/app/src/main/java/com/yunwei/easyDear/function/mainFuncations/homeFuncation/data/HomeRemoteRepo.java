@@ -10,7 +10,6 @@ import com.yunwei.easyDear.function.mainFuncations.homeFuncation.HomePresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.HTTP;
 
 /**
  * Created by LJH on 2017/1/4.
@@ -29,7 +28,7 @@ public class HomeRemoteRepo implements HomeDataSource {
     }
 
     @Override
-    public void requestScrollImageUrls(final RequestScrollImageUrlCallBack callBack) {
+    public void requestScrollImageUrls(final RequestHome callBack) {
         Call<ResponseModel<String>> call = RetrofitManager.getInstance().getService().reqScrollImageUrls();
         call.enqueue(new Callback<ResponseModel<String>>() {
             @Override
@@ -46,6 +45,10 @@ public class HomeRemoteRepo implements HomeDataSource {
 
             }
         });
+    }
+
+    public void requestHomeArticleList(final RequestHome callBack) {
+        Call<ResponseModel<String>> call = RetrofitManager.getInstance().getService().requestHomeArticleList();
     }
 
     public void addLayoutIntoScroll(LinearLayout layout) {

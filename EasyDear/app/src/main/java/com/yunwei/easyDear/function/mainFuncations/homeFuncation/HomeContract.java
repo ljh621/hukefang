@@ -12,5 +12,6 @@ public interface HomeContract {
 
     interface Presenter {
         void requestScrollImageUrls();
+        void requestHomeArticleList();
     }
 }
