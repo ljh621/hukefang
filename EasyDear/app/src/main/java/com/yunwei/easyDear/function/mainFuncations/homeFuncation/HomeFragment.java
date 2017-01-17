@@ -22,8 +22,11 @@ import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.messageFuncation.MessageActivity;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
+import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnPageChange;
 
 /**
@@ -50,14 +54,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     @BindView(R.id.main_home_location_textView)
     TextView mLocationTextView;
-    @BindView(R.id.find_tabLayout)
-    TabLayout mTabLayout;
-    @BindView(R.id.find_viewPager)
-    ViewPager mViewPager;
     @BindView(R.id.home_scroll_vp)
     ViewPager mScrollViewPager;
     @BindView(R.id.home_scroll_dot_layout)
     LinearLayout mDotLayout;
+    @BindView(R.id.home_scroll_container)
+    LinearLayout mScrollLayout;
+    @BindView(R.id.find_tabLayout)
+    TabLayout mTabLayout;
+    @BindView(R.id.find_viewPager)
+    ViewPager mViewPager;
+//    @BindView(R.id.tab_child_recyclerView)
+//    PullToRefreshRecyclerView mRecyclerView;
 
     private HomePresenter mHomePresenter;
 
@@ -88,6 +96,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         setLocationCity();
         initTabLayout();
+        addScrollLayout();
         requestScrollImageUrls();
 
         //TODO To be deleted!
@@ -127,6 +136,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         String city = (String)ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
         mLocationTextView.setText(city);
         ILog.v(TAG, "setLocationCity: " + city);
+    }
+
+    @OnClick(R.id.main_home_msg_textView)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.main_home_msg_textView:
+                ISkipActivityUtil.startIntent(getActivity(), MessageActivity.class);
+                break;
+        }
     }
 
     /**
@@ -178,6 +196,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         }
     }
 
+    private void addScrollLayout() {
+//        mHomePresenter.addLayoutIntoScroll(mScrollLayout);
+//        mRecyclerView.startUpRefresh();
+    }
+
     /**
      * 请求轮播图url
     */
@@ -225,7 +248,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             mDotLayout.addView(img, params);
             dots.add(img);
         }
-        ILog.v(TAG, "-----------> Init initScrollImages finished!");
         mHandler.sendEmptyMessageDelayed(HOME_SCROLL_IMAGE, Constant.FIVE_SECONDES);
     }
 

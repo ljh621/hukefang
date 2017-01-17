@@ -1,5 +1,6 @@
 package com.jingan.easydearbusiness.function.billFunction;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -10,6 +11,10 @@ import android.widget.TextView;
 
 import com.jingan.easydearbusiness.R;
 import com.jingan.easydearbusiness.base.BaseFragment;
+import com.jingan.easydearbusiness.common.dialog.DialogFactory;
+import com.jingan.easydearbusiness.entity.ResponseModel;
+import com.jingan.easydearbusiness.utils.TextUtil;
+import com.jingan.easydearbusiness.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,12 +28,15 @@ import butterknife.OnClick;
  * @date 2017/1/1 12:13
  */
 
-public class NumberBillFragment extends BaseFragment {
+public class NumberBillFragment extends BaseFragment implements BillConstacts.View {
 
     @BindView(R.id.numberBillFragment_serial_number_textView)
     TextView mNumberTextView;
 
     private StringBuffer sb;
+
+    private Dialog loadDialog;
+    private BillPresenter billPresenter;
 
     private static NumberBillFragment fragment;
 
@@ -53,7 +61,7 @@ public class NumberBillFragment extends BaseFragment {
         return rootView;
     }
 
-    @OnClick({R.id.number_delete, R.id.number_one, R.id.number_two, R.id.number_three, R.id.number_four, R.id.number_five, R.id.number_six, R.id.number_seven, R.id.number_eight, R.id.number_nine, R.id.number_zero, R.id.number_bill_button})
+    @OnClick({R.id.number_delete, R.id.number_one, R.id.number_two, R.id.number_three, R.id.number_four, R.id.number_five, R.id.number_six, R.id.number_seven, R.id.number_eight, R.id.number_nine, R.id.number_zero, R.id.BillFragment_number_bill_button})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.number_one:
@@ -89,7 +97,12 @@ public class NumberBillFragment extends BaseFragment {
             case R.id.number_delete:
                 setNumberText("delete");
                 break;
-            case R.id.number_bill_button:
+            case R.id.BillFragment_number_bill_button:
+                if (TextUtil.isEmpty(mNumberTextView.getText().toString())) {
+                    ToastUtil.showToast(getContext(), "序列号不能为空");
+                    return;
+                }
+                billPresenter.billAction();
                 break;
         }
     }
@@ -100,11 +113,36 @@ public class NumberBillFragment extends BaseFragment {
         }
         if ("delete".equals(text)) {
             if (!TextUtils.isEmpty(sb.toString())) {
-                sb = sb.delete(sb.length()-1, sb.length());
+                sb = sb.delete(sb.length() - 1, sb.length());
             }
         } else {
             sb.append(text);
         }
         mNumberTextView.setText(sb.toString());
+    }
+
+    @Override
+    public void onBillStart() {
+        loadDialog = DialogFactory.createLoadingDialog(getActivity(), "正在验证...");
+    }
+
+    @Override
+    public void onBillSuccess(ResponseModel<String> result) {
+        ToastUtil.showToast(getContext(), result.getMessage());
+    }
+
+    @Override
+    public void onBillFailure(String error) {
+        ToastUtil.showToast(getContext(), error);
+    }
+
+    @Override
+    public void onBillEnd() {
+        DialogFactory.dimissDialog(loadDialog);
+    }
+
+    @Override
+    public String getCode() {
+        return mNumberTextView.getText().toString();
     }
 }

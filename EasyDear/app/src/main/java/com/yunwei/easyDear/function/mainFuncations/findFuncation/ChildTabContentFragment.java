@@ -89,7 +89,7 @@ public class ChildTabContentFragment extends BaseFragment implements PullToRefre
             ItemEntity entity = new ItemEntity();
             entity.setContent(name + (i + 1));
             entity.setHeadUrl("http://v1.qzone.cc/avatar/201406/07/17/42/5392de935ac3d200.jpg%21200x200.jpg");
-            entity.setContentUrl("http://www.shifuw.com/upload/150203100412_163.jpg");
+            entity.setContentUrl("http://pic38.nipic.com/20140228/3822951_135521683000_2.jpg");
             list.add(entity);
         }
         Message message = new Message();
@@ -105,7 +105,7 @@ public class ChildTabContentFragment extends BaseFragment implements PullToRefre
             ItemEntity entity = new ItemEntity();
             entity.setContent(name + (i + 1));
             entity.setHeadUrl("http://v1.qzone.cc/avatar/201406/07/17/42/5392de935ac3d200.jpg%21200x200.jpg");
-            entity.setContentUrl("http://www.shifuw.com/upload/150203100412_163.jpg");
+            entity.setContentUrl("http://pic38.nipic.com/20140228/3822951_135521683000_2.jpg");
             list.add(entity);
         }
         Message message = new Message();

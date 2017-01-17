@@ -20,7 +20,7 @@ import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.TrackS
  * @date 2016/11/28 10:18
  */
 
-public class SettingInfoActivity extends BaseActivity {
+public class SetingInfoActivity extends BaseActivity {
 
     public static final String HEAD_TITLE_FLAG = "title_flag";
     public static final String SHOW_FRAGMENT_FLAG = "show_flag";

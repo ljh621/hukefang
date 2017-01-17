@@ -2,6 +2,7 @@ package com.yunwei.easyDear.function.mainFuncations.findFuncation;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,11 +11,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.data.ItemEntity;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Describe:tab child adapter
@@ -24,7 +28,7 @@ import butterknife.ButterKnife;
  * Version:1.0
  */
 
-public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> {
+public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public ChildTabContentAdapter(Context context){
         super(context);
@@ -41,7 +45,13 @@ public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> 
     @Override
     public RecyclerView.ViewHolder onCreateBaseViewHolder(ViewGroup parent, int viewType) {
         ItemViewHolder viewHolder=new ItemViewHolder(inflater.inflate(R.layout.item_tab_child_layout,parent,false));
+        setOnItemClickListener(this);
         return viewHolder;
+    }
+
+    @Override
+    public void onItemClick(View view, Object data, int position) {
+
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -51,11 +61,24 @@ public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> 
         @BindView(R.id.item_tab_child_content_textView)
         TextView contentText;
         @BindView(R.id.item_tab_child_business_imageView)
-      ImageView contentImagerView;
+        ImageView contentImagerView;
 
         public ItemViewHolder(View view){
             super(view);
             ButterKnife.bind(ItemViewHolder.this,view);
         }
+
+        @OnClick({R.id.item_tab_child_readall_textview})
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            switch (view.getId()) {
+                case R.id.item_tab_child_readall_textview:
+                    Log.d(TAG, "----------> onClick  Read All, position = " + position);
+                    ISkipActivityUtil.startIntent(mContent, ArticleActivity.class);
+                    break;
+            }
+        }
+
     }
+
 }

@@ -1,5 +1,7 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation.data;
 
+import android.widget.LinearLayout;
+
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
@@ -44,5 +46,8 @@ public class HomeRemoteRepo implements HomeDataSource {
 
             }
         });
+    }
+
+    public void addLayoutIntoScroll(LinearLayout layout) {
     }
 }

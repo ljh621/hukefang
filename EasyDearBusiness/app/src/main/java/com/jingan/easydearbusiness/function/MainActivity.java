@@ -7,7 +7,9 @@ import android.view.View;
 
 import com.jingan.easydearbusiness.R;
 import com.jingan.easydearbusiness.base.BaseActivity;
+import com.jingan.easydearbusiness.base.DataApplication;
 import com.jingan.easydearbusiness.common.dialog.DialogFactory;
+import com.jingan.easydearbusiness.function.accountFunction.data.UserInfoEntity;
 import com.jingan.easydearbusiness.function.billFunction.BillFragment;
 import com.jingan.easydearbusiness.function.verificationFunction.VerficationFragment;
 import com.jingan.easydearbusiness.utils.IActivityManage;
@@ -38,12 +40,16 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         setSwipeEnabled(false);
-        setToolbarCenterTitle("宁波宝恒宝马(诚信路店)");
+
         ButterKnife.bind(this);
         init();
     }
 
     private void init() {
+        UserInfoEntity userInfoEntity = DataApplication.getInstance().getUserInfoEntity();
+        if (userInfoEntity != null) {
+            setToolbarCenterTitle(userInfoEntity.getBusinessName());
+        }
         initBottomNavigationBar();
     }
 
@@ -65,7 +71,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
             @Override
             public void handle(String time) {
 //                Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG).show();
-                setToolbarCenterTitle(time.substring(time.indexOf("-") + 1, time.length())+"月账单");
+                setToolbarCenterTitle(time.substring(time.indexOf("-") + 1, time.length()) + "月账单");
             }
         }, "2000-11-22 17:34", "2020-12-1 15:20");
         timeSelector.show();

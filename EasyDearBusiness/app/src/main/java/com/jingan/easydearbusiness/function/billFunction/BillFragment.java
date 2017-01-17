@@ -1,5 +1,6 @@
 package com.jingan.easydearbusiness.function.billFunction;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -12,7 +13,11 @@ import android.widget.TextView;
 import com.google.zxing.android.CaptureActivity;
 import com.jingan.easydearbusiness.R;
 import com.jingan.easydearbusiness.base.BaseFragment;
+import com.jingan.easydearbusiness.common.dialog.DialogFactory;
+import com.jingan.easydearbusiness.entity.ResponseModel;
 import com.jingan.easydearbusiness.utils.ISkipActivityUtil;
+import com.jingan.easydearbusiness.utils.TextUtil;
+import com.jingan.easydearbusiness.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +31,7 @@ import butterknife.OnClick;
  * @date 2017/1/1 11:48
  */
 
-public class BillFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class BillFragment extends BaseFragment implements ViewPager.OnPageChangeListener , BillConstacts.View {
 
     @BindView(R.id.bill_Fragment_ViewPager)
     ViewPager mViewPager;
@@ -41,6 +46,8 @@ public class BillFragment extends BaseFragment implements ViewPager.OnPageChange
 
     private static BillFragment fragment;
 
+    private Dialog loadDialog;
+    private BillPresenter billPresenter;
 
     public static BillFragment newInstance() {
         if (fragment == null) {
@@ -53,6 +60,7 @@ public class BillFragment extends BaseFragment implements ViewPager.OnPageChange
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sb=new StringBuffer();
+        billPresenter=new BillPresenter(this);
     }
 
     @Nullable
@@ -74,7 +82,7 @@ public class BillFragment extends BaseFragment implements ViewPager.OnPageChange
 //        switchTab(BillFragmentViewPagerAdapter.TAB_NUMBER_VALUE);
     }
 
-    @OnClick({R.id.BillFragment_Number_tab_TextView, R.id.BillFragment_qr_tab_TextView, R.id.number_delete, R.id.number_one, R.id.number_two, R.id.number_three, R.id.number_four, R.id.number_five, R.id.number_six, R.id.number_seven, R.id.number_eight, R.id.number_nine, R.id.number_zero, R.id.number_bill_button})
+    @OnClick({R.id.BillFragment_Number_tab_TextView, R.id.BillFragment_qr_tab_TextView, R.id.number_delete, R.id.number_one, R.id.number_two, R.id.number_three, R.id.number_four, R.id.number_five, R.id.number_six, R.id.number_seven, R.id.number_eight, R.id.number_nine, R.id.number_zero, R.id.BillFragment_number_bill_button})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BillFragment_Number_tab_TextView:
@@ -116,7 +124,12 @@ public class BillFragment extends BaseFragment implements ViewPager.OnPageChange
             case R.id.number_delete:
                 setNumberText("delete");
                 break;
-            case R.id.number_bill_button:
+            case R.id.BillFragment_number_bill_button:
+                if (TextUtil.isEmpty(mNumberTextView.getText().toString())) {
+                    ToastUtil.showToast(getContext(), "序列号不能为空");
+                    return;
+                }
+                billPresenter.billAction();
                 break;
         }
     }
@@ -178,5 +191,31 @@ public class BillFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onBillStart() {
+        loadDialog = DialogFactory.createLoadingDialog(getActivity(), "正在验证...");
+    }
+
+    @Override
+    public void onBillSuccess(ResponseModel<String> result) {
+        ToastUtil.showToast(getContext(), result.getMessage());
+        mNumberTabTextView.setText("");
+    }
+
+    @Override
+    public void onBillFailure(String error) {
+        ToastUtil.showToast(getContext(), error);
+    }
+
+    @Override
+    public void onBillEnd() {
+        DialogFactory.dimissDialog(loadDialog);
+    }
+
+    @Override
+    public String getCode() {
+        return mNumberTextView.getText().toString();
     }
 }

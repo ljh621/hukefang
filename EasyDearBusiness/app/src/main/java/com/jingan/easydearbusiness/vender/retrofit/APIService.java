@@ -1,12 +1,18 @@
 package com.jingan.easydearbusiness.vender.retrofit;
 
 import com.jingan.easydearbusiness.BuildConfig;
+import com.jingan.easydearbusiness.entity.ResponseModel;
 import com.jingan.easydearbusiness.function.accountFunction.data.UserInfoEntity;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author hezhiWu
@@ -20,10 +26,11 @@ public interface APIService {
     /**
      * 登录
      *
-     * @param entity
      * @return
      */
-    @POST(BuildConfig.LOGIN_URL)
-    Call<UserInfoEntity> loginRepo(@Body RequestBody entity);
+    @GET(BuildConfig.LOGIN_URL)
+    Call<ResponseModel<List<UserInfoEntity>>> loginRepo(@Query("mobile") String mobil, @Query("password") String pwd);
 
+    @GET(BuildConfig.QUERY_CODE)
+    Call<ResponseModel<String>> queryCode(@Query("businessNo") String businessNo, @Query("cardTransactionNo") String cardTransactionNo);
 }

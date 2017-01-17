@@ -2,6 +2,11 @@ package com.jingan.easydearbusiness.base;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
+import com.jingan.easydearbusiness.common.Constant;
+import com.jingan.easydearbusiness.function.accountFunction.data.UserInfoEntity;
+import com.jingan.easydearbusiness.utils.ISpfUtil;
+
 /**
  * @author hezhiWu
  * @version V1.0
@@ -24,4 +29,10 @@ public class DataApplication extends Application {
     public static DataApplication getInstance() {
         return instance;
     }
+
+    public UserInfoEntity getUserInfoEntity() {
+        UserInfoEntity entity = new Gson().fromJson(ISpfUtil.getValue(Constant.USERINFO_KEY, "").toString(), UserInfoEntity.class);
+        return entity;
+    }
+
 }
