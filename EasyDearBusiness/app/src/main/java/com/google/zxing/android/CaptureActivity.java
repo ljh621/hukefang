@@ -18,6 +18,7 @@ package com.google.zxing.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,11 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.android.camera.CameraManager;
 import com.jingan.easydearbusiness.R;
+import com.jingan.easydearbusiness.common.dialog.DialogFactory;
+import com.jingan.easydearbusiness.entity.ResponseModel;
+import com.jingan.easydearbusiness.function.billFunction.BillConstacts;
+import com.jingan.easydearbusiness.function.billFunction.BillPresenter;
+import com.jingan.easydearbusiness.utils.ToastUtil;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -56,7 +62,7 @@ import java.util.Map;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public final class CaptureActivity extends Activity implements SurfaceHolder.Callback ,BillConstacts.View{
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
@@ -79,6 +85,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private BeepManager beepManager;//蜂鸣器
     private AmbientLightManager ambientLightManager;
 
+    private Dialog loadDialog;
+    private BillPresenter billPresenter;
+    private String numberCode;
+
     ViewfinderView getViewfinderView() {
         return viewfinderView;
     }
@@ -97,6 +107,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.capture);
+
+        billPresenter=new BillPresenter(this);
 
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
@@ -308,23 +320,25 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     // 当扫描到条形码的时候
     private void handleDecodeInternally(final Result rawResult) {
         viewfinderView.setVisibility(View.GONE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("扫描结果");
-        builder.setMessage(rawResult.getText());
-        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                maybeSetClipboard(rawResult.getText());
-                finish();
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                restartPreviewAfterDelay(0L);
-            }
-        });
-        builder.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("扫描结果");
+//        builder.setMessage(rawResult.getText());
+//        builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                maybeSetClipboard(rawResult.getText());
+//                finish();
+//            }
+//        });
+//        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                restartPreviewAfterDelay(0L);
+//            }
+//        });
+//        builder.show();
+        numberCode=rawResult.getText();
+        billPresenter.billAction();
     }
 
     // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.
@@ -446,5 +460,32 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     public void drawViewfinder() {
         viewfinderView.drawViewfinder();
+    }
+
+    @Override
+    public void onBillStart() {
+        loadDialog = DialogFactory.createLoadingDialog(this, "正在验证...");
+    }
+
+    @Override
+    public void onBillSuccess(ResponseModel<String> result) {
+        ToastUtil.showToast(this, result.getMessage());
+        finish();
+    }
+
+    @Override
+    public void onBillFailure(String error) {
+        ToastUtil.showToast(this, error);
+    }
+
+    @Override
+    public void onBillEnd() {
+        DialogFactory.dimissDialog(loadDialog);
+        restartPreviewAfterDelay(0L);
+    }
+
+    @Override
+    public String getCode() {
+        return numberCode;
     }
 }
