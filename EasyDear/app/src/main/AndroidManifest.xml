@@ -76,7 +76,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
-        <activity android:name=".function.mainFuncations.messageFuncation.MessageActivity"
+        <activity android:name=".function.mainFuncations.messageFunction.MessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.messagedetailFunction.MessageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
@@ -93,6 +97,10 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
         <activity android:name=".function.mainFuncations.mymemberlistFunction.MyMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+
+        <activity android:name=".function.mainFuncations.cardpayFunction.CardPayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 

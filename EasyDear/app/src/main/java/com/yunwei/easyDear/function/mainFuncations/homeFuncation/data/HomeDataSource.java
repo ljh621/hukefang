@@ -6,9 +6,12 @@ package com.yunwei.easyDear.function.mainFuncations.homeFuncation.data;
 
 public interface HomeDataSource {
 
-    interface RequestScrollImageUrlCallBack {
+    interface RequestHome {
         void getScrollImageUrlSuccess(String urls);
+
+
+        void getHomeArticleListSuccess();
     }
 
-    void requestScrollImageUrls(RequestScrollImageUrlCallBack callBack);
+    void requestScrollImageUrls(RequestHome callBack);
 }

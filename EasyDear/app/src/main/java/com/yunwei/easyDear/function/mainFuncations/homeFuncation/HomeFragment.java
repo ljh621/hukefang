@@ -1,12 +1,10 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +20,10 @@ import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
-import com.yunwei.easyDear.function.mainFuncations.messageFuncation.MessageActivity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.MessageActivity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
-import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,7 +34,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnPageChange;
 
 /**
  * @author hezhiWu
@@ -84,7 +80,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        tabNames=getResources().getStringArray(R.array.tab_tiltle);
+        tabNames = getResources().getStringArray(R.array.tab_tiltle);
         initPresenter();
     }
 
@@ -92,12 +88,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_fragment_home, null);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
 
         setLocationCity();
         initTabLayout();
         addScrollLayout();
         requestScrollImageUrls();
+        requestHomeArticleList();
 
         //TODO To be deleted!
         String[] urls = new String[4];
@@ -113,7 +110,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     }
 
     /**
-    * 初始化Presenter
+     * 初始化Presenter
      */
     private void initPresenter() {
         mHomePresenter = new HomePresenter(HomeRemoteRepo.getInstance(), this);
@@ -133,7 +130,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
      * 设置所在城市
      */
     private void setLocationCity() {
-        String city = (String)ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
+        String city = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
         mLocationTextView.setText(city);
         ILog.v(TAG, "setLocationCity: " + city);
     }
@@ -160,14 +157,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                ((TextView)tab.getCustomView()).setTextColor(getResources().getColor(R.color.colorAccent));
-                ((TextView)tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.colorAccent));
+                ((TextView) tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                ((TextView)tab.getCustomView()).setTextColor(getResources().getColor(R.color.gray));
-                ((TextView)tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+                ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.gray));
+                ((TextView) tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             }
 
             @Override
@@ -179,18 +176,19 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     /**
      * 初始化TabView
+     *
      * @param tabLayout
      */
-    private void initTabView(TabLayout tabLayout){
-        for (int i=0;i<tabNames.length;i++){
+    private void initTabView(TabLayout tabLayout) {
+        for (int i = 0; i < tabNames.length; i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             View view = LayoutInflater.from(getContext()).inflate(R.layout.title_tab_layout, null);
-            TextView textView=(TextView)view.findViewById(R.id.title_tab_textView);
+            TextView textView = (TextView) view.findViewById(R.id.title_tab_textView);
             textView.setText(tabNames[i]);
             /*设置默认选择*/
-            if (i==0){
+            if (i == 0) {
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
             }
             tab.setCustomView(textView);
         }
@@ -203,9 +201,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     /**
      * 请求轮播图url
-    */
+     */
     private void requestScrollImageUrls() {
         mHomePresenter.requestScrollImageUrls();
+    }
+
+    /**
+     * 获取首页文章列表
+     */
+    private void requestHomeArticleList() {
+        mHomePresenter.requestHomeArticleList();
     }
 
     /**
@@ -220,7 +225,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     }
 
     /**
-    * 初始化ScrollImage
+     * 初始化ScrollImage
+     *
      * @param urls
      */
     private void initScrollImages(String[] urls) {
