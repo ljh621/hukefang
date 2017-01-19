@@ -8,7 +8,6 @@ android{
             buildConfigField "boolean", "LOGSWITCH", "true"
         }
         debug {
-//            buildConfigField "String", "DOMAI", "\"http://sszx.wayto.com.cn:8081/\""
             buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
             buildConfigField "boolean", "LOGSWITCH", "false"
         }
@@ -35,7 +34,7 @@ android{
          * 登录、用户信息相关
          */
         /*登录*/
-        buildConfigField "String", "LOGIN_URL", "\"token\""
+        buildConfigField "String", "LOGIN_URL", "\"login/loginUser\""
         /*修改用户信息*/
         buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
         /*修改用户密码*/

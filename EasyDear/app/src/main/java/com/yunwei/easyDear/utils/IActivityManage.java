@@ -43,7 +43,6 @@ public class IActivityManage {
         for (Activity activity : activities) {
             if (activity != null)
                 activity.finish();
-                System.gc();
         }
     }
 

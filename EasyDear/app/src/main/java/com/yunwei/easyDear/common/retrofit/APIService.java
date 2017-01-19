@@ -4,11 +4,14 @@ import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.entity.ResponseModel;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 
+import java.util.List;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * @author hezhiWu
@@ -22,11 +25,12 @@ public interface APIService {
     /**
      * 登录
      *
-     * @param entity
+     * @param mobile
+     * @param password
      * @return
      */
-    @POST(BuildConfig.LOGIN_URL)
-    Call<UserInfoEntity> loginRepo(@Body RequestBody entity);
+    @GET(BuildConfig.LOGIN_URL)
+    Call<ResponseModel<UserInfoEntity>> loginRepo(@Query("mobile") String mobile, @Query("password") String password);
 
     /**
      * 请求七牛Token
