@@ -8,10 +8,12 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
 import android.view.animation.Interpolator;
 
+
 import com.jingan.easydearbusiness.vender.bottomnavigation.BottomNavigationBar;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+
 
 /**
  * Class description

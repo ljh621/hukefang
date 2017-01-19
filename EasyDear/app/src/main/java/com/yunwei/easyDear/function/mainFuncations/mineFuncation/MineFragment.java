@@ -11,14 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.function.account.LoginRegistActivity;
 import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
+import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.adapter.BusinessAdapter;
+import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MyMemberActivity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.IUtil;
+import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +83,25 @@ public class MineFragment extends BaseFragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUI();
+    }
+
+    private void initUI(){
+        UserInfoEntity entity= DataApplication.getInstance().getUserInfoEntity();
+        if (entity==null){
+            mineFragmentLoginRigestLayout.setVisibility(View.VISIBLE);
+            mineFragmentUserInfoLayout.setVisibility(View.GONE);
+            return;
+        }
+        mineFragmentUserInfoLayout.setVisibility(View.VISIBLE);
+        mineFragmentLoginRigestLayout.setVisibility(View.GONE);
+        mineFragmentUserNickTv.setText(entity.getNickName());
+        Glide.with(getActivity()).load(BuildConfig.DOMAI+entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(mineFragmentUserHeadviewIv));
+    }
+
     /**
      * 初始化会员默认列表
      */
@@ -93,6 +119,7 @@ public class MineFragment extends BaseFragment {
                 LoginRegistActivity.startIntent(getActivity(), LoginRegistPagerViewPagerAdapter.VALUE_REGIST);
                 break;
             case R.id.mineFragment_setting_tv:
+                ISkipActivityUtil.startIntent(getActivity(), SetingInfoActivity.class);
                 break;
             case R.id.mineFragment_all_order_layout:
                 ISkipActivityUtil.startIntent(getActivity(), MyOrderActivity.class);

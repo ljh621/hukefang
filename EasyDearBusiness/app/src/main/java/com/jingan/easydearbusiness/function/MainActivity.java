@@ -13,8 +13,13 @@ import com.jingan.easydearbusiness.function.accountFunction.data.UserInfoEntity;
 import com.jingan.easydearbusiness.function.billFunction.BillFragment;
 import com.jingan.easydearbusiness.function.verificationFunction.VerficationFragment;
 import com.jingan.easydearbusiness.utils.IActivityManage;
+import com.jingan.easydearbusiness.utils.ILog;
 import com.jingan.easydearbusiness.utils.TimeSelector;
+import com.jingan.easydearbusiness.vender.eventBus.EventConstant;
+import com.jingan.easydearbusiness.vender.eventBus.NoticeEvent;
 import com.jingan.easydearbusiness.view.MainBottomNavigationBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +33,7 @@ import butterknife.ButterKnife;
  */
 
 public class MainActivity extends BaseActivity implements MainBottomNavigationBar.BottomTabSelectedListener {
-
+    final String TAG = getClass().getSimpleName();
     private final int TAB_BILL_VALUE = 0;
     private final int TAB_VERFICATION_VALUE = 1;
 
@@ -58,9 +63,9 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
      */
     private void initBottomNavigationBar() {
         mainBottomNavigationBar.initConfig(this, R.id.main_container_FrameLayout);
-        mainBottomNavigationBar.addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_tab_bill).addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_tab_order);
+        mainBottomNavigationBar.addTabItem(R.mipmap.icon_main_tab_home_pr, R.string.main_tab_bill).addTabItem(R.mipmap.icon_main_tab_mission_pr, R.string.main_tab_order);
         mainBottomNavigationBar.addFragment(BillFragment.newInstance()).addFragment(VerficationFragment.newInstance());
-        mainBottomNavigationBar.setDefaultFragment(TAB_BILL_VALUE);
+        mainBottomNavigationBar.setFirstSelectedTab(TAB_BILL_VALUE);
         mainBottomNavigationBar.setTabSelectedListener(this);
     }
 
@@ -70,8 +75,12 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
         TimeSelector timeSelector = new TimeSelector(this, new TimeSelector.ResultHandler() {
             @Override
             public void handle(String time) {
-//                Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG).show();
-                setToolbarCenterTitle(time.substring(time.indexOf("-") + 1, time.length()) + "月账单");
+//                setToolbarCenterTitle(time.substring(time.indexOf("-") + 1, time.length()) + "月账单");
+                setToolbarCenterTitle(time.replaceAll("-", "年") + "月账单");
+                NoticeEvent event = new NoticeEvent();
+                event.setFlag(EventConstant.NOTICE1);
+                event.setObj(time);
+                EventBus.getDefault().post(event);
             }
         }, "2000-11-22 17:34", "2020-12-1 15:20");
         timeSelector.show();
@@ -81,7 +90,10 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     public void onTabSelected(int position) {
         switch (position) {
             case TAB_BILL_VALUE:
-                setToolbarCenterTitle("宁波宝恒宝马(诚信路店)");
+                UserInfoEntity userInfoEntity = DataApplication.getInstance().getUserInfoEntity();
+                if (userInfoEntity != null) {
+                    setToolbarCenterTitle(userInfoEntity.getBusinessName());
+                }
                 setToolbarRightText("");
                 break;
             case TAB_VERFICATION_VALUE:

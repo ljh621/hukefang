@@ -31,7 +31,7 @@ public class BillRemoteRemo implements BillDataSource {
 
     @Override
     public void reqBill(final BillCallBack callBack) {
-        call = RetrofitManager.getInstance().getService().queryCode(callBack.getCode(), callBack.getUserNo());
+        call = RetrofitManager.getInstance().getService().queryCode(callBack.getUserNo(),callBack.getCode());
         call.enqueue(new Callback<ResponseModel<String>>() {
             @Override
             public void onResponse(Call<ResponseModel<String>> call, Response<ResponseModel<String>> response) {
