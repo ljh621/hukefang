@@ -30,7 +30,8 @@
                         android:layout_width="70dip"
                         android:layout_height="70dip"
                         android:layout_centerInParent="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/homepage_headimg_defaut"/>
 
                     <TextView
                         android:id="@+id/VerficationDetaild_Name_TextView"
@@ -51,7 +52,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:text="+12000"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/black"
                     android:textSize="25sp"
@@ -88,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="购买成功"
                     android:textColor="@color/gray"
                     android:textSize="18sp" />
             </RelativeLayout>
@@ -113,7 +112,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="jack186****7865"
                     android:textColor="@color/gray"
                     android:textSize="18sp" />
             </RelativeLayout>
@@ -138,7 +136,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="2017-01-01"
                     android:textColor="@color/gray"
                     android:textSize="18sp" />
             </RelativeLayout>

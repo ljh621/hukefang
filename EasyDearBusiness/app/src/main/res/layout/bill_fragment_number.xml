@@ -34,6 +34,9 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <View
+        style="@style/line"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/bill_Fragment_ViewPager"
         android:layout_width="match_parent"

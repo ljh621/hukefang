@@ -3,6 +3,8 @@ package com.jingan.easydearbusiness.utils;
 
 import com.jingan.easydearbusiness.base.DataApplication;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @author hezhiWu
  * @version V1.0
@@ -22,4 +24,15 @@ public class IUtil {
     public static String getStrToRes(int res) {
         return DataApplication.getInstance().getResources().getString(res);
     }
+    /**
+     * 时间戳格式化
+     *
+     * @param time
+     * @param str
+     * @return
+     */
+    public static String formatDate(long time, String str) {
+        return new SimpleDateFormat(str).format(time);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.jingan.easydearbusiness.function.verificationFunction;
 
+import com.jingan.easydearbusiness.function.verificationFunction.data.VerficationDetailEntity;
 import com.jingan.easydearbusiness.function.verificationFunction.data.VerficationEntity;
 
 import java.util.List;
@@ -22,11 +23,33 @@ public interface VerficationContract {
         void pullRefreshSuccess(List<VerficationEntity> entities);
 
         void pullRefreshFailure();
+
+        String getBusinessNo();
+
+        int getPageSize();
+
+        int getPageCount();
+
+        String getDate();
+    }
+
+    interface VerficationDetailView {
+        void showDialog();
+
+        void dimissDialog();
+
+        void queryVerficationDetailSuccess(List<VerficationDetailEntity> entities);
+
+        void queryVerficationDetailFailure(String erro);
+
+        String getBillNo();
     }
 
     interface Presenter {
         void downRefreshActivon();
 
         void pullRefreshAction();
+
+        void queryFacationDetail();
     }
 }

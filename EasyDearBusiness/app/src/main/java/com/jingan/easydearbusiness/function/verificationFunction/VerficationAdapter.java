@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jingan.easydearbusiness.BuildConfig;
 import com.jingan.easydearbusiness.R;
 import com.jingan.easydearbusiness.base.BaseRecyclerViewAdapter;
 import com.jingan.easydearbusiness.function.verificationFunction.data.VerficationEntity;
@@ -42,7 +43,11 @@ public class VerficationAdapter extends BaseRecyclerViewAdapter<VerficationEntit
     @Override
     public void onBindBaseViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        Glide.with(mContent).load(mLists.get(position).getHeadUrl()).asBitmap().centerCrop().into(new RoundedBitmapImageViewTarget(viewHolder.itemVerfacitionHeadImageView));
+        VerficationEntity entity = mLists.get(position);
+        Glide.with(mContent).load(BuildConfig.DOMAI + entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(viewHolder.itemVerfacitionHeadImageView));
+        viewHolder.itemVerfacitionTotalTextView.setText("+" + entity.getBuyAmount());
+        viewHolder.itemVerfacitionDayTextView.setText(entity.getCreateTime().substring(entity.getCreateTime().lastIndexOf("-") + 1, entity.getCreateTime().lastIndexOf(" ")) + "日");
+        viewHolder.itemVerfacitionTimeTextView.setText(entity.getCreateTime().substring(entity.getCreateTime().lastIndexOf(" "), entity.getCreateTime().length()));
         viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

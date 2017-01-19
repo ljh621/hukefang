@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 
-
 import com.jingan.easydearbusiness.R;
 import com.jingan.easydearbusiness.base.BaseFragment;
 import com.jingan.easydearbusiness.vender.bottomnavigation.BadgeItem;
@@ -69,7 +68,8 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
     private void setDefaultConfig() {
         setMode(BottomNavigationBar.MODE_FIXED);
         setBackgroundResource(R.color.white);
-        setActiveColor(R.color.colorPrimary);
+//        setActiveColor(R.color.colorPrimary);
+//        setInActiveColor(R.color.gray);
     }
 
     /**
@@ -112,7 +112,7 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
      * @return
      */
     public MainBottomNavigationBar addTabItem(int iconResId, int nameResId) {
-        addItem(new BottomNavigationItem(iconResId, nameResId)).initialise();
+        addItem(new BottomNavigationItem(iconResId, nameResId)).setActiveColor(R.color.tab_active).initialise();
 
         mIconResources.add(iconResId);
         mTitleResources.add(nameResId);
@@ -136,9 +136,9 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
             } else {
                 item.setText(String.valueOf(number));
             }
-            removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource).setBadgeItem(item)).initialise();
+            removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource).setBadgeItem(item)).setActiveColor(R.color.tab_active).initialise();
         } else {
-            removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource)).initialise();
+            removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource)).setActiveColor(R.color.tab_active).initialise();
         }
     }
 
@@ -150,14 +150,17 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
     public void removeTabSign(int tabPosition) {
         int iconResource = mIconResources.get(tabPosition);
         int titleResource = mTitleResources.get(tabPosition);
-        removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource)).initialise();
+        removeItem(tabPosition).addItem(tabPosition, new BottomNavigationItem(iconResource, titleResource)).setActiveColor(R.color.tab_active).initialise();
     }
 
     /**
+     * 设置默认选中的Tab
      * @param position
      */
-    public void setDefaultFragment(int position) {
+    public void setFirstSelectedTab(int position) {
         switchTab(position);
+        setFirstSelectedPosition(position).initialise();
+        onTabSelected(position);
     }
 
     @Override
@@ -202,7 +205,7 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
     }
 
     /**
-     * set clickListener
+     * set listener
      *
      * @param listener
      */

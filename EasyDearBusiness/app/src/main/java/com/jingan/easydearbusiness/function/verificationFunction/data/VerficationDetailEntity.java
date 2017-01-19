@@ -5,11 +5,10 @@ package com.jingan.easydearbusiness.function.verificationFunction.data;
  * @version V1.0
  * @Package com.jingan.easydearbusiness.function.verificationFunction.data
  * @Description:
- * @date 2017/1/1 14:52
+ * @date 2017/1/17 10:31
  */
 
-public class VerficationEntity {
-
+public class VerficationDetailEntity {
     private String BillNo;
 
     private String UserNo;
@@ -74,4 +73,6 @@ public class VerficationEntity {
     public String getCreateTime(){
         return this.CreateTime;
     }
+
+
 }

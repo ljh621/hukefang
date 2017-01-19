@@ -92,7 +92,8 @@ public class TimeSelector {
         this.handler = resultHandler;
         startCalendar = Calendar.getInstance();
         endCalendar = Calendar.getInstance();
-        startCalendar.setTime(DateUtil.parse(startDate, FORMAT_STR));
+        String startT=IUtil.formatDate(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss");
+        startCalendar.setTime(DateUtil.parse(startT, FORMAT_STR));
         endCalendar.setTime(DateUtil.parse(endDate, FORMAT_STR));
         initDialog();
         initView();

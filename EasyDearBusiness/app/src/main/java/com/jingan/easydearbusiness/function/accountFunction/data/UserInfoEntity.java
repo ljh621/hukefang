@@ -10,18 +10,18 @@ package com.jingan.easydearbusiness.function.accountFunction.data;
 
 public class UserInfoEntity {
 
-    private String BusinessNO;
+    private String BusinessNo;
 
     private String Logo ;
 
     private String BusinessName;
 
     public String getBusinessNO() {
-        return BusinessNO;
+        return BusinessNo;
     }
 
     public void setBusinessNO(String businessNO) {
-        BusinessNO = businessNO;
+        BusinessNo = businessNO;
     }
 
     public String getLogo() {
