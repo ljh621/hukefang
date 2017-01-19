@@ -10,68 +10,36 @@ package com.yunwei.easyDear.function.account.data;
 
 public class UserInfoEntity {
 
-    private String access_token;
+    private String UserNo;
 
-    private String token_type;
+    private String Mobile;
 
-    private int expires_in;
+    private String NickName;
 
-    private String id;
+    private String Imagery;
 
-    private String icon;
-
-    private String name;
-
-    private String dept;
-
-    private String unit;
-
-    public void setAccess_token(String access_token){
-        this.access_token = access_token;
+    public void setUserNo(String UserNo){
+        this.UserNo = UserNo;
     }
-    public String getAccess_token(){
-        return this.access_token;
+    public String getUserNo(){
+        return this.UserNo;
     }
-    public void setToken_type(String token_type){
-        this.token_type = token_type;
+    public void setMobile(String Mobile){
+        this.Mobile = Mobile;
     }
-    public String getToken_type(){
-        return this.token_type;
+    public String getMobile(){
+        return this.Mobile;
     }
-    public void setExpires_in(int expires_in){
-        this.expires_in = expires_in;
+    public void setNickName(String NickName){
+        this.NickName = NickName;
     }
-    public int getExpires_in(){
-        return this.expires_in;
+    public String getNickName(){
+        return this.NickName;
     }
-    public void setId(String id){
-        this.id = id;
+    public void setImagery(String Imagery){
+        this.Imagery = Imagery;
     }
-    public String getId(){
-        return this.id;
-    }
-    public void setIcon(String icon){
-        this.icon = icon;
-    }
-    public String getIcon(){
-        return this.icon;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public String getName(){
-        return this.name;
-    }
-    public void setDept(String dept){
-        this.dept = dept;
-    }
-    public String getDept(){
-        return this.dept;
-    }
-    public void setUnit(String unit){
-        this.unit = unit;
-    }
-    public String getUnit(){
-        return this.unit;
+    public String getImagery(){
+        return this.Imagery;
     }
 }

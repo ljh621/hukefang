@@ -2,6 +2,11 @@ package com.yunwei.easyDear.base;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
+import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.function.account.data.UserInfoEntity;
+import com.yunwei.easyDear.utils.ISpfUtil;
+
 /**
  * @author hezhiWu
  * @version V1.0
@@ -14,6 +19,8 @@ public class DataApplication extends Application {
 
     private static DataApplication instance;
 
+    private UserInfoEntity userInfoEntity;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -22,5 +29,17 @@ public class DataApplication extends Application {
 
     public static DataApplication getInstance() {
         return instance;
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    public UserInfoEntity getUserInfoEntity() {
+        if (userInfoEntity == null) {
+            userInfoEntity = new Gson().fromJson(ISpfUtil.getValue(Constant.USERINFO_KEY, "").toString(), UserInfoEntity.class);
+        }
+        return userInfoEntity;
     }
 }

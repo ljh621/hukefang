@@ -43,7 +43,7 @@ public interface APIService {
      * @return
      */
     @GET(BuildConfig.QUERY_CODE)
-    Call<ResponseModel<String>> queryCode(@Query("BusinessNo") String businessNo, @Query("cardTransactionNo") String cardTransactionNo);
+    Call<ResponseModel<String>> queryCode(@Query("businessNo") String businessNo, @Query("cardTransactionNo") String cardTransactionNo);
 
     /**
      * 账单列表

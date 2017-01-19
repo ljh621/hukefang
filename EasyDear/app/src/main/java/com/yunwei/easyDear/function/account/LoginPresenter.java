@@ -35,7 +35,6 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     public void onLoginSuccess(UserInfoEntity entity) {
         if (entity != null) {
             /*数据本地化*/
-            ISpfUtil.setValue(Constant.ACCESS_TOKEN_KEY, entity.getAccess_token());
             ISpfUtil.setValue(Constant.ACCOUNT_KEY, loginView.getAccount());
             ISpfUtil.setValue(Constant.PSSWORD_KEY, loginView.getPassword());
             ISpfUtil.setValue(Constant.USERINFO_KEY, new Gson().toJson(entity));

@@ -8,39 +8,40 @@ package com.yunwei.easyDear.entity;
 
 public class ResponseModel<T> {
 
-    private boolean success;
+    private int Code;
 
-    private String message;
+    private String Message;
 
-    private T data;
 
-    public ResponseModel(boolean success, String message, T data) {
-        this.success = success;
-        this.message = message;
-        this.data = data;
+    private T Data;
+
+    public ResponseModel(int code, String message, T data) {
+        this.Code = code;
+        this.Message = message;
+        this.Data = data;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public int getCode() {
+        return Code;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setCode(int code) {
+        Code = code;
     }
 
     public String getMessage() {
-        return message;
+        return Message;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        Message = message;
     }
 
     public T getData() {
-        return data;
+        return Data;
     }
 
     public void setData(T data) {
-        this.data = data;
+        Data = data;
     }
 }

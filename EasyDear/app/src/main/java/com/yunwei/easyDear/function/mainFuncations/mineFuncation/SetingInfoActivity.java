@@ -5,12 +5,28 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.function.account.LoginActivity;
+import com.yunwei.easyDear.function.account.LoginRegistActivity;
+import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
+import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.AboutFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.TrackSetingFragment;
+import com.yunwei.easyDear.utils.IActivityManage;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author hezhiWu
@@ -22,38 +38,35 @@ import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.TrackS
 
 public class SetingInfoActivity extends BaseActivity {
 
-    public static final String HEAD_TITLE_FLAG = "title_flag";
-    public static final String SHOW_FRAGMENT_FLAG = "show_flag";
+    @BindView(R.id.SetingInfoHeadView_iamgeView)
+    ImageView headImageView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_seting_info);
-        String fromFlag = getIntent().getStringExtra(SHOW_FRAGMENT_FLAG);
-        initUI(fromFlag);
+        ButterKnife.bind(this);
+        initUI();
     }
 
-    /**
-     * 初始化UI
-     *
-     * @param flag
-     */
-    private void initUI(String flag) {
-        if (TextUtils.isEmpty(flag)) {
+    private void initUI() {
+        UserInfoEntity entity = DataApplication.getInstance().getUserInfoEntity();
+        if (entity == null) {
             return;
         }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        if (flag.equals(MessageSetingFragment.FRAGMENT_FLAG)) {
-            setToolbarTitle(R.string.set_msg_info);
-            transaction.replace(R.id.seting_info_container, MessageSetingFragment.newInstance());
-        } else if (flag.equals(TrackSetingFragment.FRAGMENT_FLAG)) {
-            setToolbarTitle(R.string.set_track_info);
-            transaction.replace(R.id.seting_info_container, TrackSetingFragment.newInstance());
-        } else if (flag.equals(AboutFragment.FRAGMENT_FLAG)) {
-            setToolbarTitle(R.string.set_about);
-            transaction.replace(R.id.seting_info_container, AboutFragment.newInstance());
+        Glide.with(this).load(BuildConfig.DOMAI + entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headImageView));
+    }
+
+    @OnClick({R.id.SetingInfoHeadView_layout, R.id.SetingInfo_exit_btn})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.SetingInfoHeadView_layout:
+
+                break;
+            case R.id.SetingInfo_exit_btn:
+                IActivityManage.getInstance().exit();
+                LoginRegistActivity.startIntent(this, LoginRegistPagerViewPagerAdapter.VALUE_LOGIN);
+                break;
         }
-        transaction.commit();
     }
 }
