@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.messageFuncation;
+package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

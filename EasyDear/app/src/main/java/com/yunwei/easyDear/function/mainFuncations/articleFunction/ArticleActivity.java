@@ -77,7 +77,7 @@ public class ArticleActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.article_back, R.id.article_send, R.id.article_to_discount_detail, R.id.article_more_info})
+    @OnClick({R.id.article_back, R.id.article_send, R.id.article_to_discount_detail, R.id.article_discount_purchase, R.id.article_more_info})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.article_back:
@@ -87,6 +87,9 @@ public class ArticleActivity extends BaseActivity {
                 startToSend();
                 break;
             case R.id.article_to_discount_detail:
+                ISkipActivityUtil.startIntent(this, CardDetailActivity.class);
+                break;
+            case R.id.article_discount_purchase:
                 ISkipActivityUtil.startIntent(this, CardDetailActivity.class);
                 break;
             case R.id.article_more_info:

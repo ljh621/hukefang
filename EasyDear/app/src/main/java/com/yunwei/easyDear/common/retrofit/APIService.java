@@ -36,6 +36,10 @@ public interface APIService {
     @GET(BuildConfig.QINIU_TOKEN_URL)
     Call<ResponseModel<String>> reqQiniuToken();
 
-    @GET(BuildConfig.SCROLL_IMAGE_URL)
+    @GET(BuildConfig.HOME_SCROLL_IMAGE_URL)
     Call<ResponseModel<String>> reqScrollImageUrls();
+
+    @POST(BuildConfig.HOME_ARTICLE_LIST)
+    Call<ResponseModel<String>> requestHomeArticleList();
+
 }

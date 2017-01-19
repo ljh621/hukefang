@@ -1,15 +1,14 @@
-package com.yunwei.easyDear.function.mainFuncations.messageFuncation;
+package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
-import com.yunwei.easyDear.function.mainFuncations.messageFuncation.data.ItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.ItemEntity;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
