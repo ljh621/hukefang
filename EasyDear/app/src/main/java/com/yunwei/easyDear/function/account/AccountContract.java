@@ -28,7 +28,24 @@ public interface AccountContract {
         String getPassword();
     }
 
+    interface RegistView {
+        void showDialog();
+
+        void dismissDialog();
+
+        void registSuccess();
+
+        void registFailure(String error);
+
+        String getMobile();
+
+        String getPassword();
+
+        String getMobileKey();
+    }
+
     interface Presenter {
         void login();
+        void regist();
     }
 }

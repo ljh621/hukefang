@@ -23,7 +23,7 @@
             edit:edite_icon="@mipmap/login_user" />
 
         <com.yunwei.easyDear.widget.ResetEditView
-            android:id="@+id/loginFragment_password_editView"
+            android:id="@+id/registFragment_password_editView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

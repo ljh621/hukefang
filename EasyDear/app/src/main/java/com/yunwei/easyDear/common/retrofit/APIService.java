@@ -33,6 +33,15 @@ public interface APIService {
     Call<ResponseModel<UserInfoEntity>> loginRepo(@Query("mobile") String mobile, @Query("password") String password);
 
     /**
+     * 注册
+     * @param mobile
+     * @param password
+     * @param mobileKey
+     * @return
+     */
+    @GET(BuildConfig.REGIST_URL)
+    Call<ResponseModel<UserInfoEntity>> registRepo(@Query("mobile") String mobile,@Query("password") String password,@Query("mobileKey")String mobileKey);
+    /**
      * 请求七牛Token
      *
      * @return
