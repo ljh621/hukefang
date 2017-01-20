@@ -11,7 +11,7 @@ import com.yunwei.easyDear.base.BaseDataSourse;
  * @date 2016/11/29 15:02
  */
 
-public interface LoginDataSoure extends BaseDataSourse{
+public interface LoginDataSoure extends BaseDataSourse {
 
     interface LoginCallBack {
 
@@ -21,5 +21,19 @@ public interface LoginDataSoure extends BaseDataSourse{
 
     }
 
+    interface RigestCallBack {
+        void onRigestSuccess(UserInfoEntity entity);
+
+        void onRigestFailure(String error);
+
+        String getMobile();
+
+        String getPassword();
+
+        String getMobileKey();
+    }
+
     void login(String account, String password, LoginCallBack callBack);
+
+    void rigest(RigestCallBack callBack);
 }

@@ -86,8 +86,16 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
      */
     private void initBottomNavigationBar() {
         mainBottomNavigationBar.initConfig(this, R.id.main_container_FrameLayout);
-        mainBottomNavigationBar.addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_home_tab).addTabItem(R.mipmap.main_tab_mission_n, R.string.main_qr_tab).addTabItem(R.mipmap.ic_location_on_white_24dp, R.string.main_code_tab).addTabItem(R.mipmap.main_tab_record_n, R.string.main_find_tab).addTabItem(R.mipmap.main_tab_mine_n, R.string.main_mine_tab);
-        mainBottomNavigationBar.addFragment(HomeFragment.newInstance()).addFragment(ScanQrFragment.newInstance()).addFragment(MembershipCodeFragment.newInstance()).addFragment(FindFragment.newInstance()).addFragment(MineFragment.newInstance());
+        mainBottomNavigationBar.addTabItem(R.mipmap.ic_home_white_24dp, R.string.main_home_tab)
+                .addTabItem(R.mipmap.main_tab_mission_n, R.string.main_qr_tab)
+                .addTabItem(R.mipmap.ic_location_on_white_24dp, R.string.main_code_tab)
+                .addTabItem(R.mipmap.main_tab_record_n, R.string.main_find_tab)
+                .addTabItem(R.mipmap.main_tab_mine_n, R.string.main_mine_tab);
+        mainBottomNavigationBar.addFragment(HomeFragment.newInstance())
+                .addFragment(ScanQrFragment.newInstance())
+                .addFragment(MembershipCodeFragment.newInstance())
+                .addFragment(FindFragment.newInstance())
+                .addFragment(MineFragment.newInstance());
         mainBottomNavigationBar.setDefaultFragment(0);
         mainBottomNavigationBar.setTabSelectedListener(this);
     }

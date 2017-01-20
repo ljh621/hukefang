@@ -31,6 +31,7 @@ public class LoginRemoteRepo implements LoginDataSoure {
 
     private static LoginRemoteRepo remoteRepo;
     private Call<ResponseModel<UserInfoEntity>> call;
+    private Call<ResponseModel<UserInfoEntity>> rigestCall;
 
     public static LoginRemoteRepo newInstance() {
         if (remoteRepo == null) {
@@ -63,6 +64,30 @@ public class LoginRemoteRepo implements LoginDataSoure {
         });
     }
 
+    @Override
+    public void rigest(final RigestCallBack callBack) {
+        if (!INetWorkUtil.isNetworkAvailable(DataApplication.getInstance())) {
+            callBack.onRigestFailure(IUtil.getStrToRes(R.string.invalid_network));
+            return;
+        }
+        rigestCall = RetrofitManager.getInstance().getService().registRepo(callBack.getMobile(), callBack.getPassword(), callBack.getMobileKey());
+        rigestCall.enqueue(new Callback<ResponseModel<UserInfoEntity>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<UserInfoEntity>> call, Response<ResponseModel<UserInfoEntity>> response) {
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.onRigestSuccess(response.body().getData());
+                } else {
+                    callBack.onRigestFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<UserInfoEntity>> call, Throwable t) {
+                callBack.onRigestFailure("注册失败");
+            }
+        });
+    }
+
     /**
      * 取消请求
      */
@@ -71,6 +96,9 @@ public class LoginRemoteRepo implements LoginDataSoure {
         if (call != null && !call.isCanceled()) {
             call.cancel();
             ILog.d(TAG, "isCanceled==" + call.isCanceled());
+        }
+        if (rigestCall != null && !rigestCall.isCanceled()) {
+            rigestCall.cancel();
         }
     }
 }

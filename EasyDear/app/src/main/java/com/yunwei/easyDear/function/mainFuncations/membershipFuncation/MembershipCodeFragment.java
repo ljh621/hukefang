@@ -11,9 +11,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
+import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.MyCardActivity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
@@ -57,9 +60,16 @@ public class MembershipCodeFragment extends BaseFragment {
     }
 
     private void initUI(){
+        UserInfoEntity entity= DataApplication.getInstance().getUserInfoEntity();
+        if (entity!=null){
+            userName.setText(entity.getNickName());
+            qrImageView.setImageBitmap(IUtil.createQRImage(entity.getUserNo(),120,120));
+            Glide.with(getActivity()).load(entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headView));
+        }else {
+            Glide.with(getContext()).load("http://www.wendu.com/upload/12-02-06/dizhiqr.jpeg").into(qrImageView);
+            Glide.with(getContext()).load("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg").asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headView));
+        }
         Glide.with(getContext()).load("http://www.popoffices.com/design/pin/opn/006.jpg").into(MembershiFrgmentBgIv);
-        Glide.with(getContext()).load("http://www.wendu.com/upload/12-02-06/dizhiqr.jpeg").into(qrImageView);
-        Glide.with(getContext()).load("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg").asBitmap().centerCrop().into(new RoundedBitmapImageViewTarget(headView));
     }
 
     @OnClick({R.id.MembershipFragment_order_layout,R.id.MembershipFragment_block_layout,R.id.MembershipFragment_ll_layout})
