@@ -9,8 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
+import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
+import com.yunwei.easyDear.utils.IStringUtils;
+import com.yunwei.easyDear.utils.IUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +24,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class MyOrderAdapter extends BaseRecyclerViewAdapter<OrderItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MyOrderAdapter extends BaseRecyclerViewAdapter<OrderEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MyOrderAdapter(Context context) {
         super(context);
@@ -36,14 +40,14 @@ public class MyOrderAdapter extends BaseRecyclerViewAdapter<OrderItemEntity> imp
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        if (position >= 2) {
-            viewHolder.businessNameText.setText(mLists.get(position).getBusinessName());
-            viewHolder.cardTypeText.setText(mLists.get(position).getCardType());
-            viewHolder.validateText.setText(mLists.get(position).getValidateDate());
-            viewHolder.priceText.setText(mLists.get(position).getCardPrice());
-            viewHolder.amountText.setText(mLists.get(position).getCardAmount());
-//            Glide.with(mContent).load(mLists.get(position).getHeadUrl()).into(viewHolder.headView);
-        }
+        viewHolder.businessNameText.setText(mLists.get(position).getBusinessName());/*商家名*/
+        viewHolder.cardTypeText.setText(mLists.get(position).getCardName());/*消费券信息*/
+        viewHolder.validateText.setText("有效期至" + mLists.get(position).getCardEndTime());/*有效期*/
+        viewHolder.priceText.setText("¥" + mLists.get(position).getBuyAmount());/*金额*/
+        viewHolder.amountText.setText(mLists.get(position).getCardSize());
+        viewHolder.sumPriceText.setText("合计: ¥" + IStringUtils.toInt(mLists.get(position).getCardSize()) * IStringUtils.toInt(mLists.get(position).getBuyAmount()));
+        viewHolder.orderState.setText(mLists.get(position).getStatus());
+        Glide.with(mContent).load(BuildConfig.DOMAI + mLists.get(position).getLogo()).into(viewHolder.headView);
     }
 
     @Override
@@ -67,6 +71,8 @@ public class MyOrderAdapter extends BaseRecyclerViewAdapter<OrderItemEntity> imp
         TextView amountText;
         @BindView(R.id.myorder_card_sum_price)
         TextView sumPriceText;
+        @BindView(R.id.myorder_state)
+        TextView orderState;
 
         public ItemViewHolder(View view) {
             super(view);

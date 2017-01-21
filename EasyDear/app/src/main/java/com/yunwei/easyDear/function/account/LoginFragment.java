@@ -17,6 +17,7 @@ import com.yunwei.easyDear.common.dialog.DialogFactory;
 import com.yunwei.easyDear.common.dialog.ToastUtil;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.account.data.soure.LoginRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.MainActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.widget.ResetEditView;
@@ -101,7 +102,7 @@ public class LoginFragment extends BaseFragment implements AccountContract.Login
     @Override
     public void loginSuccess(UserInfoEntity entity) {
         ToastUtil.showToast(getActivity(), "登录成功");
-        getActivity().finish();
+        ISkipActivityUtil.startIntent(getActivity(), MainActivity.class);
     }
 
     @Override

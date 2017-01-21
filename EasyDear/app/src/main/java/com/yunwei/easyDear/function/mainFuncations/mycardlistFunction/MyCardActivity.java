@@ -6,6 +6,9 @@ import android.view.View;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.common.dialog.ToastUtil;
+import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.data.CardEntity;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
@@ -17,50 +20,89 @@ import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
+ * 我的券
  */
 
-public class MyCardActivity extends BaseActivity {
+public class MyCardActivity extends BaseActivity implements CardContract.CardView, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    private MyCardAdapter adapter;
+
+    private int defaultPageSize = 1;
+
     @BindView(R.id.mycard_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
+
+    private CardPresenter cardPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_mycard);
-        setToolbarVisibility(View.GONE);
-//        setSwipeEnabled(false);
+        setToolbarTitle("消费券");
         ButterKnife.bind(this);
 
+        cardPresenter = new CardPresenter(this);
         initRecyclerView();
     }
 
-    @OnClick({R.id.mycard_back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.mycard_back:
-                onBackPressed();
-                break;
-        }
+    /**
+     * 初始化RecyclerView
+     */
+    private void initRecyclerView() {
+        adapter = new MyCardAdapter(this);
+        mRecyclerView.setRecyclerViewAdapter(adapter);
+        mRecyclerView.setPullToRefreshListener(this);
+
+        mRecyclerView.startUpRefresh();
     }
 
-    private void initRecyclerView() {
-        List<CardItemEntity> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            CardItemEntity entity = new CardItemEntity();
-            if (i < 2) {
-                list.add(entity);
-            } else {
-                entity.setViceTitle("中杯饮品");
-                entity.setCardName("星巴克咖啡");
-                entity.setValidate("2017-3-12");
-                list.add(entity);
-            }
-        }
-        MyCardAdapter adapter = new MyCardAdapter(this);
+    @Override
+    public void onDownRefresh() {
+        defaultPageSize=1;
+        cardPresenter.reqCardListAction();
+    }
+
+    @Override
+    public void onPullRefresh() {
+        defaultPageSize++;
+        cardPresenter.reqCardListAction();
+    }
+
+    @Override
+    public void onCardStart() {
+
+    }
+
+    @Override
+    public void onCardEnd() {
+        mRecyclerView.closeDownRefresh();
+        mRecyclerView.onLoadMoreFinish();
+    }
+
+    @Override
+    public void onCardSuccess(List<CardEntity> list) {
         adapter.addItems(list);
-        mRecyclerView.setRecyclerViewAdapter(adapter);
+    }
+
+    @Override
+    public void onCardFailure(String error) {
+        ToastUtil.showToast(this, error);
+    }
+
+    @Override
+    public String getUserNo() {
+        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+    }
+
+    @Override
+    public int getPageSize() {
+        return defaultPageSize;
+    }
+
+    @Override
+    public int getPageCount() {
+        return 20;
     }
 }

@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
 import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.CardItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +23,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class MyMemberAdapter extends BaseRecyclerViewAdapter<MemberItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MyMemberAdapter extends BaseRecyclerViewAdapter<BusinessEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MyMemberAdapter(Context context) {
         super(context);
@@ -36,13 +39,11 @@ public class MyMemberAdapter extends BaseRecyclerViewAdapter<MemberItemEntity> i
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        if (position >= 2) {
             viewHolder.businessNameText.setText(mLists.get(position).getBusinessName());
-            viewHolder.levelText.setText(mLists.get(position).getLevel());
-            viewHolder.cardAmountText.setText(mLists.get(position).getCardAmount());
-            viewHolder.creditText.setText(mLists.get(position).getCredit());
-//            Glide.with(mContent).load(mLists.get(position).getHeadUrl()).into(viewHolder.logoView);
-        }
+            viewHolder.levelText.setText(mLists.get(position).getVipLevel());
+            viewHolder.cardAmountText.setText("您有"+mLists.get(position).getCardSize()+"张礼券");
+//            viewHolder.creditText.setText(mLists.get(position).getCredit());
+            Glide.with(mContent).load(BuildConfig.DOMAI+mLists.get(position).getLogo()).into(viewHolder.logoView);
     }
 
     @Override

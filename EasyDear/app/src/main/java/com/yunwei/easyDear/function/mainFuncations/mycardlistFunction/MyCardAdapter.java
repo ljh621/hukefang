@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
-import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.OrderItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.data.CardEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class MyCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MyCardAdapter extends BaseRecyclerViewAdapter<CardEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MyCardAdapter(Context context) {
         super(context);
@@ -37,12 +38,10 @@ public class MyCardAdapter extends BaseRecyclerViewAdapter<CardItemEntity> imple
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        if (position >= 2) {
-            viewHolder.viceTitleText.setText(mLists.get(position).getViceTitle());
-            viewHolder.cardNameText.setText(mLists.get(position).getCardName());
-            viewHolder.validateText.setText(mLists.get(position).getValidate());
-//            Glide.with(mContent).load(mLists.get(position).getHeadUrl()).into(viewHolder.logoView);
-        }
+        viewHolder.viceTitleText.setText(mLists.get(position).getAssociateName());
+        viewHolder.cardNameText.setText(mLists.get(position).getCardName());
+        viewHolder.validateText.setText("有效期至" + mLists.get(position).getCardEndTime());
+        Glide.with(mContent).load(BuildConfig.DOMAI + mLists.get(position).getLogo()).into(viewHolder.logoView);
     }
 
     @Override
