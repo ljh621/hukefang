@@ -15,10 +15,11 @@ import com.yunwei.easyDear.utils.ISpfUtil;
  * @date 2016/11/29 15:21
  */
 
-public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountContract.Presenter, LoginDataSoure.RigestCallBack {
+public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountContract.Presenter, LoginDataSoure.RigestCallBack, LoginDataSoure.ValidateCallBack {
 
     private AccountContract.LoginView loginView;
     private AccountContract.RegistView registView;
+    private AccountContract.validateView validateView;
     private LoginDataSoure remoteRepo;
 
     public LoginPresenter(LoginRemoteRepo remoteRepo, AccountContract.LoginView loginView) {
@@ -31,6 +32,11 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
         this.registView = registView;
     }
 
+    public LoginPresenter(AccountContract.validateView validateView) {
+        this.remoteRepo = LoginRemoteRepo.newInstance();
+        this.validateView = validateView;
+    }
+
     @Override
     public void login() {
         loginView.showDialog();
@@ -41,6 +47,12 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     public void regist() {
         registView.showDialog();
         remoteRepo.rigest(this);
+    }
+
+    @Override
+    public void sendValidateCode() {
+        validateView.onStartSendValidateCode();
+        remoteRepo.sendValidateCode(this);
     }
 
     @Override
@@ -99,5 +111,22 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     @Override
     public String getMobileKey() {
         return registView.getMobileKey();
+    }
+
+    @Override
+    public void onValidateSuccess(String code) {
+        validateView.getValidateCodeSuccess(code);
+        validateView.onEndSendValidateCode();
+    }
+
+    @Override
+    public void onValidateFailure(String error) {
+        validateView.getValidateCodeFailure(error);
+        validateView.onEndSendValidateCode();
+    }
+
+    @Override
+    public String getSendMobile() {
+        return validateView.getMobile();
     }
 }

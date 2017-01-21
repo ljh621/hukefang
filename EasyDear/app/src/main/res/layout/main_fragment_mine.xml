@@ -58,7 +58,7 @@
                     android:layout_marginBottom="5dp"
                     android:padding="10dp"
                     android:text="LEO"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:layout_alignParentRight="true"
                     android:padding="10dp"
                     android:text="设置"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -101,7 +101,7 @@
                         android:layout_toRightOf="@id/mineFragment_consumer_coupon_iv"
                         android:gravity="center"
                         android:text="消费券"
-                        android:textColor="@color/white"
+                        android:textColor="@color/gray"
                         android:textSize="15sp" />
 
                     <TextView
@@ -111,7 +111,7 @@
                         android:layout_toRightOf="@id/mineFragment_consumer_coupon_iv"
                         android:gravity="center"
                         android:text="8"
-                        android:textColor="@color/white"
+                        android:textColor="@color/gray"
                         android:textSize="15sp" />
                 </RelativeLayout>
 
@@ -136,7 +136,7 @@
                         android:layout_toRightOf="@id/mineFragment_equity_merchant_iv"
                         android:gravity="center"
                         android:text="权益商家"
-                        android:textColor="@color/white"
+                        android:textColor="@color/gray"
                         android:textSize="15sp" />
 
                     <TextView
@@ -146,7 +146,7 @@
                         android:layout_toRightOf="@id/mineFragment_equity_merchant_iv"
                         android:gravity="center"
                         android:text="21"
-                        android:textColor="@color/white"
+                        android:textColor="@color/gray"
                         android:textSize="15sp" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -219,8 +219,9 @@
                 android:id="@+id/mineFragment_business_gridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numColumns="4"
+                android:listSelector="@color/transparency"
                 android:background="@color/white"
+                android:numColumns="4"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp" />
 
@@ -268,7 +269,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="联系客户"
+                    android:text="联系商家"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
 

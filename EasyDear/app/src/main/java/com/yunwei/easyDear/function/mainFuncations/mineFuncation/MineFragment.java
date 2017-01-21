@@ -16,16 +16,22 @@ import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.common.dialog.CommPopupWindow;
 import com.yunwei.easyDear.function.account.LoginRegistActivity;
 import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.adapter.BusinessAdapter;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessContract;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessPresenter;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MyMemberActivity;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +45,7 @@ import butterknife.OnClick;
  * @date 2016/11/22 18:12
  */
 
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements BusinessContract.BusinessView {
 
     private static MineFragment fragment;
     @BindView(R.id.mineFragment_login_rigest_layout)
@@ -67,11 +73,23 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.mineFragment_tontact_layout)
     RelativeLayout mineFragmentTontactLayout;
 
+    private CommPopupWindow commPopupWindow;
+
+    private BusinessPresenter businessPresenter;
+
+    private BusinessAdapter businessAdapter;
+
     public static MineFragment newInstance() {
         if (fragment == null) {
             fragment = new MineFragment();
         }
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        businessPresenter = new BusinessPresenter(this);
     }
 
     @Nullable
@@ -89,9 +107,9 @@ public class MineFragment extends BaseFragment {
         initUI();
     }
 
-    private void initUI(){
-        UserInfoEntity entity= DataApplication.getInstance().getUserInfoEntity();
-        if (entity==null){
+    private void initUI() {
+        UserInfoEntity entity = DataApplication.getInstance().getUserInfoEntity();
+        if (entity == null) {
             mineFragmentLoginRigestLayout.setVisibility(View.VISIBLE);
             mineFragmentUserInfoLayout.setVisibility(View.GONE);
             return;
@@ -99,14 +117,16 @@ public class MineFragment extends BaseFragment {
         mineFragmentUserInfoLayout.setVisibility(View.VISIBLE);
         mineFragmentLoginRigestLayout.setVisibility(View.GONE);
         mineFragmentUserNickTv.setText(entity.getNickName());
-        Glide.with(getActivity()).load(BuildConfig.DOMAI+entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(mineFragmentUserHeadviewIv));
+        Glide.with(getActivity()).load(BuildConfig.DOMAI + entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(mineFragmentUserHeadviewIv));
     }
 
     /**
      * 初始化会员默认列表
      */
-    private void initGridView(){
-        mineFragmentBusinessGridView.setAdapter(new BusinessAdapter(getActivity()));
+    private void initGridView() {
+        businessAdapter = new BusinessAdapter(getActivity());
+        mineFragmentBusinessGridView.setAdapter(businessAdapter);
+        businessPresenter.reqBusinessListAction();
     }
 
     @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})
@@ -124,13 +144,66 @@ public class MineFragment extends BaseFragment {
             case R.id.mineFragment_all_order_layout:
                 ISkipActivityUtil.startIntent(getActivity(), MyOrderActivity.class);
                 break;
-            case R.id.mineFragment_all_business_layout:
+            case R.id.mineFragment_all_business_layout:/*会员商家*/
                 ISkipActivityUtil.startIntent(getActivity(), MyMemberActivity.class);
                 break;
-            case R.id.mineFragment_tontact_layout:
+            case R.id.mineFragment_tontact_layout:/*联系客户*/
+                View tontactView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_tontact_layout, null);
+                tontactView.findViewById(R.id.dialog_tontact_calcel_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        commPopupWindow.dismiss();
+                    }
+                });
+                commPopupWindow = new CommPopupWindow(tontactView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                commPopupWindow.showAtButton(getView());
                 break;
-            case R.id.mineFragment_into_business_layout:
+            case R.id.mineFragment_into_business_layout:/*联系商家*/
+                View businessView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_tontact_layout, null);
+                businessView.findViewById(R.id.dialog_tontact_calcel_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        commPopupWindow.dismiss();
+                    }
+                });
+                commPopupWindow = new CommPopupWindow(businessView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                commPopupWindow.showAtButton(getView());
                 break;
         }
+    }
+
+    @Override
+    public void onBusinessStart() {
+
+    }
+
+    @Override
+    public void onBusinessEnd() {
+
+    }
+
+    @Override
+    public void onBusinessSuccess(List<BusinessEntity> list) {
+        businessAdapter.addData(list);
+    }
+
+    @Override
+    public void onBusinessFaliure(String error) {
+
+    }
+
+    @Override
+    public String getUserNo() {
+        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+    }
+
+    @Override
+    public int getPageSize() {
+        return 1;
+    }
+
+    @Override
+    public int getPageCount() {
+        return 4;
     }
 }

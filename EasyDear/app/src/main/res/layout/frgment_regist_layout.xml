@@ -44,6 +44,7 @@
                 android:src="@mipmap/login_mima"/>
 
             <EditText
+                android:id="@+id/registFragment_validateCode_editText"
                 android:layout_toRightOf="@+id/registFragment_code_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
                 android:background="@color/white"/>
 
             <Button
+                android:id="@+id/registFragment_send_vaildate_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

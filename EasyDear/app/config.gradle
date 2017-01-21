@@ -37,10 +37,24 @@ android {
         buildConfigField "String", "LOGIN_URL", "\"login/loginUser\""
         /*注册*/
         buildConfigField "String", "REGIST_URL", "\"register/insertUser?\""
+        /*发送验证码*/
+        buildConfigField "String", "SEND_VALIDATE_CODE", "\" user/sendMobile\""
         /*修改用户信息*/
         buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
         /*修改用户密码*/
         buildConfigField "String", "UPDATE_USER_PWD_URL", "\"v2/account/changepwd/\""
+        /*用户订单列表*/
+        buildConfigField "String", "BILL_LIST_URL", "\"user/listBillByUserNo\""
+        /*会员商家列表*/
+        buildConfigField "String", "BUSINESS_LIST_URL", "\"business/listByUserNo\""
+        /*消费券列表*/
+        buildConfigField "String", "CARD_LIST_URL", "\"card /listByUserNo\""
+        /*卡券数量*/
+        buildConfigField "String", "CARD_COUNT_URL", "\"user/countByUserNo\""
+        /*商家数量*/
+        buildConfigField "String", "BUSINESS_COUNT_URL", "\"user/countBussinessByUserNo\""
+        /*订单数量*/
+        buildConfigField "String", "BILL_COUNT_URL", "\"user/counBillByUserNo\""
 
         /*Home页轮播图url*/
         buildConfigField "String", "HOME_SCROLL_IMAGE_URL", "\"v2/home/scrollimageurl/\""

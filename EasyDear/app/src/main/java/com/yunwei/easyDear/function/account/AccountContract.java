@@ -44,8 +44,23 @@ public interface AccountContract {
         String getMobileKey();
     }
 
+    interface validateView {
+        void onStartSendValidateCode();
+
+        void onEndSendValidateCode();
+
+        void getValidateCodeSuccess(String code);
+
+        void getValidateCodeFailure(String error);
+
+        String getMobile();
+    }
+
     interface Presenter {
         void login();
+
         void regist();
+
+        void sendValidateCode();
     }
 }

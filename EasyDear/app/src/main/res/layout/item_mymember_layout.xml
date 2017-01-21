@@ -33,7 +33,6 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:gravity="right"
-            android:text="金星"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -46,7 +45,6 @@
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/mymember_level"
             android:layout_toRightOf="@id/mymember_business_logo"
-            android:text="星巴克咖啡-南部商务区店"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -62,7 +60,6 @@
             android:layout_marginTop="5dp"
             android:drawablePadding="5dp"
             android:drawableRight="@mipmap/arrow_right"
-            android:text="您距离会员升级还需2300积分"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -76,7 +73,6 @@
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@id/mymember_credit"
             android:layout_toRightOf="@id/mymember_business_logo"
-            android:text="您有6张礼券"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
