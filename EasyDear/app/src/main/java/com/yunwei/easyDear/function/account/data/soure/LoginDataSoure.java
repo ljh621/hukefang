@@ -33,7 +33,17 @@ public interface LoginDataSoure extends BaseDataSourse {
         String getMobileKey();
     }
 
+    interface ValidateCallBack {
+        void onValidateSuccess(String code);
+
+        void onValidateFailure(String error);
+
+        String getSendMobile();
+    }
+
     void login(String account, String password, LoginCallBack callBack);
 
     void rigest(RigestCallBack callBack);
+
+    void sendValidateCode(ValidateCallBack callBack);
 }

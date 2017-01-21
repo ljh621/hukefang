@@ -17,7 +17,7 @@
             android:background="?attr/colorPrimary"
             app:title="@string/app_name"
             app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:titleTextColor="@color/white">
+            app:titleTextColor="@color/gray">
 
             <TextView
                 android:id="@+id/toolbar_center_title_tv"
@@ -26,7 +26,7 @@
                 android:textAppearance="@style/Toolbar.TitleText"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/gray"
                 android:layout_centerInParent="true"
                 android:visibility="gone" />
 
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>

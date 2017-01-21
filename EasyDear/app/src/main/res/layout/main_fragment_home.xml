@@ -5,19 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#55000000"
             app:title="@string/app_name"
             app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:titleTextColor="@color/white">
+            app:titleTextColor="@color/gray">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -31,7 +28,7 @@
                     android:minWidth="45dip"
                     android:layout_centerVertical="true"
                     android:textSize="15sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:text=""/>
 
                 <TextView
@@ -42,7 +39,7 @@
                     android:paddingRight="15dp"
                     android:layout_centerVertical="true"
                     android:textSize="15sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:minWidth="45dip"
                     android:text="消息"/>
 
@@ -68,7 +65,6 @@
 
         </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
 
 <!--    <com.yunwei.easyDear.view.ReboundScrollView
         android:layout_width="match_parent"

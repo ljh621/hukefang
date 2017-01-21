@@ -6,6 +6,7 @@ import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.function.account.data.ValidateCodeEntity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.INetWorkUtil;
 import com.yunwei.easyDear.utils.IUtil;
@@ -32,6 +33,7 @@ public class LoginRemoteRepo implements LoginDataSoure {
     private static LoginRemoteRepo remoteRepo;
     private Call<ResponseModel<UserInfoEntity>> call;
     private Call<ResponseModel<UserInfoEntity>> rigestCall;
+    private Call<ResponseModel<ValidateCodeEntity>> validateCall;
 
     public static LoginRemoteRepo newInstance() {
         if (remoteRepo == null) {
@@ -88,6 +90,26 @@ public class LoginRemoteRepo implements LoginDataSoure {
         });
     }
 
+    @Override
+    public void sendValidateCode(final ValidateCallBack callBack) {
+        validateCall = RetrofitManager.getInstance().getService().sendValidateCode(callBack.getSendMobile());
+        validateCall.enqueue(new Callback<ResponseModel<ValidateCodeEntity>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<ValidateCodeEntity>> call, Response<ResponseModel<ValidateCodeEntity>> response) {
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.onValidateSuccess(response.body().getData().getMobileCode());
+                } else {
+                    callBack.onValidateFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<ValidateCodeEntity>> call, Throwable t) {
+                callBack.onValidateFailure("获取失败");
+            }
+        });
+    }
+
     /**
      * 取消请求
      */
@@ -95,10 +117,13 @@ public class LoginRemoteRepo implements LoginDataSoure {
     public void cancelRequest() {
         if (call != null && !call.isCanceled()) {
             call.cancel();
-            ILog.d(TAG, "isCanceled==" + call.isCanceled());
         }
         if (rigestCall != null && !rigestCall.isCanceled()) {
             rigestCall.cancel();
+        }
+
+        if (validateCall != null && !validateCall.isCanceled()) {
+            validateCall.cancel();
         }
     }
 }

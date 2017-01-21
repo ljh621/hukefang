@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
@@ -30,21 +31,25 @@ import butterknife.OnClick;
  * Version:1.0
  */
 
-public class RegistFragment extends BaseFragment implements AccountContract.RegistView {
+public class RegistFragment extends BaseFragment implements AccountContract.RegistView, AccountContract.validateView {
 
     @BindView(R.id.registFragment_account_editView)
     ResetEditView registFragmentAccountEditView;
     @BindView(R.id.registFragment_password_editView)
     ResetEditView registFragmentPasswordEditView;
+    @BindView(R.id.registFragment_validateCode_editText)
+    EditText validateCodeEditView;
 
     private Dialog loadDialog;
+
+    private String validateCode;
 
     private LoginPresenter loginPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginPresenter = new LoginPresenter(LoginRemoteRepo.newInstance(), this);
+
     }
 
     @Nullable
@@ -55,17 +60,38 @@ public class RegistFragment extends BaseFragment implements AccountContract.Regi
         return rootView;
     }
 
-    @OnClick(R.id.registFragment_login_button)
-    public void onClick() {
-        if (TextUtils.isEmpty(registFragmentAccountEditView.getText().toString())) {
-            ToastUtil.showToast(getActivity(), "手机号不能为空");
-            return;
+    @OnClick({R.id.registFragment_login_button, R.id.registFragment_send_vaildate_code})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.registFragment_login_button:
+                if (TextUtils.isEmpty(registFragmentAccountEditView.getText().toString())) {
+                    ToastUtil.showToast(getActivity(), "手机号不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(registFragmentPasswordEditView.getText().toString())) {
+                    ToastUtil.showToast(getActivity(), "密码不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(validateCodeEditView.getText().toString())) {
+                    ToastUtil.showToast(getActivity(), "验证码不能为空");
+                    return;
+                }
+                if (!validateCode.equals(validateCodeEditView.getText().toString())) {
+                    ToastUtil.showToast(getActivity(), "验证码不正确");
+                    return;
+                }
+                loginPresenter = new LoginPresenter(LoginRemoteRepo.newInstance(), this);
+                loginPresenter.regist();
+                break;
+            case R.id.registFragment_send_vaildate_code:
+                if (TextUtils.isEmpty(registFragmentAccountEditView.getText().toString())) {
+                    ToastUtil.showToast(getActivity(), "手机号不能为空");
+                    return;
+                }
+                loginPresenter = new LoginPresenter(this);
+                loginPresenter.sendValidateCode();
+                break;
         }
-        if (TextUtils.isEmpty(registFragmentPasswordEditView.getText().toString())) {
-            ToastUtil.showToast(getActivity(), "密码不能为空");
-            return;
-        }
-        loginPresenter.regist();
     }
 
     @Override
@@ -102,5 +128,26 @@ public class RegistFragment extends BaseFragment implements AccountContract.Regi
     @Override
     public String getMobileKey() {
         return IUtil.getIMEI(getActivity());
+    }
+
+    @Override
+    public void onStartSendValidateCode() {
+        loadDialog=DialogFactory.createLoadingDialog(getActivity(),"正在发送...");
+    }
+
+    @Override
+    public void onEndSendValidateCode() {
+        DialogFactory.dimissDialog(loadDialog);
+    }
+
+    @Override
+    public void getValidateCodeSuccess(String code) {
+        validateCode = code;
+        ToastUtil.showToast(getActivity(), "验证码已发送");
+    }
+
+    @Override
+    public void getValidateCodeFailure(String error) {
+        ToastUtil.showToast(getActivity(), error);
     }
 }

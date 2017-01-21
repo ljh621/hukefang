@@ -87,6 +87,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/MembershipFragment_card_count_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -119,6 +120,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/MembershipFragment_business_count_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -151,6 +153,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/MembershipFragment_bill_count_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

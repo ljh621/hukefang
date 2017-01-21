@@ -6,8 +6,10 @@ import android.view.View;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.MyCardAdapter;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
@@ -19,51 +21,90 @@ import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
+ * 会员商家
  */
 
-public class MyMemberActivity extends BaseActivity {
+public class MyMemberActivity extends BaseActivity implements PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener, BusinessContract.BusinessView {
 
     private final String TAG = this.getClass().getSimpleName();
 
     @BindView(R.id.mymember_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
 
+    private MyMemberAdapter adapter;
+
+    private BusinessPresenter businessPresenter;
+
+    private int defaultPageSize = 1;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_mymember);
-        setToolbarVisibility(View.GONE);
-//        setSwipeEnabled(false);
+        setToolbarTitle("我的会员权益");
         ButterKnife.bind(this);
+        businessPresenter = new BusinessPresenter(this);
 
         initRecyclerView();
     }
 
-    @OnClick({R.id.mymember_back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.mymember_back:
-                onBackPressed();
-                break;
-        }
+    /**
+     * 初始化RecyclerView
+     */
+    private void initRecyclerView() {
+        adapter = new MyMemberAdapter(this);
+        mRecyclerView.setPullToRefreshListener(this);
+        mRecyclerView.setRecyclerViewAdapter(adapter);
+
+        mRecyclerView.startUpRefresh();
+
     }
 
-    private void initRecyclerView() {
-        List<MemberItemEntity> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            MemberItemEntity entity = new MemberItemEntity();
-            if (i < 2) {
-                list.add(entity);
-            } else {
-                entity.setBusinessName("人在茶在(印象城店)");
-                entity.setLevel("V2");
-                entity.setCardAmount("您有3张礼券");
-                entity.setCredit("您距离会员升级还需680积分");
-                list.add(entity);
-            }
-        }
-        MyMemberAdapter adapter = new MyMemberAdapter(this);
+    @Override
+    public void onDownRefresh() {
+        defaultPageSize = 1;
+        businessPresenter.reqBusinessListAction();
+    }
+
+    @Override
+    public void onPullRefresh() {
+        defaultPageSize++;
+        businessPresenter.reqBusinessListAction();
+    }
+
+    @Override
+    public void onBusinessStart() {
+
+    }
+
+    @Override
+    public void onBusinessEnd() {
+        mRecyclerView.closeDownRefresh();
+        mRecyclerView.onLoadMoreFinish();
+    }
+
+    @Override
+    public void onBusinessSuccess(List<BusinessEntity> list) {
         adapter.addItems(list);
-        mRecyclerView.setRecyclerViewAdapter(adapter);
+    }
+
+    @Override
+    public void onBusinessFaliure(String error) {
+        showToast(error);
+    }
+
+    @Override
+    public String getUserNo() {
+        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+    }
+
+    @Override
+    public int getPageSize() {
+        return defaultPageSize;
+    }
+
+    @Override
+    public int getPageCount() {
+        return 20;
     }
 }

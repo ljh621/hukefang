@@ -67,7 +67,7 @@ public class MainBottomNavigationBar extends BottomNavigationBar implements Bott
     private void setDefaultConfig() {
         setMode(BottomNavigationBar.MODE_FIXED);
         setBackgroundResource(R.color.white);
-        setActiveColor(R.color.colorPrimary);
+        setActiveColor(R.color.tab_active);
     }
 
     /**
