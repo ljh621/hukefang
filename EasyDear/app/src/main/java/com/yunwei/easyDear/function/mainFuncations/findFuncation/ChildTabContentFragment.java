@@ -14,7 +14,6 @@ import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
 import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
-import com.yunwei.easyDear.function.mainFuncations.findFuncation.data.ItemEntity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 

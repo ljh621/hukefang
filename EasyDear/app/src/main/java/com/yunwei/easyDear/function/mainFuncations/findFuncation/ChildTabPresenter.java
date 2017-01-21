@@ -27,7 +27,6 @@ public class ChildTabPresenter implements ChildTabContact.ChildPresenter, ChildT
 
     @Override
     public void onGetArticleListSuccess(ArrayList<ArticleItemEntity> data) {
-        Log.d("ChildTabPresenter", "----------> ChildTab onGetArticleListSuccess data = " + (data == null));
         mChildTabView.setArticleList(data);
     }
 

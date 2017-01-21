@@ -8,6 +8,7 @@ import com.yunwei.easyDear.function.account.data.ValidateCodeEntity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BillEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
 
@@ -152,5 +153,9 @@ public interface APIService {
     /** 商家软文列表*/
     @GET(BuildConfig.BUSINESS_ARTICLE_LIST)
     Call<ResponseModel<ArrayList<ArticleItemEntity>>> requestBusinessArticles(@Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**获取系统消息列表*/
+    @GET(BuildConfig.BUSINESS_MESSAGE_LIST)
+    Call<ResponseModel<ArrayList<BusMessageItemEntity>>> requestBusMessages (@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
 }

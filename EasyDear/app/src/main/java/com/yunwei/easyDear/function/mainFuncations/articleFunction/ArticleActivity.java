@@ -65,8 +65,9 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
-        setToolbarVisibility(View.GONE);
+//        setToolbarVisibility(View.GONE);
 //        setSwipeEnabled(false);
+        setToolbarTitle("易兑正文");
         ButterKnife.bind(this);
         initPresenter();
         requestArticleDetail();
@@ -158,8 +159,8 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
         mPubTime.setText(entity.getPubTime());
         mArticleContent.setText(entity.getContent());
         mArticleForward.setText(getString(R.string.article_detail_forward) + entity.getArticleForward());
-        Glide.with(this).load(entity.getLogo()).into(mBusinessLogo);
-        Glide.with(this).load(entity.getArticleImage()).into(mArticleImage);
+        Glide.with(getApplicationContext()).load(entity.getLogo()).into(mBusinessLogo);
+        Glide.with(getApplicationContext()).load(entity.getArticleImage()).into(mArticleImage);
     }
 
     private void setCardInfo(ArrayList<CardItemEntity> cardItems) {

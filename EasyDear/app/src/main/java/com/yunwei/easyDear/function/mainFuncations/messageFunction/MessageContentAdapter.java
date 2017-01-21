@@ -12,8 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
-import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.ItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messagedetailFunction.MessageDetailActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
@@ -25,7 +24,7 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class MessageContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MessageContentAdapter(Context context) {
         super(context);
@@ -41,10 +40,9 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> i
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.timeText.setText(mLists.get(position).getTime());
-        viewHolder.typeText.setText(mLists.get(position).getType());
+        viewHolder.timeText.setText(mLists.get(position).getCreateTime());
         viewHolder.contentText.setText(mLists.get(position).getContent());
-        Glide.with(mContent).load(mLists.get(position).getContentUrl()).into(viewHolder.headView);
+        Glide.with(mContent).load(mLists.get(position).getLogo()).into(viewHolder.headView);
     }
 
     @Override
@@ -74,9 +72,9 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> i
             switch (view.getId()) {
                 case R.id.item_message_content_textView:
                     Log.d(TAG, "----------> onClick  Read Message Detail, position = " + position);
-                    String msgUrl = mLists.get(position).getContentUrl();
+//                    String msgUrl = mLists.get(position).getContentUrl();
                     Bundle bundle = new Bundle();
-                    bundle.putString("msg_usl", msgUrl);
+//                    bundle.putString("msg_usl", msgUrl);
                     ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class);
                     break;
             }

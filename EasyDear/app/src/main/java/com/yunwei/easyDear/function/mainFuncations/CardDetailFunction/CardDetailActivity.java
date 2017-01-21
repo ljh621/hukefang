@@ -46,8 +46,9 @@ public class CardDetailActivity extends BaseActivity implements CardDetailContac
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_card_detail);
-        setToolbarVisibility(View.GONE);
+//        setToolbarVisibility(View.GONE);
 //        setSwipeEnabled(false);
+        setToolbarTitle("券详情");
         ButterKnife.bind(this);
         initPresenter();
         requestCardDetailInfo();
@@ -90,7 +91,7 @@ public class CardDetailActivity extends BaseActivity implements CardDetailContac
         mCardPrice.setText("总价 " + entity.getCardPrice());
         mCardEndTime.setText("有效期至 " + entity.getCardEndTime());
         mCardNo.setText(entity.getCardNo());
-        Glide.with(this).load(entity.getLogo()).into(mBusinessLogo);
+        Glide.with(getApplicationContext()).load(entity.getLogo()).into(mBusinessLogo);
     }
 
     @OnClick({R.id.card_detail_back, R.id.card_purchase})
