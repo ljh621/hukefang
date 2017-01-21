@@ -18,6 +18,7 @@ import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.MessageActivity;
@@ -63,10 +64,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 //    @BindView(R.id.tab_child_recyclerView)
 //    PullToRefreshRecyclerView mRecyclerView;
 
+    private String[] tabNames;
     private HomePresenter mHomePresenter;
+    private ArrayList<ArticleItemEntity> mTopScrollArticles;
 
     private static final int HOME_SCROLL_IMAGE = 1001;
-    private String[] tabNames;
     private List<ImageView> dots = new ArrayList<ImageView>();
 
     public static HomeFragment newInstance() {
@@ -92,13 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         setLocationCity();
         initTabLayout();
-        addScrollLayout();
-        requestScrollImageUrls();
-        requestHomeArticleList();
-
-        //TODO To be deleted!
-        String[] urls = new String[4];
-        initScrollImages(urls);
+        requestTopScrollArticles();
         setScrollViewListener();
         return rootView;
     }
@@ -126,15 +122,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         }
     }
 
-    /**
-     * 设置所在城市
-     */
-    private void setLocationCity() {
-        String city = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
-        mLocationTextView.setText(city);
-        ILog.v(TAG, "setLocationCity: " + city);
-    }
-
     @OnClick(R.id.main_home_msg_textView)
     public void onClick(View view) {
         switch (view.getId()) {
@@ -159,6 +146,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             public void onTabSelected(TabLayout.Tab tab) {
                 ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.colorAccent));
                 ((TextView) tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+                requestArticleList(tab.getPosition());
             }
 
             @Override
@@ -189,56 +177,60 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             if (i == 0) {
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+                requestArticleList(0);
             }
             tab.setCustomView(textView);
         }
     }
 
-    private void addScrollLayout() {
-//        mHomePresenter.addLayoutIntoScroll(mScrollLayout);
-//        mRecyclerView.startUpRefresh();
+    /**
+     * 设置所在城市
+     */
+    private void setLocationCity() {
+        String city = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
+        mLocationTextView.setText(city);
+        ILog.v(TAG, "setLocationCity: " + city);
     }
 
     /**
-     * 请求轮播图url
+     * 通知ChildTabFragment获取首页文章列表
      */
-    private void requestScrollImageUrls() {
-        mHomePresenter.requestScrollImageUrls();
+    private void requestArticleList(int position) {
+        NoticeEvent event = new NoticeEvent();
+        event.setFlag(EventConstant.NOTICE12);
+        event.setNum(position);
+        EventBus.getDefault().post(event);
     }
 
     /**
-     * 获取首页文章列表
+     * 获取顶部轮播文章列表
      */
-    private void requestHomeArticleList() {
-        mHomePresenter.requestHomeArticleList();
+    private void requestTopScrollArticles() {
+        mHomePresenter.requestTopScrollArticles();
     }
 
     /**
-     * 初始化ScrollImageUrl
+     * 设置顶部轮播文章列表
      */
-    @Override
-    public void initImageUrl(String urls) {
-        //TODO 待处理url
-        String urlArr[] = new String[4];
-//        initScrollImages(urlArr);
-//        setScrollViewListener();
+    public void setTopScrollArticles(ArrayList<ArticleItemEntity> articleItems) {
+        if (articleItems == null || articleItems.size() == 0) {
+            return;
+        }
+        mTopScrollArticles = new ArrayList<ArticleItemEntity>();
+        for (ArticleItemEntity entity : articleItems) {
+            mTopScrollArticles.add(entity);
+        }
+
+        initScrollImagesLayout(mTopScrollArticles);
     }
 
     /**
      * 初始化ScrollImage
      *
-     * @param urls
+     * @param articleList
      */
-    private void initScrollImages(String[] urls) {
-        if (urls == null) {
-            return;
-        }
-        List<String> urlList = new ArrayList<String>();
-        int len = urls.length;
-        for (int i = 0; i < len; i++) {
-            urlList.add(urls[i]);
-        }
-        ScrollPagerAdapter adapter = new ScrollPagerAdapter(getContext(), urlList);
+    private void initScrollImagesLayout(ArrayList<ArticleItemEntity> articleList) {
+        ScrollPagerAdapter adapter = new ScrollPagerAdapter(getContext(), articleList);
         mScrollViewPager.setAdapter(adapter);
         for (int i = 0; i < 4; i++) {
             ImageView img = new ImageView(getContext());

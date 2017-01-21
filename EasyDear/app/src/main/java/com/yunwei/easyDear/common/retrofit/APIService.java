@@ -3,12 +3,15 @@ package com.yunwei.easyDear.common.retrofit;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.entity.ResponseModel;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -40,10 +43,18 @@ public interface APIService {
     @GET(BuildConfig.QINIU_TOKEN_URL)
     Call<ResponseModel<String>> reqQiniuToken();
 
-    @GET(BuildConfig.HOME_SCROLL_IMAGE_URL)
-    Call<ResponseModel<String>> reqScrollImageUrls();
+    /*** 获取首页顶部轮播文章列表*/
+    @GET(BuildConfig.HOME_TOP_SCROLL_ARTICLE_LIST)
+    Call<ResponseModel<ArrayList<ArticleItemEntity>>> requestHomeTopScrollArticleList(@Query("province") String province, @Query("city") String city, @Query("area") String area);
 
-    @POST(BuildConfig.HOME_ARTICLE_LIST)
-    Call<ResponseModel<String>> requestHomeArticleList();
+    /** 获取首页文章列表*/
+    @GET(BuildConfig.HOME_ARTICLE_LIST)
+    Call<ResponseModel<ArrayList<ArticleItemEntity>>> requestHomeArticleList(@Query("pageSize") int pageSize, @Query("pageCount") int pageCount,
+                                                                             @Query("key") String key, @Query("type") String type,
+                                                                             @Query("province") String province, @Query("city") String city, @Query("area") String area);
+
+    /** 文章详情*/
+    @GET(BuildConfig.ARTICLE_DETAIL)
+    Call<ResponseModel<ArticleItemEntity>> requestArticleDetail(@Query("articleId") String articleId);
 
 }

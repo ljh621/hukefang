@@ -37,7 +37,10 @@ public class ArticleActivity extends BaseActivity {
         setToolbarVisibility(View.GONE);
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
-        initUI();
+        initPresenter();
+    }
+
+    private void initPresenter() {
     }
 
     private void initUI() {
@@ -51,25 +54,25 @@ public class ArticleActivity extends BaseActivity {
         ArticleItemEntity item1 = new ArticleItemEntity();
         item1.setType("[促销]");
         item1.setTitle("现车热卖");
-        item1.setDate("10.14");
+        item1.setPubTime("10.14");
         articleItemList.add(item1);
 
         ArticleItemEntity item2 = new ArticleItemEntity();
         item2.setType("[促销]");
         item2.setTitle("购奔驰E级敞篷");
-        item2.setDate("10.14");
+        item2.setPubTime("10.14");
         articleItemList.add(item2);
 
         ArticleItemEntity item3 = new ArticleItemEntity();
         item3.setType("[促销]");
         item3.setTitle("现车热卖");
-        item3.setDate("10.16");
+        item3.setPubTime("10.16");
         articleItemList.add(item3);
 
         ArticleItemEntity item4 = new ArticleItemEntity();
         item4.setType("[促销]");
         item4.setTitle("现车热卖");
-        item4.setDate("10.18");
+        item4.setPubTime("10.18");
         articleItemList.add(item4);
 
         adapter.setArticleItemList(articleItemList);

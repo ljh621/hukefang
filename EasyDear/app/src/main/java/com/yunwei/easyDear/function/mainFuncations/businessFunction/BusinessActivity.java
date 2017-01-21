@@ -15,7 +15,9 @@ import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleListAdapter;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.ScrollPagerAdapter;
+import com.yunwei.easyDear.function.mainFuncations.membercenterFunction.MemberCenterActivity;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,7 @@ public class BusinessActivity extends BaseActivity {
 
     private static final int BUSINESS_SCROLL_IMAGE = 1001;
     private List<ImageView> dots = new ArrayList<ImageView>();
+    private ArrayList<ArticleItemEntity> mArticleItemList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,30 +71,34 @@ public class BusinessActivity extends BaseActivity {
         ArticleItemEntity item1 = new ArticleItemEntity();
         item1.setType("[促销]");
         item1.setTitle("现车热卖");
-        item1.setDate("10.14");
+        item1.setPubTime("10.14");
         articleItemList.add(item1);
 
         ArticleItemEntity item2 = new ArticleItemEntity();
         item2.setType("[促销]");
         item2.setTitle("购奔驰E级敞篷");
-        item2.setDate("10.14");
+        item2.setPubTime("10.14");
         articleItemList.add(item2);
 
         ArticleItemEntity item3 = new ArticleItemEntity();
         item3.setType("[促销]");
         item3.setTitle("现车热卖");
-        item3.setDate("10.16");
+        item3.setPubTime("10.16");
         articleItemList.add(item3);
 
         ArticleItemEntity item4 = new ArticleItemEntity();
         item4.setType("[促销]");
         item4.setTitle("现车热卖");
-        item4.setDate("10.18");
+        item4.setPubTime("10.18");
         articleItemList.add(item4);
 
         adapter.setArticleItemList(articleItemList);
         mBusinessArticleListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        for (ArticleItemEntity entity : articleItemList) {
+            mArticleItemList.add(entity);
+        }
     }
 
     /**
@@ -99,15 +106,8 @@ public class BusinessActivity extends BaseActivity {
      * @param urls
      */
     private void initScrollImages(String[] urls) {
-        if (urls == null) {
-            return;
-        }
-        List<String> urlList = new ArrayList<String>();
-        int len = urls.length;
-        for (int i = 0; i < len; i++) {
-            urlList.add(urls[i]);
-        }
-        ScrollPagerAdapter adapter = new ScrollPagerAdapter(this, urlList);
+
+        ScrollPagerAdapter adapter = new ScrollPagerAdapter(this, mArticleItemList);
         mScrollViewPager.setAdapter(adapter);
         for (int i = 0; i < 4; i++) {
             ImageView img = new ImageView(this);
@@ -157,13 +157,16 @@ public class BusinessActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.business_back, R.id.business_activity_purchase})
+    @OnClick({R.id.business_back, R.id.business_activity_purchase, R.id.business_become_member})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.business_back:
                 onBackPressed();
                 break;
             case R.id.business_activity_purchase:
+                break;
+            case R.id.business_become_member:
+                ISkipActivityUtil.startIntent(this, MemberCenterActivity.class);
                 break;
         }
     }

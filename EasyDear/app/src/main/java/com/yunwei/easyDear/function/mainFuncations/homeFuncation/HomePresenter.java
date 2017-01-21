@@ -2,14 +2,17 @@ package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
 import android.widget.LinearLayout;
 
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeDataSource;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
+
+import java.util.ArrayList;
 
 /**
  * Created by LJH on 2017/1/4.
  */
 
-public class HomePresenter implements HomeContract.Presenter, HomeDataSource.RequestHome {
+public class HomePresenter implements HomeContract.Presenter, HomeDataSource.HomeCallBack {
 
     private HomeRemoteRepo mRemoteRepo;
     private HomeContract.HomeView mHomeView;
@@ -20,26 +23,17 @@ public class HomePresenter implements HomeContract.Presenter, HomeDataSource.Req
     }
 
     @Override
-    public void requestScrollImageUrls() {
-        mRemoteRepo.requestScrollImageUrls(this);
+    public void requestTopScrollArticles() {
+        mRemoteRepo.requestHomeTopScrollArticles(this);
     }
 
     @Override
-    public void requestHomeArticleList() {
-        mRemoteRepo.requestHomeArticleList(this);
+    public void onGetTopScrollArticlesSuccess(ArrayList<ArticleItemEntity> articleItems) {
+        mHomeView.setTopScrollArticles(articleItems);
     }
 
     @Override
-    public void getScrollImageUrlSuccess(String urls) {
-        mHomeView.initImageUrl(urls);
-    }
+    public void onGetTopScrollArticlesSuccess(String message) {
 
-    @Override
-    public void getHomeArticleListSuccess() {
-
-    }
-
-    public void addLayoutIntoScroll(LinearLayout layout) {
-        mRemoteRepo.addLayoutIntoScroll(layout);
     }
 }
