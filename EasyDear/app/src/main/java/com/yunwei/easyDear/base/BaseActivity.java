@@ -128,6 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(true);
+        mActionBar.setHomeAsUpIndicator(R.mipmap.icon_back);
     }
 
     @Override

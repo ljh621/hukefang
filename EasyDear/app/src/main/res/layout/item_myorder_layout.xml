@@ -27,7 +27,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:text="宝恒宝马-诚信路店"
             android:textSize="16sp" />
 
         <ImageView
@@ -118,8 +117,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/myorder_line"
+        android:layout_gravity="right"
         android:background="@color/white"
-        android:gravity="center_vertical"
+        android:gravity="right"
         android:padding="5dp">
 
 
@@ -136,7 +136,8 @@
             android:padding="2dp"
             android:text="申请退款"
             android:textColor="@color/bright_red"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/myorder_state"
