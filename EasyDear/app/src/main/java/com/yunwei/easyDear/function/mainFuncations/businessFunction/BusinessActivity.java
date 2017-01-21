@@ -96,6 +96,7 @@ public class BusinessActivity extends BaseActivity {
         mBusinessArticleListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        mArticleItemList = new ArrayList<ArticleItemEntity>();
         for (ArticleItemEntity entity : articleItemList) {
             mArticleItemList.add(entity);
         }

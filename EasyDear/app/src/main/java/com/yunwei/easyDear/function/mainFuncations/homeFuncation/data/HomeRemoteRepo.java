@@ -1,8 +1,5 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation.data;
 
-import android.util.Log;
-import android.widget.LinearLayout;
-
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
@@ -32,7 +29,7 @@ public class HomeRemoteRepo implements HomeDataSource {
 
     @Override
     public void requestHomeTopScrollArticles(final HomeCallBack callBack) {
-        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().requestHomeTopScrollArticleList("", "", "");
+        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().reqHomeTopScrollArticleList("", "", "");
         call.enqueue(new Callback<ResponseModel<ArrayList<ArticleItemEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<ArrayList<ArticleItemEntity>>> call, Response<ResponseModel<ArrayList<ArticleItemEntity>>> response) {

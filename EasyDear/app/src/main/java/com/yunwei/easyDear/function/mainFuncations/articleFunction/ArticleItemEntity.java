@@ -16,6 +16,8 @@ public class ArticleItemEntity {
     private String Content;
     private String PubTime;
 
+    private String ArticleForward;
+
     public ArticleItemEntity() {
     }
 
@@ -88,6 +90,14 @@ public class ArticleItemEntity {
 
     public void setPubTime(String pubTime) {
         PubTime = pubTime;
+    }
+
+    public String getArticleForward() {
+        return ArticleForward;
+    }
+
+    public void setArticleForward(String articleForward) {
+        ArticleForward = articleForward;
     }
 
 }

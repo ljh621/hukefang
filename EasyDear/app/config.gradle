@@ -65,5 +65,14 @@ android {
         /**文章详情*/
         buildConfigField "String", "ARTICLE_DETAIL", "\"article/detailById\""
 
+        /**最新卡券信息*/
+        buildConfigField "String", "LATEST_CARD_INFO", "\"card/listByBusNo\""
+
+        /**卡券详情*/
+        buildConfigField "String", "CARD_INFO_DETAIL", "\"card/detailById\""
+
+        /**商家软文列表*/
+        buildConfigField "String", "BUSINESS_ARTICLE_LIST", "\"article/listByBusNo\""
+
     }
 }

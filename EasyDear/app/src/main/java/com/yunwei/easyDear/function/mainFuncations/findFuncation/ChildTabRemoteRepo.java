@@ -1,7 +1,5 @@
 package com.yunwei.easyDear.function.mainFuncations.findFuncation;
 
-import android.util.Log;
-
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
@@ -32,7 +30,7 @@ public class ChildTabRemoteRepo implements ChildTabDataSource {
     @Override
     public void requestRecyclerArticles(String type, final ChildTabCallBack callBack) {
 
-        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().requestHomeArticleList(1, 5, "", "", "", "", "");
+        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().reqHomeArticleList(1, 5, "", "", "", "", "");
         call.enqueue(new Callback<ResponseModel<ArrayList<ArticleItemEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<ArrayList<ArticleItemEntity>>> call, Response<ResponseModel<ArrayList<ArticleItemEntity>>> response) {
