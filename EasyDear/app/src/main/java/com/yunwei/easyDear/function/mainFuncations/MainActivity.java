@@ -8,6 +8,7 @@ import android.view.View;
 import com.amap.api.location.AMapLocation;
 import com.google.zxing.client.android.CaptureActivity;
 import com.yunwei.easyDear.R;
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.dialog.DialogFactory;
 import com.yunwei.easyDear.base.BaseActivity;
@@ -125,9 +126,8 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 break;
             case TAB_FIND:
                 setToolbarCenterTitle(R.string.main_find_tab);
-
-                ISkipActivityUtil.startIntent(this, CaptureActivity.class);
-                mainBottomNavigationBar.setFirstSelectedPosition(currentTab).initialise();
+//                ISkipActivityUtil.startIntent(this, CaptureActivity.class);
+//                mainBottomNavigationBar.setFirstSelectedPosition(currentTab).initialise();
                 break;
             case TAB_TRAINGCODE:
                 this.currentTab=position;
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
     @Override
     public void locationSuccess(AMapLocation location) {
-        ILog.d(TAG,"city="+location.getCity());
+        DataApplication.getInstance().setLocation(location);
         ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
         NoticeEvent event = new NoticeEvent();
         event.setFlag(EventConstant.NOTICE11);

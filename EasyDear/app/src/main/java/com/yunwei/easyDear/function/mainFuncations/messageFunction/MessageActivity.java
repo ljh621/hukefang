@@ -21,8 +21,7 @@ public class MessageActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_message);
-        setToolbarVisibility(View.GONE);
-        setSwipeEnabled(false);
+        setToolbarTitle("消息");
         ButterKnife.bind(this);
 
         addFragment();

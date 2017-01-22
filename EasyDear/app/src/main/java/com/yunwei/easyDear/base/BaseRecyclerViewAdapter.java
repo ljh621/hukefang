@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
@@ -22,7 +23,10 @@ import java.util.List;
 
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public final static String TAG = "BaseRecyclerViewAdapter";
-
+    /**
+     * 默认加载个数
+     */
+    public final static int DEFAULT_LOAD_SIZE = 6;
     /**
      * 正在刷新
      */
@@ -71,7 +75,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     @Override
     public int getItemViewType(int position) {
         /* 最后一个item设置为footerView*/
-        if (getItemCount() >= 20 && position + 1 == getItemCount() && (PullToRefreshRecyclerView.Mode.BOTH == mode || PullToRefreshRecyclerView.Mode.PULL_FROM_END == mode) && !isRefresh && isLoadMore) {
+        if (getItemCount() >= DEFAULT_LOAD_SIZE && position + 1 == getItemCount() && (PullToRefreshRecyclerView.Mode.BOTH == mode || PullToRefreshRecyclerView.Mode.PULL_FROM_END == mode) && !isRefresh && isLoadMore) {
             return TYPE_FOOTER;
         } else {
             return TYPE_ITEM;
@@ -100,7 +104,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     @Override
     public int getItemCount() {
         int count = getList().size();
-        if (count >= 20 && (PullToRefreshRecyclerView.Mode.BOTH == mode || PullToRefreshRecyclerView.Mode.PULL_FROM_END == mode) && !isRefresh && isLoadMore) {
+        if (count >= DEFAULT_LOAD_SIZE && (PullToRefreshRecyclerView.Mode.BOTH == mode || PullToRefreshRecyclerView.Mode.PULL_FROM_END == mode) && !isRefresh && isLoadMore) {
             return ++count;
         } else if (count > 0) {
             return count;
@@ -219,6 +223,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
 
     /**
      * 设置是否加载更多
+     *
      * @param loadMore
      */
     public void setLoadMore(boolean loadMore) {

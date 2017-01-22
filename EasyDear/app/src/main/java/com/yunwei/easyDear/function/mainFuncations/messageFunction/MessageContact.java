@@ -1,8 +1,10 @@
 package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by LJH on 2017/1/22.
@@ -11,6 +13,22 @@ import java.util.ArrayList;
 public interface MessageContact {
     interface MessageView {
         void setBusinessMessages(ArrayList<BusMessageItemEntity> data);
+    }
+
+    interface MessageDetailView {
+        void onMsgStart();
+
+        void onMsgEnd();
+
+        void onMsgSuccess(List<MessageDetailEntity> list);
+
+        void onMsgFailure(int code, String error);
+
+        String getPageSize();
+
+        String getPageCount();
+
+        String getUserNo();
     }
 
     interface MessagePresenter {

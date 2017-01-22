@@ -2,6 +2,7 @@ package com.yunwei.easyDear.base;
 
 import android.app.Application;
 
+import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
@@ -19,6 +20,8 @@ public class DataApplication extends Application {
 
     private static DataApplication instance;
 
+    private AMapLocation location;
+
     private UserInfoEntity userInfoEntity;
 
     @Override
@@ -29,6 +32,14 @@ public class DataApplication extends Application {
 
     public static DataApplication getInstance() {
         return instance;
+    }
+
+    public AMapLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(AMapLocation location) {
+        this.location = location;
     }
 
     /**

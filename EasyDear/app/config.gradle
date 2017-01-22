@@ -76,6 +76,7 @@ android {
 
         /**获取商家信息列表*/
         buildConfigField "String", "BUSINESS_MESSAGE_LIST", "\"information/busInforList\""
-
+        /*信息详情*/
+        buildConfigField "String", "MESSAGE_DETAIL_URL", "\"information/ busDetailInforList\""
     }
 }

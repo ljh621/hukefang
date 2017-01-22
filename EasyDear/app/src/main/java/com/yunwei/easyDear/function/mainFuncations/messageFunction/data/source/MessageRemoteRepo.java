@@ -1,6 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.messageFunction;
-
-import android.util.Log;
+package com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source;
 
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
@@ -50,6 +48,11 @@ public class MessageRemoteRepo implements MessageDataSource {
 
             }
         });
+
+    }
+
+    @Override
+    public void reqMsgDetail(MsgDetailCallBack callBack) {
 
     }
 }

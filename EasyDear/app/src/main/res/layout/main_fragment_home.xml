@@ -1,152 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#55000000"
+        app:title="@string/app_name"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextColor="@color/gray">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_title"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#55000000"
-            app:title="@string/app_name"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:titleTextColor="@color/gray">
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/main_home_location_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:minWidth="45dip"
+                android:drawableLeft="@mipmap/icon_location"
+                android:text=""
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/main_home_msg_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:minWidth="45dip"
+                android:paddingRight="15dp"
+                android:drawableTop="@mipmap/icon_message"
+                android:text="消息"
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/main_home_search_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-                <TextView
-                    android:id="@+id/main_home_location_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="45dip"
-                    android:layout_centerVertical="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/gray"
-                    android:text=""/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/main_home_msg_textView"
+                android:layout_toRightOf="@+id/main_home_location_textView"
+                android:background="@color/white"
 
-                <TextView
-                    android:id="@+id/main_home_msg_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingRight="15dp"
-                    android:layout_centerVertical="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/gray"
-                    android:minWidth="45dip"
-                    android:text="消息"/>
+                android:hint="商家名称 商圈 类目"
+                android:padding="8dp"
+                android:singleLine="true"
 
-                <EditText
-                    android:id="@+id/main_home_search_editText"
-                    android:layout_toLeftOf="@+id/main_home_msg_textView"
-                    android:layout_toRightOf="@+id/main_home_location_textView"
-                    android:background="@color/white"
-                    android:textColor="@color/black"
-                    android:padding="8dp"
-                    android:hint="商家名称 商圈 类目"
-                    android:textColorHint="@color/gray"
-                    android:textSize="13sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
-                    android:layout_width="match_parent"
-                    android:layout_centerVertical="true"
-                    android:singleLine="true"
-
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>
 
 
-<!--    <com.yunwei.easyDear.view.ReboundScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
-        <LinearLayout
+    <!--    <com.yunwei.easyDear.view.ReboundScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">-->
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/home_scroll_container"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">-->
+
+    <LinearLayout
+        android:id="@+id/home_scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="120dip">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dip">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/home_scroll_vp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/home_scroll_vp"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            <LinearLayout
+                android:id="@+id/home_scroll_dot_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/home_scroll_vp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" />
 
-        <LinearLayout
-            android:id="@+id/home_scroll_dot_layout"
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_alignBottom="@id/home_scroll_vp"
-            android:orientation="horizontal"/>
+            android:layout_height="45dp"
+            android:background="@color/white">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="选择区域:"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white">
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="全部商区"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
-        <TextView
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="选择区域:"
-            android:textColor="@color/black"
-            android:textSize="15sp"/>
+        <View style="@style/line" />
 
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:padding="5dp"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/arrow_right"
-            android:text="全部商区"
-            android:textColor="@color/black"
-            android:textSize="15sp"/>
-    </RelativeLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/find_tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@color/white" />
 
-    <View style="@style/line" />
+        <View style="@style/line" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/find_tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="45dip"
-        android:background="@color/white" />
-
-    <View style="@style/line" />
-
-        </LinearLayout>
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/find_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-<!--        </LinearLayout>
-    </com.yunwei.easyDear.view.ReboundScrollView>-->
+    <!--        </LinearLayout>
+        </com.yunwei.easyDear.view.ReboundScrollView>-->
 </LinearLayout>
