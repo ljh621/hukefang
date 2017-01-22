@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
+import com.yunwei.easyDear.common.eventbus.EventConstant;
+import com.yunwei.easyDear.common.eventbus.NoticeEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +30,8 @@ import butterknife.ButterKnife;
  */
 
 public class FindFragment extends BaseFragment {
+
+    private final String TAG = getClass().getSimpleName();
 
     private static FindFragment fragment;
 
@@ -71,6 +78,9 @@ public class FindFragment extends BaseFragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 ((TextView)tab.getCustomView()).setTextColor(getResources().getColor(R.color.colorAccent));
                 ((TextView)tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+                int tabPosition = tab.getPosition();
+                requestArticleList(tabPosition);
+                Log.d(TAG, "----------> Find selected!! tabPosition = "  + tabPosition);
             }
 
             @Override
@@ -85,6 +95,7 @@ public class FindFragment extends BaseFragment {
             }
         });
     }
+
     /**
      * 初始化TabView
      * @param tabLayout
@@ -99,8 +110,19 @@ public class FindFragment extends BaseFragment {
             if (i==0){
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,17);
+                requestArticleList(0);
             }
             tab.setCustomView(textView);
         }
+    }
+
+    /**
+     * 通知ChildTabFragment获取首页文章列表
+     */
+    private void requestArticleList(int position) {
+        NoticeEvent event = new NoticeEvent();
+        event.setFlag(EventConstant.NOTICE12);
+        event.setNum(position);
+        EventBus.getDefault().post(event);
     }
 }

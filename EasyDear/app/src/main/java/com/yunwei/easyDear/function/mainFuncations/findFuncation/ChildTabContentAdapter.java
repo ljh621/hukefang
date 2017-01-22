@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
-import com.yunwei.easyDear.function.mainFuncations.findFuncation.data.ItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * Version:1.0
  */
 
-public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ArticleItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public ChildTabContentAdapter(Context context){
         super(context);
@@ -37,9 +37,13 @@ public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> 
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder=(ItemViewHolder)holder;
-        viewHolder.contentText.setText(mLists.get(position).getContent());
-        Glide.with(mContent).load(mLists.get(position).getHeadUrl()).asBitmap().centerCrop().into(new RoundedBitmapImageViewTarget(viewHolder.headView));
-        Glide.with(mContent).load(mLists.get(position).getContentUrl()).into(viewHolder.contentImagerView);
+
+        ArticleItemEntity entity = mLists.get(position);
+        viewHolder.contentText.setText(entity.getContent());
+        viewHolder.businessName.setText(entity.getBusinessName());
+        viewHolder.pubTime.setText(entity.getPubTime());
+        Glide.with(mContent).load(entity.getLogo()).asBitmap().centerCrop().into(new RoundedBitmapImageViewTarget(viewHolder.headView));
+        Glide.with(mContent).load(entity.getArticleImage()).into(viewHolder.articleImageView);
     }
 
     @Override
@@ -60,12 +64,16 @@ public class ChildTabContentAdapter extends BaseRecyclerViewAdapter<ItemEntity> 
         ImageView headView;
         @BindView(R.id.item_tab_child_content_textView)
         TextView contentText;
+        @BindView(R.id.item_tab_child_business_textView)
+        TextView businessName;
+        @BindView(R.id.item_tab_child_date_textView)
+        TextView pubTime;
         @BindView(R.id.item_tab_child_business_imageView)
-        ImageView contentImagerView;
+        ImageView articleImageView;
 
         public ItemViewHolder(View view){
             super(view);
-            ButterKnife.bind(ItemViewHolder.this,view);
+            ButterKnife.bind(ItemViewHolder.this, view);
         }
 
         @OnClick({R.id.item_tab_child_readall_textview})

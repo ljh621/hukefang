@@ -56,10 +56,26 @@ android {
         /*订单数量*/
         buildConfigField "String", "BILL_COUNT_URL", "\"user/counBillByUserNo\""
 
-        /*Home页轮播图url*/
-        buildConfigField "String", "HOME_SCROLL_IMAGE_URL", "\"v2/home/scrollimageurl/\""
-        /*Home页文章列表*/
+        /**Home页顶部轮播文章*/
+        buildConfigField "String", "HOME_TOP_SCROLL_ARTICLE_LIST", "\"article/listTop\""
+
+        /**Home页文章列表*/
         buildConfigField "String", "HOME_ARTICLE_LIST", "\"article/list\""
+
+        /**文章详情*/
+        buildConfigField "String", "ARTICLE_DETAIL", "\"article/detailById\""
+
+        /**最新卡券信息*/
+        buildConfigField "String", "LATEST_CARD_INFO", "\"card/listByBusNo\""
+
+        /**卡券详情*/
+        buildConfigField "String", "CARD_INFO_DETAIL", "\"card/detailById\""
+
+        /**商家软文列表*/
+        buildConfigField "String", "BUSINESS_ARTICLE_LIST", "\"article/listByBusNo\""
+
+        /**获取商家信息列表*/
+        buildConfigField "String", "BUSINESS_MESSAGE_LIST", "\"information/busInforList\""
 
     }
 }

@@ -60,7 +60,7 @@ public class ArticleListAdapter extends BaseAdapter {
         }
         holder.typeTextView.setText(mArticleItemList.get(position).getType());
         holder.titleTextView.setText(mArticleItemList.get(position).getTitle());
-        holder.dateTextView.setText(mArticleItemList.get(position).getDate());
+        holder.dateTextView.setText(mArticleItemList.get(position).getPubTime());
         return convertView;
     }
 

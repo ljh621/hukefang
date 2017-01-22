@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.ItemEntity;
+import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
@@ -26,13 +28,14 @@ import butterknife.OnClick;
  * @date 2016/11/22 18:12
  */
 
-public class MessageFragment extends BaseFragment {
+public class MessageFragment extends BaseFragment implements MessageContact.MessageView {
 
     @BindView(R.id.msg_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
 
     private static MessageFragment fragment;
 
+    private MessagePresenter mMessagePresenter;
 
     public static MessageFragment newInstance() {
         if (fragment == null) {
@@ -51,8 +54,36 @@ public class MessageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_fragment_record, null);
         ButterKnife.bind(this, rootView);
-        initRecyclerView();
+        initPresenter();
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        requestBusinessMessageList();
+    }
+
+    private void initPresenter() {
+        mMessagePresenter = new MessagePresenter(MessageRemoteRepo.getInstance(), this);
+    }
+
+    /**
+     * 获取系统消息列表
+     */
+    private void requestBusinessMessageList() {
+        String useNo = (String) ISpfUtil.getValue(Constant.ACCOUNT_KEY, "");
+        useNo = "20170113204638513425";
+        mMessagePresenter.requestBusMessages(useNo);
+    }
+
+    @Override
+    public void setBusinessMessages(ArrayList<BusMessageItemEntity> businessMsgItems) {
+        if (businessMsgItems == null) {
+            return;
+        }
+
+        initRecyclerView(businessMsgItems);
     }
 
     @OnClick({R.id.message_back})
@@ -64,21 +95,20 @@ public class MessageFragment extends BaseFragment {
         }
     }
 
-    private void initRecyclerView() {
-        List<ItemEntity> list = new ArrayList<>();
+    private void initRecyclerView(ArrayList<BusMessageItemEntity> businessMsgItems) {
+        ArrayList<BusMessageItemEntity> list = new ArrayList<BusMessageItemEntity>();
+        list.addAll(businessMsgItems);
         for (int i = 0; i < 5; i++) {
-            ItemEntity entity = new ItemEntity();
+            BusMessageItemEntity entity = new BusMessageItemEntity();
             if (i < 2) {
-                entity.setTime("上午8:16");
-                entity.setType("消费券信息");
+                entity.setCreateTime("上午8:16");
                 entity.setContent("您有5张一点点奶茶消费券入账，立即查看>>");
-                entity.setContentUrl("http://cdn.duitang.com/uploads/people/201207/24/20120724112116_yksB4.jpeg");
+                entity.setLogo("http://cdn.duitang.com/uploads/people/201207/24/20120724112116_yksB4.jpeg");
                 list.add(entity);
             } else {
-                entity.setTime("下午4:30");
-                entity.setType("中村屋-南部商业区店");
+                entity.setCreateTime("下午4:30");
                 entity.setContent("感谢您的评论，欢迎下次光临");
-                entity.setContentUrl("http://img4.imgtn.bdimg.com/it/u=3081843971,3565251645&fm=23&gp=0.jpg");
+                entity.setLogo("http://img4.imgtn.bdimg.com/it/u=3081843971,3565251645&fm=23&gp=0.jpg");
                 list.add(entity);
             }
         }
@@ -86,4 +116,5 @@ public class MessageFragment extends BaseFragment {
         adapter.addItems(list);
         mRecyclerView.setRecyclerViewAdapter(adapter);
     }
+
 }

@@ -25,8 +25,9 @@ public class CardPayActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_card_pay);
-        setToolbarVisibility(View.GONE);
+//        setToolbarVisibility(View.GONE);
 //        setSwipeEnabled(false);
+        setToolbarTitle("券二维码");
         ButterKnife.bind(this);
 
 //        initRecyclerView();
