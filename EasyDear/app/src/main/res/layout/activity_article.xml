@@ -14,40 +14,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/white"
-                android:padding="10dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/article_back"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/arrow_left" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="易兑正文"
-                    android:textColor="@color/black"
-                    android:textSize="17sp" />
-
-
-                <ImageView
-                    android:id="@+id/article_send"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/main_tab_track_n" />
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +27,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.3"
-                    android:text="宝诚宝马VIP尊享月，低至对折，保养、漆面、维修折扣全面开启；更有新年折扣礼包赠送"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -75,8 +40,7 @@
                         android:id="@+id/article_business_logo"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/mem_bmw" />
+                        android:layout_gravity="center_vertical" />
 
                     <TextView
                         android:id="@+id/article_business_textView"
@@ -84,7 +48,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:text="宁波宝恒宝马诚信路店"
                         android:textColor="@color/gray" />
 
                     <TextView
@@ -93,7 +56,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:text="12月24日"
                         android:textColor="@color/gray" />
                 </LinearLayout>
 
@@ -101,8 +63,7 @@
                     android:id="@+id/article_business_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="130dip"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/scene_3" />
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/article_content"
@@ -110,7 +71,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:lineSpacingMultiplier="1.3"
-                    android:text="SUV凭借着MPV的空间，轿车般的驾驶感受，在世界范围内受到消费者的喜爱。一些豪华品牌便顺势推出了不少SUV车型，这些车型有着霸气的外观，豪华的配置，舒适的驾乘感受，深受一些“不差钱”的消费者喜爱，今天我们就为大家推荐几款正在暴降的豪华品牌SUV车型"
                     android:textColor="@color/gray_light"
                     android:textSize="15sp" />
 
@@ -122,7 +82,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
                     android:gravity="right"
-                    android:text="转发 1345"
+                    android:text="转发 "
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -160,7 +120,6 @@
                     android:layout_toLeftOf="@id/article_to_discount_detail"
                     android:layout_toRightOf="@id/article_discount_coupon_imageview"
                     android:gravity="center_vertical"
-                    android:text="常规小保养3次券"
                     android:textColor="@color/gray_light"
                     android:textSize="18sp" />
 
@@ -171,7 +130,6 @@
                     android:layout_below="@id/article_card_name"
                     android:layout_toRightOf="@id/article_discount_coupon_imageview"
                     android:gravity="center_vertical"
-                    android:text="给您的爱车1万公里需要保养，保障用车安全"
                     android:textColor="@color/gray_light" />
 
                 <View
@@ -186,7 +144,7 @@
                     android:layout_below="@id/article_card_line"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
-                    android:text="¥ 2400"
+                    android:text="¥ "
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -198,7 +156,7 @@
                     android:layout_below="@id/article_card_line"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/article_card_price"
-                    android:text="原价 2600"
+                    android:text="原价 "
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 

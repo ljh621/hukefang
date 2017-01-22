@@ -81,7 +81,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         tabNames = getResources().getStringArray(R.array.tab_tiltle);
         initPresenter();
     }
@@ -94,7 +93,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         setLocationCity();
         initTabLayout();
-        requestTopScrollArticles();
         setScrollViewListener();
         return rootView;
     }
@@ -102,7 +100,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -110,6 +107,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
      */
     private void initPresenter() {
         mHomePresenter = new HomePresenter(HomeRemoteRepo.getInstance(), this);
+        mHomePresenter.requestTopScrollArticles();
     }
 
     /**
@@ -146,7 +144,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             public void onTabSelected(TabLayout.Tab tab) {
                 ((TextView) tab.getCustomView()).setTextColor(getResources().getColor(R.color.colorAccent));
                 ((TextView) tab.getCustomView()).setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-                requestArticleList(tab.getPosition());
             }
 
             @Override
@@ -177,7 +174,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             if (i == 0) {
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-                requestArticleList(0);
             }
             tab.setCustomView(textView);
         }
@@ -192,22 +188,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         ILog.v(TAG, "setLocationCity: " + city);
     }
 
-    /**
-     * 通知ChildTabFragment获取首页文章列表
-     */
-    private void requestArticleList(int position) {
-        NoticeEvent event = new NoticeEvent();
-        event.setFlag(EventConstant.NOTICE12);
-        event.setNum(position);
-        EventBus.getDefault().post(event);
-    }
-
-    /**
-     * 获取顶部轮播文章列表
-     */
-    private void requestTopScrollArticles() {
-        mHomePresenter.requestTopScrollArticles();
-    }
 
     /**
      * 设置顶部轮播文章列表
@@ -283,14 +263,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     protected void dispatchMessage(Message msg) {
         super.dispatchMessage(msg);
-        ILog.v(TAG, "dispatchMessage msg.what = " + msg.what);
         switch (msg.what) {
             case HOME_SCROLL_IMAGE:
                 mHandler.removeMessages(HOME_SCROLL_IMAGE);
                 int pos = mScrollViewPager.getCurrentItem();
-//                ILog.v(TAG, "dispatchMessage pos1 = " + pos);
                 mScrollViewPager.setCurrentItem(++pos);
-                ILog.d(TAG, "dispatchMessage pos2 = " + mScrollViewPager.getCurrentItem());
                 mHandler.sendEmptyMessageDelayed(HOME_SCROLL_IMAGE, Constant.FIVE_SECONDES);
                 break;
             default:

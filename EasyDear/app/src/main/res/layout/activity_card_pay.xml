@@ -6,30 +6,6 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:padding="10dp"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/card_pay_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/arrow_left" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="券二维码"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -96,7 +72,7 @@
             android:layout_below="@id/card_pay_base_line"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:lineSpacingMultiplier="1.3"
             android:text="券号"
             android:textColor="@color/gray_light"
@@ -109,7 +85,7 @@
             android:layout_below="@id/card_pay_base_line"
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@id/card_pay_num_text"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:lineSpacingMultiplier="1.3"
             android:padding="3dp"
             android:text="9709 2717 74"

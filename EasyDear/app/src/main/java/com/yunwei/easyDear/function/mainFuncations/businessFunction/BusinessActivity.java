@@ -49,7 +49,8 @@ public class BusinessActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_business);
-        setToolbarVisibility(View.GONE);
+        setToolbarTitle(getIntent().getStringExtra("title"));
+        setToolbarRightImage(R.mipmap.icon_add);
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
         initUI();
@@ -104,6 +105,7 @@ public class BusinessActivity extends BaseActivity {
 
     /**
      * 初始化ScrollImage
+     *
      * @param urls
      */
     private void initScrollImages(String[] urls) {

@@ -1,19 +1,21 @@
-package com.yunwei.easyDear.function.mainFuncations.cardDetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.CardDetailFunction;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.common.dialog.DialogFactory;
+import com.yunwei.easyDear.common.dialog.ToastUtil;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.cardpayFunction.CardPayActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +29,8 @@ public class CardDetailActivity extends BaseActivity implements CardDetailContac
 
     private final String TAG = this.getClass().getSimpleName();
 
+    private String cartNo;
+
     @BindView(R.id.card_detail_business_logo)
     ImageView mBusinessLogo;
     @BindView(R.id.card_detail_business_name)
@@ -38,80 +42,66 @@ public class CardDetailActivity extends BaseActivity implements CardDetailContac
     @BindView(R.id.card_detail_validity_date)
     TextView mCardEndTime;
     @BindView(R.id.card_detail_number)
-    TextView mCardNo;
+    TextView mCardNoText;
 
     private CardDetailPresenter mCardDetailPresenter;
 
+    private CardItemEntity entity;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_card_detail);
-//        setToolbarVisibility(View.GONE);
-//        setSwipeEnabled(false);
+        cartNo = getIntent().getStringExtra("cardNo");
         setToolbarTitle("券详情");
         ButterKnife.bind(this);
         initPresenter();
-        requestCardDetailInfo();
     }
 
     private void initPresenter() {
         mCardDetailPresenter = new CardDetailPresenter(CardDetailRemoteRepo.getInstance(), this);
+        mCardDetailPresenter.requestCardDetail(cartNo);
     }
 
-    /**
-     * 获取券详情
-     */
-    private void requestCardDetailInfo() {
-        String cardNo = "20170113211446474936";
-        mCardDetailPresenter.requestCardDetail(cardNo);
+    @Override
+    public void showDialog() {
+        loadDialog= DialogFactory.createLoadingDialog(this,"获取详情...");
+    }
+
+    @Override
+    public void dimissDialog() {
+        DialogFactory.dimissDialog(loadDialog);
+    }
+
+    @Override
+    public void onCardDetailInfoFailure(String error) {
+        ToastUtil.showToast(this,error);
     }
 
     /**
      * 设置券详情信息
      */
     @Override
-    public void setCardDetailInfo(CardItemEntity entity) {
+    public void onCardDetailInfoSuccess(CardItemEntity entity) {
         if (entity == null) {
             return;
         }
-
-        Message msg = new Message();
-        msg.what = 0x100;
-        msg.obj = entity;
-        mHandler.sendMessageDelayed(msg, 5000);
-    }
-
-    public void setCardDetailInfos(CardItemEntity entity) {
-        if (entity == null) {
-            return;
-        }
-
+        this.entity=entity;
         mBusinessName.setText(entity.getCardName());
         mAssociateName.setText(entity.getAssociateName());
         mCardPrice.setText("总价 " + entity.getCardPrice());
         mCardEndTime.setText("有效期至 " + entity.getCardEndTime());
-        mCardNo.setText(entity.getCardNo());
-        Glide.with(getApplicationContext()).load(entity.getLogo()).into(mBusinessLogo);
+        mCardNoText.setText(entity.getCardNo());
+        Glide.with(getApplicationContext()).load(BuildConfig.DOMAI+entity.getLogo()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(mBusinessLogo));
     }
 
-    @OnClick({R.id.card_detail_back, R.id.card_purchase})
+
+    @OnClick({R.id.card_purchase})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.card_detail_back:
-                onBackPressed();
-                break;
             case R.id.card_purchase:
-                ISkipActivityUtil.startIntent(this, CardPayActivity.class);
-                break;
-        }
-    }
-
-    @Override
-    protected void dispatchMessage(Message msg) {
-        super.dispatchMessage(msg);
-        switch (msg.what) {
-            case 0x100:
-                setCardDetailInfos((CardItemEntity) msg.obj);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("entity",entity);
+                ISkipActivityUtil.startIntent(this, CardPayActivity.class,bundle);
                 break;
         }
     }

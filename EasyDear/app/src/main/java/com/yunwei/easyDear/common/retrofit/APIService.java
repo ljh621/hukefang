@@ -128,34 +128,48 @@ public interface APIService {
     @GET(BuildConfig.QINIU_TOKEN_URL)
     Call<ResponseModel<String>> reqQiniuToken();
 
-    /*** 获取首页顶部轮播文章列表*/
+    /***
+     * 获取首页顶部轮播文章列表
+     */
     @GET(BuildConfig.HOME_TOP_SCROLL_ARTICLE_LIST)
     Call<ResponseModel<ArrayList<ArticleItemEntity>>> reqHomeTopScrollArticleList(@Query("province") String province, @Query("city") String city, @Query("area") String area);
 
-    /** 获取首页文章列表*/
+    /**
+     * 获取首页文章列表
+     */
     @GET(BuildConfig.HOME_ARTICLE_LIST)
     Call<ResponseModel<ArrayList<ArticleItemEntity>>> reqHomeArticleList(@Query("pageSize") int pageSize, @Query("pageCount") int pageCount,
                                                                          @Query("key") String key, @Query("type") String type,
                                                                          @Query("province") String province, @Query("city") String city, @Query("area") String area);
 
-    /** 文章详情*/
+    /**
+     * 文章详情
+     */
     @GET(BuildConfig.ARTICLE_DETAIL)
     Call<ResponseModel<ArticleItemEntity>> requestArticleDetail(@Query("articleId") String articleId);
 
-    /** 最新卡券信息*/
+    /**
+     * 最新卡券信息
+     */
     @GET(BuildConfig.LATEST_CARD_INFO)
     Call<ResponseModel<ArrayList<CardItemEntity>>> requestLatestCardInfo(@Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
-    /** 卡券详情*/
+    /**
+     * 卡券详情
+     */
     @GET(BuildConfig.CARD_INFO_DETAIL)
     Call<ResponseModel<CardItemEntity>> requestCardDetail(@Query("cardNo") String cardNo);
 
-    /** 商家软文列表*/
+    /**
+     * 商家软文列表
+     */
     @GET(BuildConfig.BUSINESS_ARTICLE_LIST)
     Call<ResponseModel<ArrayList<ArticleItemEntity>>> requestBusinessArticles(@Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
-    /**获取系统消息列表*/
+    /**
+     * 获取系统消息列表
+     */
     @GET(BuildConfig.BUSINESS_MESSAGE_LIST)
-    Call<ResponseModel<ArrayList<BusMessageItemEntity>>> requestBusMessages (@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+    Call<ResponseModel<ArrayList<BusMessageItemEntity>>> requestBusMessages(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
 }

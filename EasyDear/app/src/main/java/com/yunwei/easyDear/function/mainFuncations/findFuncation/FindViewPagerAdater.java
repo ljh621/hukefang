@@ -36,29 +36,29 @@ public class FindViewPagerAdater extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment=null;
         Bundle bundle=new Bundle();
-        bundle.putString("name",tabNames[position]);
+        bundle.putString("type",tabNames[position]);
         switch (position){
-            case TAB_SELECTED:
+            case TAB_SELECTED:/*精选*/
                 fragment=new ChildTabContentFragment();
                 fragment.setArguments(bundle);
                 break;
-            case TAB_DELICACY:
+            case TAB_DELICACY:/*美食*/
                 fragment=new ChildTabContentFragment();
                 fragment.setArguments(bundle);
                 break;
-            case TAB_ENTERTAINMENT:
+            case TAB_ENTERTAINMENT:/*娱乐*/
                 fragment=new ChildTabContentFragment();
                 fragment.setArguments(bundle);
                 break;
-            case TAB_FASHION:
+            case TAB_FASHION:/*时尚*/
                 fragment=new ChildTabContentFragment();
                 fragment.setArguments(bundle);
                 break;
-            case TAB_CAR:
+            case TAB_CAR:/*爱车*/
                 fragment =new ChildTabContentFragment();
                 fragment.setArguments(bundle);
                 break;
-            case TAB_WEDDING:
+            case TAB_WEDDING:/*婚礼*/
                 fragment=new ChildTabContentFragment();
                 fragment.setArguments(bundle);
                 break;

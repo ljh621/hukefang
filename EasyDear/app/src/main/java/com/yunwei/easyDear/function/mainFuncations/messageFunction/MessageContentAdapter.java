@@ -7,9 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
@@ -42,7 +45,14 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageIte
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.timeText.setText(mLists.get(position).getCreateTime());
         viewHolder.contentText.setText(mLists.get(position).getContent());
-        Glide.with(mContent).load(mLists.get(position).getLogo()).into(viewHolder.headView);
+        viewHolder.titleTextView.setText(mLists.get(position).getBusinessName());
+        Glide.with(mContent).load(BuildConfig.DOMAI + mLists.get(position).getLogo()).into(viewHolder.headView);
+        viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class);
+            }
+        });
     }
 
     @Override
@@ -60,24 +70,14 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageIte
         TextView typeText;
         @BindView(R.id.item_message_content_textView)
         TextView contentText;
+        @BindView(R.id.item_message_layout)
+        RelativeLayout layout;
+        @BindView(R.id.item_message_title_textView)
+        TextView titleTextView;
 
         public ItemViewHolder(View view) {
             super(view);
             ButterKnife.bind(ItemViewHolder.this, view);
-        }
-
-        @OnClick({R.id.item_message_content_textView})
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            switch (view.getId()) {
-                case R.id.item_message_content_textView:
-                    Log.d(TAG, "----------> onClick  Read Message Detail, position = " + position);
-//                    String msgUrl = mLists.get(position).getContentUrl();
-                    Bundle bundle = new Bundle();
-//                    bundle.putString("msg_usl", msgUrl);
-                    ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class);
-                    break;
-            }
         }
     }
 }

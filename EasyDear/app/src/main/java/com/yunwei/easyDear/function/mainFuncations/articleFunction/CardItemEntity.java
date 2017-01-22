@@ -1,10 +1,12 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
+import java.io.Serializable;
+
 /**
  * Created by LJH on 2017/1/21.
  */
 
-public class CardItemEntity {
+public class CardItemEntity implements Serializable{
 
     private String CardNo;
     private String CardName;

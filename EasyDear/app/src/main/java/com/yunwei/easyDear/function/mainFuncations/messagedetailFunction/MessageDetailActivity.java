@@ -23,45 +23,28 @@ public class MessageDetailActivity extends BaseActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    private String businessName;
+    private String businessNo;
+
     @BindView(R.id.message_detail_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
+
+    private MessageDetailAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_message_detail);
-        setToolbarVisibility(View.GONE);
-//        setSwipeEnabled(false);
+        businessName = getIntent().getStringExtra("businessName");
+        businessNo = getIntent().getStringExtra("businessNo");
+        setToolbarTitle("消息列表");
         ButterKnife.bind(this);
 
         initRecyclerView();
     }
 
     private void initRecyclerView() {
-        List<MessageDetailItemEntity> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            MessageDetailItemEntity entity = new MessageDetailItemEntity();
-            if (i < 3) {
-                list.add(entity);
-            } else {
-                entity.setMessageContent("感谢您成为中村屋会员");
-                entity.setMessageTime("10:12");
-                entity.setMessageConsumeInfo("有效期至2017-1-31");
-                list.add(entity);
-            }
-        }
-        MessageDetailAdapter adapter = new MessageDetailAdapter(this);
-        adapter.addItems(list);
+        adapter = new MessageDetailAdapter(this);
         mRecyclerView.setRecyclerViewAdapter(adapter);
     }
-
-    @OnClick({R.id.message_detail_back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.message_detail_back:
-                onBackPressed();
-                break;
-        }
-    }
-
 }

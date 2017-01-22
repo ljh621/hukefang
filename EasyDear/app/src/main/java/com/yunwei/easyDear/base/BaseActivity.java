@@ -313,6 +313,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void setToolbarRightImage(int resid) {
         mToolbarRightIV.setImageResource(resid);
+        mToolbarRightIV.setVisibility(View.VISIBLE);
         mToolbarRightText.setVisibility(View.GONE);
     }
 
