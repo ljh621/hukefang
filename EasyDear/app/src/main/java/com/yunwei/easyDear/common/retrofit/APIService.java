@@ -3,17 +3,22 @@ package com.yunwei.easyDear.common.retrofit;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.entity.ResponseModel;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.account.data.ValidateCodeEntity;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BillEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -123,10 +128,34 @@ public interface APIService {
     @GET(BuildConfig.QINIU_TOKEN_URL)
     Call<ResponseModel<String>> reqQiniuToken();
 
-    @GET(BuildConfig.HOME_SCROLL_IMAGE_URL)
-    Call<ResponseModel<String>> reqScrollImageUrls();
+    /*** 获取首页顶部轮播文章列表*/
+    @GET(BuildConfig.HOME_TOP_SCROLL_ARTICLE_LIST)
+    Call<ResponseModel<ArrayList<ArticleItemEntity>>> reqHomeTopScrollArticleList(@Query("province") String province, @Query("city") String city, @Query("area") String area);
 
-    @POST(BuildConfig.HOME_ARTICLE_LIST)
-    Call<ResponseModel<String>> requestHomeArticleList();
+    /** 获取首页文章列表*/
+    @GET(BuildConfig.HOME_ARTICLE_LIST)
+    Call<ResponseModel<ArrayList<ArticleItemEntity>>> reqHomeArticleList(@Query("pageSize") int pageSize, @Query("pageCount") int pageCount,
+                                                                         @Query("key") String key, @Query("type") String type,
+                                                                         @Query("province") String province, @Query("city") String city, @Query("area") String area);
+
+    /** 文章详情*/
+    @GET(BuildConfig.ARTICLE_DETAIL)
+    Call<ResponseModel<ArticleItemEntity>> requestArticleDetail(@Query("articleId") String articleId);
+
+    /** 最新卡券信息*/
+    @GET(BuildConfig.LATEST_CARD_INFO)
+    Call<ResponseModel<ArrayList<CardItemEntity>>> requestLatestCardInfo(@Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /** 卡券详情*/
+    @GET(BuildConfig.CARD_INFO_DETAIL)
+    Call<ResponseModel<CardItemEntity>> requestCardDetail(@Query("cardNo") String cardNo);
+
+    /** 商家软文列表*/
+    @GET(BuildConfig.BUSINESS_ARTICLE_LIST)
+    Call<ResponseModel<ArrayList<ArticleItemEntity>>> requestBusinessArticles(@Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**获取系统消息列表*/
+    @GET(BuildConfig.BUSINESS_MESSAGE_LIST)
+    Call<ResponseModel<ArrayList<BusMessageItemEntity>>> requestBusMessages (@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
 }

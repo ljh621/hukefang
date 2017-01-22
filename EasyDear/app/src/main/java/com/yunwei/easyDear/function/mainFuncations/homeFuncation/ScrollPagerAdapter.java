@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
@@ -26,40 +27,27 @@ public class ScrollPagerAdapter extends PagerAdapter implements View.OnClickList
     private final String TAG = this.getClass().getSimpleName();
 
     private Context mContext;
-    private List<String> mUrlList;
+    private List<ArticleItemEntity> mArticleList;
     private List<ImageView> mImageViewList;
 
     private int mImagePosition;
 
-    public ScrollPagerAdapter(Context context, List<String> urlList) {
+    public ScrollPagerAdapter(Context context, ArrayList<ArticleItemEntity> articleList) {
         mContext = context;
-        mUrlList = urlList;
+        mArticleList = articleList;
         mImageViewList = new ArrayList<ImageView>();
         initImageViewList();
-
-//        ImageView iv1 = new ImageView(mContext);
-//        iv1.setBackgroundResource(R.mipmap.scene_1);
-//        mImageViewList.add(iv1);
-//        ImageView iv2 = new ImageView(mContext);
-//        iv2.setBackgroundResource(R.mipmap.scene_2);
-//        mImageViewList.add(iv2);
-//        ImageView iv3 = new ImageView(mContext);
-//        iv3.setBackgroundResource(R.mipmap.scene_3);
-//        mImageViewList.add(iv3);
-//        ImageView iv4 = new ImageView(mContext);
-//        iv4.setBackgroundResource(R.mipmap.scene_4);
-//        mImageViewList.add(iv4);
     }
 
     private void initImageViewList() {
-        if (mUrlList == null) {
+        if (mArticleList == null) {
             return;
         }
-        for (String url : mUrlList) {
-            url = "http://pic38.nipic.com/20140228/3822951_135521683000_2.jpg";
+        for (ArticleItemEntity entity : mArticleList) {
+            entity. setArticleImage("http://pic38.nipic.com/20140228/3822951_135521683000_2.jpg");
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(mContext).load(url).into(iv);
+            Glide.with(mContext).load(entity.getArticleImage()).into(iv);
             mImageViewList.add(iv);
         }
     }

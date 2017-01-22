@@ -6,34 +6,98 @@ package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
 public class ArticleItemEntity {
 
-    private String type;
-    private String title;
-    private String date;
+    private String ArticleId;
+    private String Title;
+    private String Type;
+    private String BusinessNO;
+    private String Logo;
+    private String BusinessName;
+    private String ArticleImage;
+    private String Content;
+    private String PubTime;
+
+    private String ArticleForward;
 
     public ArticleItemEntity() {
     }
 
-    public String getType() {
-        return type;
+    public String getArticleId() {
+        return ArticleId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setArticleId(String articleId) {
+        ArticleId = articleId;
     }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.Title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getType() {
+        return Type;
+    }
+    public void setType(String type) {
+        this.Type = type;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getBusinessNO() {
+        return BusinessNO;
     }
+
+    public void setBusinessNO(String businessNO) {
+        BusinessNO = businessNO;
+    }
+
+    public String getLogo() {
+        return Logo;
+    }
+
+    public void setLogo(String logo) {
+        Logo = logo;
+    }
+
+    public String getBusinessName() {
+        return BusinessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        BusinessName = businessName;
+    }
+
+    public String getArticleImage() {
+        return ArticleImage;
+    }
+
+    public void setArticleImage(String articleImage) {
+        ArticleImage = articleImage;
+    }
+
+    public String getContent() {
+        return Content;
+    }
+
+    public void setContent(String content) {
+        Content = content;
+    }
+
+    public String getPubTime() {
+        return PubTime;
+    }
+
+    public void setPubTime(String pubTime) {
+        PubTime = pubTime;
+    }
+
+    public String getArticleForward() {
+        return ArticleForward;
+    }
+
+    public void setArticleForward(String articleForward) {
+        ArticleForward = articleForward;
+    }
+
 }

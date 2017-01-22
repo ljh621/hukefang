@@ -1,17 +1,21 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation.data;
 
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
+
+import java.util.ArrayList;
+
 /**
  * Created by LJH on 2017/1/4.
  */
 
 public interface HomeDataSource {
 
-    interface RequestHome {
-        void getScrollImageUrlSuccess(String urls);
+    interface HomeCallBack {
 
+        void onGetTopScrollArticlesSuccess(ArrayList<ArticleItemEntity> articleItems);
 
-        void getHomeArticleListSuccess();
+        void onGetTopScrollArticlesSuccess(String message);
     }
 
-    void requestScrollImageUrls(RequestHome callBack);
+    void requestHomeTopScrollArticles(HomeCallBack callBack);
 }

@@ -1,5 +1,9 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
+
+import java.util.ArrayList;
+
 /**
  * Created by LJH on 2017/1/2.
  */
@@ -7,11 +11,10 @@ package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 public interface HomeContract {
 
     interface HomeView {
-        void initImageUrl(String urls);
+        void setTopScrollArticles(ArrayList<ArticleItemEntity> articleItems);
     }
 
     interface Presenter {
-        void requestScrollImageUrls();
-        void requestHomeArticleList();
+        void requestTopScrollArticles();
     }
 }
