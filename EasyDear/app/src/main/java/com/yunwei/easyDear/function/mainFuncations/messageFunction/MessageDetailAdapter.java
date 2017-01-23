@@ -1,26 +1,26 @@
-package com.yunwei.easyDear.function.mainFuncations.messagedetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
-import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.OrderItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
  */
 
-public class MessageDetailAdapter extends BaseRecyclerViewAdapter<MessageDetailItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MessageDetailAdapter extends BaseRecyclerViewAdapter<MessageDetailEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MessageDetailAdapter(Context context) {
         super(context);
@@ -36,12 +36,10 @@ public class MessageDetailAdapter extends BaseRecyclerViewAdapter<MessageDetailI
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        if (position >= 2) {
-            viewHolder.messageContentText.setText(mLists.get(position).getMessageContent());
-            viewHolder.messageTimeText.setText(mLists.get(position).getMessageTime());
-            viewHolder.messageConsumeInfoText.setText(mLists.get(position).getMessageConsumeInfo());
-//            Glide.with(mContent).load(mLists.get(position).getHeadUrl()).into(viewHolder.headView);
-        }
+            viewHolder.messageContentText.setText(mLists.get(position).getBusinessName());
+            viewHolder.messageTimeText.setText(mLists.get(position).getCreateTime());
+            viewHolder.messageConsumeInfoText.setText(mLists.get(position).getContent());
+            Glide.with(mContent).load(BuildConfig.DOMAI+mLists.get(position).getLogo()).into(viewHolder.headView);
     }
 
     @Override
@@ -64,7 +62,5 @@ public class MessageDetailAdapter extends BaseRecyclerViewAdapter<MessageDetailI
             super(view);
             ButterKnife.bind(ItemViewHolder.this, view);
         }
-
     }
-
 }

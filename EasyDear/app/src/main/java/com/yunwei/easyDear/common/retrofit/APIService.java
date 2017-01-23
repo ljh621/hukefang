@@ -9,6 +9,7 @@ import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntit
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BillEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
 
@@ -172,4 +173,15 @@ public interface APIService {
     @GET(BuildConfig.BUSINESS_MESSAGE_LIST)
     Call<ResponseModel<ArrayList<BusMessageItemEntity>>> requestBusMessages(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
+    /**
+     * 获取信息详情
+     *
+     * @param userNo
+     * @param businessNo
+     * @param pageSize
+     * @param pageCount
+     * @return
+     */
+    @GET(BuildConfig.MESSAGE_DETAIL_URL)
+    Call<ResponseModel<List<MessageDetailEntity>>> reqMessageDetail(@Query("userNo") String userNo, @Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 }

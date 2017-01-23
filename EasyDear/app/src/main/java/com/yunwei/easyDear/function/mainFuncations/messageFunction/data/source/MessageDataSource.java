@@ -23,13 +23,15 @@ public interface MessageDataSource {
 
         void getMsgSuccess(List<MessageDetailEntity> list);
 
-        void getMsgFailure(String error);
+        void getMsgFailure(int code,String error);
 
-        String getPageSize();
+        int getPageSize();
 
-        String getPageCount();
+        int getPageCount();
 
         String getUserNo();
+
+        String getBusinessNo();
     }
 
     void reqMsgDetail(MsgDetailCallBack callBack);

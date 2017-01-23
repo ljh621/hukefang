@@ -22,8 +22,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/car" />
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:id="@+id/message_detail_container"
@@ -46,7 +45,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:gravity="center_vertical"
-                android:text="感谢您成为中村屋会员"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -56,7 +54,6 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:text="上午8:12"
                 android:textColor="@color/gray"
                 android:textSize="14sp" />
 
@@ -67,8 +64,6 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:padding="3dp"
-                android:text="当地时间上午11时许，习近平和夫人彭丽媛在瑞士联邦主席洛伊特哈德、世界经济论坛创始人兼执行主席施瓦布夫妇的陪同下步入全会厅，全场响起热烈的掌声。\n
-施瓦布主持开幕式，瑞士联邦主席洛伊特哈德在开幕式上致辞，感谢习近平主席莅临世界经济论坛年会并发表重要演讲。"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>

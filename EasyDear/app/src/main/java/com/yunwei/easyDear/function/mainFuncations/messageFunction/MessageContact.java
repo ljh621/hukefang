@@ -24,14 +24,18 @@ public interface MessageContact {
 
         void onMsgFailure(int code, String error);
 
-        String getPageSize();
+        int getPageSize();
 
-        String getPageCount();
+        int getPageCount();
 
         String getUserNo();
+
+        String getBusinessNo();
     }
 
     interface MessagePresenter {
         void requestBusMessages(String useNo);
+
+        void reqMsgDetail();
     }
 }

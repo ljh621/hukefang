@@ -3,11 +3,9 @@ package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,12 +14,10 @@ import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
-import com.yunwei.easyDear.function.mainFuncations.messagedetailFunction.MessageDetailActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
@@ -41,7 +37,7 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageIte
     }
 
     @Override
-    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.timeText.setText(mLists.get(position).getCreateTime());
         viewHolder.contentText.setText(mLists.get(position).getContent());
@@ -50,7 +46,10 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageIte
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("businessName", mLists.get(position).getBusinessName());
+                bundle.putString("businessNo", mLists.get(position).getBusinessNo());
+                ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class,bundle);
             }
         });
     }

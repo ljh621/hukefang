@@ -80,7 +80,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
-        <activity android:name=".function.mainFuncations.messagedetailFunction.MessageDetailActivity"
+        <activity android:name=".function.mainFuncations.messageFunction.MessageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
