@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.messagedetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
 /**
  * Created by LJH on 2017/1/15.

@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.cardDetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.CardDetailFunction;
 
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 
@@ -9,7 +9,13 @@ import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntit
 public interface CardDetailContact {
 
     interface CardDetailView {
-        void setCardDetailInfo(CardItemEntity data);
+        void showDialog();
+
+        void dimissDialog();
+
+        void onCardDetailInfoSuccess(CardItemEntity data);
+
+        void onCardDetailInfoFailure(String error);
     }
 
     interface Presenter {

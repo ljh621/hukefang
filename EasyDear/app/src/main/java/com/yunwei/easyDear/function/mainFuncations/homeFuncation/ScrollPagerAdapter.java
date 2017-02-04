@@ -1,6 +1,7 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewParent;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
@@ -35,7 +37,7 @@ public class ScrollPagerAdapter extends PagerAdapter implements View.OnClickList
     public ScrollPagerAdapter(Context context, ArrayList<ArticleItemEntity> articleList) {
         mContext = context;
         mArticleList = articleList;
-        mImageViewList = new ArrayList<ImageView>();
+        mImageViewList = new ArrayList<>();
         initImageViewList();
     }
 
@@ -44,7 +46,7 @@ public class ScrollPagerAdapter extends PagerAdapter implements View.OnClickList
             return;
         }
         for (ArticleItemEntity entity : mArticleList) {
-            entity. setArticleImage("http://pic38.nipic.com/20140228/3822951_135521683000_2.jpg");
+            entity.setArticleImage(BuildConfig.DOMAI + entity.getArticleImage());
             ImageView iv = new ImageView(mContext);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(mContext).load(entity.getArticleImage()).into(iv);
@@ -68,7 +70,6 @@ public class ScrollPagerAdapter extends PagerAdapter implements View.OnClickList
         if (position < 0) {
             position += mImageViewList.size();
         }
-        ILog.d(TAG, "instantiateItem position = " + position);
         mImagePosition = position;
         ImageView iv = mImageViewList.get(position);
         ViewParent vp = iv.getParent();
@@ -76,19 +77,25 @@ public class ScrollPagerAdapter extends PagerAdapter implements View.OnClickList
             ViewGroup parent = (ViewGroup) vp;
             parent.removeView(iv);
         }
-        iv.setOnClickListener(this);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", mArticleList.get(mImagePosition).getArticleId());
+                bundle.putString("businessNo",mArticleList.get(mImagePosition).getBusinessNO());
+                ISkipActivityUtil.startIntent(mContext, ArticleActivity.class, bundle);
+            }
+        });
         container.addView(iv);
         return iv;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-//        super.destroyItem(container, position, object);
     }
 
     @Override
     public void onClick(View view) {
-        ILog.d(TAG, "--------> ViewPager Position = " + mImagePosition);
         ISkipActivityUtil.startIntent(mContext, ArticleActivity.class);
     }
 }

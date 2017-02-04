@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.cardDetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.CardDetailFunction;
 
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 
@@ -18,16 +18,19 @@ public class CardDetailPresenter implements CardDetailContact.Presenter, CardDet
 
     @Override
     public void requestCardDetail(String cardNo) {
+        mCardDetailView.showDialog();
         mRemoteRepo.requestCardDetail(cardNo, this);
     }
 
     @Override
     public void onReqCardDetailSuccess(CardItemEntity entity) {
-        mCardDetailView.setCardDetailInfo(entity);
+        mCardDetailView.onCardDetailInfoSuccess(entity);
+        mCardDetailView.dimissDialog();
     }
 
     @Override
     public void onReqCardDetailFailure(String message) {
-
+        mCardDetailView.onCardDetailInfoFailure(message);
+        mCardDetailView.dimissDialog();
     }
 }

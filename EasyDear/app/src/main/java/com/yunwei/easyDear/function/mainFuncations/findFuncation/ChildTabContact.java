@@ -11,12 +11,31 @@ import java.util.ArrayList;
 public interface ChildTabContact {
 
     interface ChildPresenter {
-        void requestRecyclerArticles(String type);
+        void requestRecyclerArticles();
     }
 
     interface ChileTabView {
+        void onArticleListStart();
 
-        void setArticleList(ArrayList<ArticleItemEntity> data);
+        void onArticleListEnd();
+
+        void onArticleListSuccess(ArrayList<ArticleItemEntity> data);
+
+        void onArticleListFailure(int code, String error);
+
+        int getPageSize();
+
+        int getPageCount();
+
+        String getKey();
+
+        String getType();
+
+        String getProvince();
+
+        String getCity();
+
+        String getArea();
 
     }
 }

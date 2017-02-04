@@ -8,17 +8,15 @@ import android.view.ViewGroup;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
-import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
-import com.yunwei.easyDear.utils.ISpfUtil;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source.MessageRemoteRepo;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author hezhiWu
@@ -32,6 +30,8 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
 
     @BindView(R.id.msg_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
+
+    private MessageContentAdapter adapter;
 
     private static MessageFragment fragment;
 
@@ -61,6 +61,8 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        adapter = new MessageContentAdapter(getActivity());
+        mRecyclerView.setRecyclerViewAdapter(adapter);
         requestBusinessMessageList();
     }
 
@@ -72,8 +74,7 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
      * 获取系统消息列表
      */
     private void requestBusinessMessageList() {
-        String useNo = (String) ISpfUtil.getValue(Constant.ACCOUNT_KEY, "");
-        useNo = "20170113204638513425";
+        String useNo = DataApplication.getInstance().getUserInfoEntity().getUserNo();
         mMessagePresenter.requestBusMessages(useNo);
     }
 
@@ -82,17 +83,7 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
         if (businessMsgItems == null) {
             return;
         }
-
-        initRecyclerView(businessMsgItems);
-    }
-
-    @OnClick({R.id.message_back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.message_back:
-                getActivity().onBackPressed();
-                break;
-        }
+        adapter.addItems(businessMsgItems);
     }
 
     private void initRecyclerView(ArrayList<BusMessageItemEntity> businessMsgItems) {
@@ -112,7 +103,7 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
                 list.add(entity);
             }
         }
-        MessageContentAdapter adapter = new MessageContentAdapter(getActivity());
+
         adapter.addItems(list);
         mRecyclerView.setRecyclerViewAdapter(adapter);
     }

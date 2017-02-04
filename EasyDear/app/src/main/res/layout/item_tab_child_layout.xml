@@ -5,11 +5,12 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/item_tab_child_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/item_seletor"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@color/white">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                 android:layout_height="30dip"
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_launcher"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/item_tab_child_content_textView"
@@ -31,9 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:textStyle="bold"
-                android:textSize="17sp"
-                android:text="item" />
+                android:singleLine="true"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -43,12 +43,13 @@
 
             <TextView
                 android:id="@+id/item_tab_child_date_textView"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/gray"
-                android:text="12月24日" />
+                android:maxWidth="200dp"
+                android:singleLine="true"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/item_tab_child_business_textView"
@@ -56,8 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:gravity="center|right"
-                android:textColor="@color/gray"
-                android:text="宁波宝恒宝马-诚信路店" />
+                android:textColor="@color/gray" />
         </LinearLayout>
 
         <ImageView
@@ -74,21 +74,22 @@
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:drawableRight="@mipmap/arrow_right"
             android:drawablePadding="8dp"
-            android:textColor="@color/gray_light"
-            android:text="Read All"
+            android:drawableRight="@mipmap/arrow_right"
             android:gravity="center_vertical"
-            android:textSize="15sp"/>
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="Read All"
+            android:textColor="@color/gray_light"
+            android:textSize="15sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@color/main_background"
-            android:layout_marginLeft="-10dp"
-            android:layout_marginRight="-10dp"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
+        android:background="@color/main_background" />
 
 </LinearLayout>

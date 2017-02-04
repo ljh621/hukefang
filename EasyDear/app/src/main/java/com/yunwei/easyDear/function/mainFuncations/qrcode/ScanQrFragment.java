@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -68,15 +69,19 @@ public class ScanQrFragment extends BaseFragment {
     }
 
     private static ScanQrFragment fragment;
-    public static ScanQrFragment newInstance(){
-        if (fragment==null){
-            fragment=new ScanQrFragment();
+
+    public static ScanQrFragment newInstance() {
+        if (fragment == null) {
+            fragment = new ScanQrFragment();
         }
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        TextView textView = new TextView(getActivity());
+        textView.setText("扫一扫添加好友");
+        return textView;
     }
 }
