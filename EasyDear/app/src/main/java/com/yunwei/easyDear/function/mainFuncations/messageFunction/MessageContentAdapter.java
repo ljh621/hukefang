@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by LJH on 2017/1/15.
  */
 
-public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MessageContentAdapter extends BaseRecyclerViewAdapter<MessageItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MessageContentAdapter(Context context) {
         super(context);

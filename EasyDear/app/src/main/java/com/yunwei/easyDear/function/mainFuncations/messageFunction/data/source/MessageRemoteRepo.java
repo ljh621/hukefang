@@ -3,7 +3,7 @@ package com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 
 import java.util.ArrayList;
@@ -33,12 +33,35 @@ public class MessageRemoteRepo implements MessageDataSource {
     }
 
     @Override
+    public void requestTuiMessages(String useNo, final TuiMsgCallBack callBack) {
+
+        Call<ResponseModel<ArrayList<MessageItemEntity>>> call = RetrofitManager.getInstance().getService().requestTuiMessages(useNo, 1, 5);
+        call.enqueue(new Callback<ResponseModel<ArrayList<MessageItemEntity>>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<ArrayList<MessageItemEntity>>> call, Response<ResponseModel<ArrayList<MessageItemEntity>>> response) {
+
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.onReqTuiMessagesSuccess(response.body().getData());
+                } else {
+                    callBack.onReqTuiMessagesFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<ArrayList<MessageItemEntity>>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    @Override
     public void requestBusMessages(String useNo, final BusMsgCallBack callBack) {
 
-        Call<ResponseModel<ArrayList<BusMessageItemEntity>>> call = RetrofitManager.getInstance().getService().requestBusMessages(useNo, 1, 5);
-        call.enqueue(new Callback<ResponseModel<ArrayList<BusMessageItemEntity>>>() {
+        Call<ResponseModel<ArrayList<MessageItemEntity>>> call = RetrofitManager.getInstance().getService().requestBusMessages(useNo, 1, 5);
+        call.enqueue(new Callback<ResponseModel<ArrayList<MessageItemEntity>>>() {
             @Override
-            public void onResponse(Call<ResponseModel<ArrayList<BusMessageItemEntity>>> call, Response<ResponseModel<ArrayList<BusMessageItemEntity>>> response) {
+            public void onResponse(Call<ResponseModel<ArrayList<MessageItemEntity>>> call, Response<ResponseModel<ArrayList<MessageItemEntity>>> response) {
 
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onReqBusMessagesSuccess(response.body().getData());
@@ -48,7 +71,7 @@ public class MessageRemoteRepo implements MessageDataSource {
             }
 
             @Override
-            public void onFailure(Call<ResponseModel<ArrayList<BusMessageItemEntity>>> call, Throwable t) {
+            public void onFailure(Call<ResponseModel<ArrayList<MessageItemEntity>>> call, Throwable t) {
 
             }
         });

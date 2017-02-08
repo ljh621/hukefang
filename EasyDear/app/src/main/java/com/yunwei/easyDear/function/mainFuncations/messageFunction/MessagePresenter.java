@@ -1,6 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source.MessageDataSource;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source.MessageRemoteRepo;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by LJH on 2017/1/22.
  */
 
-public class MessagePresenter implements MessageContact.MessagePresenter, MessageDataSource.BusMsgCallBack, MessageDataSource.MsgDetailCallBack {
+public class MessagePresenter implements MessageContact.MessagePresenter, MessageDataSource.BusMsgCallBack, MessageDataSource.TuiMsgCallBack, MessageDataSource.MsgDetailCallBack {
 
     private MessageContact.MessageView mMessageView;
     private MessageContact.MessageDetailView messageDetailView;
@@ -29,6 +29,11 @@ public class MessagePresenter implements MessageContact.MessagePresenter, Messag
     }
 
     @Override
+    public void requestTuiMessages(String useNo) {
+        mRemoteRepo.requestTuiMessages(useNo, this);
+    }
+
+    @Override
     public void requestBusMessages(String useNo) {
         mRemoteRepo.requestBusMessages(useNo, this);
     }
@@ -40,7 +45,17 @@ public class MessagePresenter implements MessageContact.MessagePresenter, Messag
     }
 
     @Override
-    public void onReqBusMessagesSuccess(ArrayList<BusMessageItemEntity> data) {
+    public void onReqTuiMessagesSuccess(ArrayList<MessageItemEntity> data) {
+        mMessageView.setTuiMessages(data);
+    }
+
+    @Override
+    public void onReqTuiMessagesFailure(String message) {
+
+    }
+
+    @Override
+    public void onReqBusMessagesSuccess(ArrayList<MessageItemEntity> data) {
         mMessageView.setBusinessMessages(data);
     }
 
@@ -79,4 +94,5 @@ public class MessagePresenter implements MessageContact.MessagePresenter, Messag
     public String getBusinessNo() {
         return messageDetailView.getBusinessNo();
     }
+
 }

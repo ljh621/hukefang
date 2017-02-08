@@ -1,6 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 
 import java.util.ArrayList;
@@ -12,7 +12,9 @@ import java.util.List;
 
 public interface MessageContact {
     interface MessageView {
-        void setBusinessMessages(ArrayList<BusMessageItemEntity> data);
+        void setTuiMessages(ArrayList<MessageItemEntity> data);
+
+        void setBusinessMessages(ArrayList<MessageItemEntity> data);
     }
 
     interface MessageDetailView {
@@ -35,6 +37,8 @@ public interface MessageContact {
 
     interface MessagePresenter {
         void requestBusMessages(String useNo);
+
+        void requestTuiMessages(String useNo);
 
         void reqMsgDetail();
     }

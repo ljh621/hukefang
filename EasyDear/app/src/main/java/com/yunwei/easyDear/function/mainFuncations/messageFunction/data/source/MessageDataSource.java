@@ -1,6 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source;
 
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 
 import java.util.ArrayList;
@@ -11,10 +11,18 @@ import java.util.List;
  */
 public interface MessageDataSource {
 
+    void requestTuiMessages(String useNo, TuiMsgCallBack callBack);
+
     void requestBusMessages(String useNo, BusMsgCallBack callBack);
 
+    interface TuiMsgCallBack {
+        void onReqTuiMessagesSuccess(ArrayList<MessageItemEntity> data);
+
+        void onReqTuiMessagesFailure(String message);
+    }
+
     interface BusMsgCallBack {
-        void onReqBusMessagesSuccess(ArrayList<BusMessageItemEntity> data);
+        void onReqBusMessagesSuccess(ArrayList<MessageItemEntity> data);
 
         void onReqBusMessagesFailure(String message);
     }

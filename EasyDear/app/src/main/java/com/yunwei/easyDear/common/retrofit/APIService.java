@@ -8,7 +8,7 @@ import com.yunwei.easyDear.function.account.data.ValidateCodeEntity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BillEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
@@ -16,12 +16,8 @@ import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.Orde
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -170,8 +166,14 @@ public interface APIService {
     /**
      * 获取系统消息列表
      */
+    @GET(BuildConfig.TUI_MESSAGE_LIST)
+    Call<ResponseModel<ArrayList<MessageItemEntity>>> requestTuiMessages(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**
+     * 获取商家消息列表
+     */
     @GET(BuildConfig.BUSINESS_MESSAGE_LIST)
-    Call<ResponseModel<ArrayList<BusMessageItemEntity>>> requestBusMessages(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+    Call<ResponseModel<ArrayList<MessageItemEntity>>> requestBusMessages(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
     /**
      * 获取信息详情
