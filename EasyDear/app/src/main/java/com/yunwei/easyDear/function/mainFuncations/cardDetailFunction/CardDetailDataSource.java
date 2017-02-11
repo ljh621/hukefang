@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.CardDetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.cardDetailFunction;
 
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
 

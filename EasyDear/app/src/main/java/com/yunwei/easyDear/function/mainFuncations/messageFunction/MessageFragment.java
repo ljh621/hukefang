@@ -92,7 +92,7 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
         if (tuiMsgItems == null) {
             return;
         }
-        adapter.addItems(tuiMsgItems);
+        adapter.addItems(tuiMsgItems, 0);
     }
 
     @Override

@@ -39,16 +39,23 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<MessageItemEn
     @Override
     public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.timeText.setText(mLists.get(position).getCreateTime());
-        viewHolder.contentText.setText(mLists.get(position).getContent());
-        viewHolder.titleTextView.setText(mLists.get(position).getBusinessName());
-        Glide.with(mContent).load(BuildConfig.DOMAI + mLists.get(position).getLogo()).into(viewHolder.headView);
+        final MessageItemEntity itemEntity = mLists.get(position);
+
+        // BusinessNo 和 BusinessName 为空，为系统消息
+        if (itemEntity.getBusinessNo() == null && itemEntity.getBusinessName() == null) {
+            itemEntity.setBusinessName("易兑消息推送");
+//            viewHolder.headView.setImageResource();
+        }
+        viewHolder.timeText.setText(itemEntity.getCreateTime());
+        viewHolder.contentText.setText(itemEntity.getContent());
+        viewHolder.titleTextView.setText(itemEntity.getBusinessName());
+        Glide.with(mContent).load(BuildConfig.DOMAI + itemEntity.getLogo()).into(viewHolder.headView);
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("businessName", mLists.get(position).getBusinessName());
-                bundle.putString("businessNo", mLists.get(position).getBusinessNo());
+                bundle.putString("businessName", itemEntity.getBusinessName());
+                bundle.putString("businessNo", itemEntity.getBusinessNo());
                 ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class,bundle);
             }
         });

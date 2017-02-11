@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public interface MessageContact {
+
     interface MessageView {
         void setTuiMessages(ArrayList<MessageItemEntity> data);
 

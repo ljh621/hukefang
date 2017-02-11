@@ -30,8 +30,8 @@ public class MessageDetailActivity extends BaseActivity implements MessageContac
     private int defaultPageSize = 1;
     private boolean isRefresh = true;
 
-    private String businessName;
-    private String businessNo;
+    private String businessName = null;
+    private String businessNo = null;
 
     @BindView(R.id.message_detail_recyclerView)
     PullToRefreshRecyclerView mRecyclerView;
@@ -46,10 +46,18 @@ public class MessageDetailActivity extends BaseActivity implements MessageContac
         super.setContentView(R.layout.activity_message_detail);
         businessName = getIntent().getStringExtra("businessName");
         businessNo = getIntent().getStringExtra("businessNo");
+        resetBusinessName();
         setToolbarTitle(businessName);
         ButterKnife.bind(this);
         initPresenter();
         initRecyclerView();
+    }
+
+    // businessNo 为空，为系统消息
+    private void resetBusinessName() {
+        if (businessNo == null) {
+            businessName = "易兑科技";
+        }
     }
 
     private void initRecyclerView() {

@@ -176,7 +176,13 @@ public interface APIService {
     Call<ResponseModel<ArrayList<MessageItemEntity>>> requestBusMessages(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
 
     /**
-     * 获取信息详情
+     * 获取系统消息详情
+     */
+    @GET(BuildConfig.TUI_MESSAGE_LIST)
+    Call<ResponseModel<List<MessageDetailEntity>>> reqTuiMessageDetail(@Query("userNo") String userNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**
+     * 获取单个商家信息详情
      *
      * @param userNo
      * @param businessNo

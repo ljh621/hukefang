@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.CardDetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.cardDetailFunction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

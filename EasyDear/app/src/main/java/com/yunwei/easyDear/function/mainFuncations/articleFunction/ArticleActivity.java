@@ -1,6 +1,5 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -12,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
-import com.yunwei.easyDear.function.mainFuncations.CardDetailFunction.CardDetailActivity;
+import com.yunwei.easyDear.function.mainFuncations.cardDetailFunction.CardDetailActivity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.IViewUtil;
