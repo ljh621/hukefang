@@ -23,12 +23,12 @@ import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.adapter.BusinessAdapter;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MineContact;
+import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.MyCardActivity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessContract;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MemberBusinessPresenter;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MyMemberActivity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
-import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
@@ -134,7 +134,6 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
         memberBusinessPresenter.reqBusinessListAction();
     }
 
-
     @Override
     public void setCardAmount(CardEntity cardEntity) {
         mMineCardAmount.setText("" + cardEntity.getCardSize());
@@ -145,7 +144,8 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
         mMineBusinessAmount.setText("" + businessEntity.getBusinessSize());
     }
 
-    @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})
+    @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mine_card_amount_container, R.id.mine_business_amount_container,
+            R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mineFragment_login_btn:
@@ -156,6 +156,12 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
                 break;
             case R.id.mineFragment_setting_tv:
                 ISkipActivityUtil.startIntent(getActivity(), SetingInfoActivity.class);
+                break;
+            case R.id.mine_card_amount_container:
+                ISkipActivityUtil.startIntent(getActivity(), MyCardActivity.class);
+                break;
+            case R.id.mine_business_amount_container:
+                ISkipActivityUtil.startIntent(getActivity(), MyMemberActivity.class);
                 break;
             case R.id.mineFragment_all_order_layout:
                 ISkipActivityUtil.startIntent(getActivity(), MyOrderActivity.class);

@@ -1,5 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -100,6 +101,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
     @Override
     public void onClickToolbarRightLayout() {
         super.onClickToolbarRightLayout();
+        shareAction();
     }
 
     /**
@@ -186,13 +188,14 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
         }
     }
 
-//    private void startToSend() {
-//        Intent intent = new Intent(Intent.ACTION_SEND);
+    private void shareAction() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
 //        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
-//        intent.putExtra(Intent.EXTRA_TEXT, "http://society.qq.com/a/20161222/035882.htm#p=1");
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(Intent.createChooser(intent, "类名"));
-//    }
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+        intent.putExtra(Intent.EXTRA_TEXT, "http://society.qq.com/a/20161222/035882.htm#p=1");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, "分享到"));
+    }
 
 }
