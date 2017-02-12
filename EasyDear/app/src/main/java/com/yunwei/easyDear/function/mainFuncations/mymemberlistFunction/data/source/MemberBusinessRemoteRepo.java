@@ -19,15 +19,15 @@ import retrofit2.Response;
  * @date 2017/1/21 14:49
  */
 
-public class BusinessRemoteRepo implements BusinessDataSource {
+public class MemberBusinessRemoteRepo implements BusinessDataSource {
 
-    private static BusinessRemoteRepo remoteRepo;
+    private static MemberBusinessRemoteRepo remoteRepo;
 
     private Call<ResponseModel<List<BusinessEntity>>> call;
 
-    public static BusinessRemoteRepo newInstance() {
+    public static MemberBusinessRemoteRepo newInstance() {
         if (remoteRepo == null) {
-            remoteRepo = new BusinessRemoteRepo();
+            remoteRepo = new MemberBusinessRemoteRepo();
         }
         return remoteRepo;
     }

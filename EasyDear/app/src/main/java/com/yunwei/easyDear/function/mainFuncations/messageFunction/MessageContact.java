@@ -36,7 +36,7 @@ public interface MessageContact {
         String getBusinessNo();
     }
 
-    interface MessagePresenter {
+    interface Presenter {
         void requestBusMessages(String useNo);
 
         void requestTuiMessages(String useNo);

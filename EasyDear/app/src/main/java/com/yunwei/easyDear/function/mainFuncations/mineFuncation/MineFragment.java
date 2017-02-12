@@ -21,14 +21,12 @@ import com.yunwei.easyDear.function.account.LoginRegistActivity;
 import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.adapter.BusinessAdapter;
-import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessContract;
-import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessPresenter;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MemberBusinessPresenter;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MyMemberActivity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
-import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import java.util.List;
@@ -75,7 +73,7 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
 
     private CommPopupWindow commPopupWindow;
 
-    private BusinessPresenter businessPresenter;
+    private MemberBusinessPresenter memberBusinessPresenter;
 
     private BusinessAdapter businessAdapter;
 
@@ -89,7 +87,7 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        businessPresenter = new BusinessPresenter(this);
+        memberBusinessPresenter = new MemberBusinessPresenter(this);
     }
 
     @Nullable
@@ -126,7 +124,7 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
     private void initGridView() {
         businessAdapter = new BusinessAdapter(getActivity());
         mineFragmentBusinessGridView.setAdapter(businessAdapter);
-        businessPresenter.reqBusinessListAction();
+        memberBusinessPresenter.reqBusinessListAction();
     }
 
     @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})

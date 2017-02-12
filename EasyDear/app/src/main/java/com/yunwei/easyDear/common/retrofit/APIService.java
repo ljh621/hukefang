@@ -5,7 +5,8 @@ import com.yunwei.easyDear.entity.ResponseModel;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.account.data.ValidateCodeEntity;
-import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessDetailEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BillEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
@@ -144,6 +145,12 @@ public interface APIService {
      */
     @GET(BuildConfig.ARTICLE_DETAIL)
     Call<ResponseModel<ArticleItemEntity>> requestArticleDetail(@Query("articleId") String articleId);
+
+    /**
+     * 文章详情
+     */
+    @GET(BuildConfig.BUSINESS_DETAIL)
+    Call<ResponseModel<BusinessDetailEntity>> requestBusinessDetail(@Query("businessNo") String businessNo, @Query("userNo") String userNo);
 
     /**
      * 最新卡券信息

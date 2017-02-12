@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
-import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.IUtil;

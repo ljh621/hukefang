@@ -12,7 +12,7 @@ import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
 import com.yunwei.easyDear.common.dialog.DialogFactory;
 import com.yunwei.easyDear.common.dialog.ToastUtil;
-import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.cardpayFunction.CardPayActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;

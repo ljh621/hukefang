@@ -1,4 +1,4 @@
-package com.yunwei.easyDear.function.mainFuncations.articleFunction;
+package com.yunwei.easyDear.function.mainFuncations.businessFunction;
 
 import java.io.Serializable;
 

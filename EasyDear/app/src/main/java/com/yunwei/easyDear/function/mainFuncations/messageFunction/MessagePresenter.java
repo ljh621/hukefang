@@ -12,7 +12,7 @@ import java.util.List;
  * Created by LJH on 2017/1/22.
  */
 
-public class MessagePresenter implements MessageContact.MessagePresenter, MessageDataSource.BusMsgCallBack, MessageDataSource.TuiMsgCallBack, MessageDataSource.MsgDetailCallBack {
+public class MessagePresenter implements MessageContact.Presenter, MessageDataSource.BusMsgCallBack, MessageDataSource.TuiMsgCallBack, MessageDataSource.MsgDetailCallBack {
 
     private MessageContact.MessageView mMessageView;
     private MessageContact.MessageDetailView messageDetailView;

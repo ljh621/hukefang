@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
-import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 
 import butterknife.BindView;

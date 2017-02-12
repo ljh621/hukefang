@@ -1,5 +1,7 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
+
 import java.util.ArrayList;
 
 /**
