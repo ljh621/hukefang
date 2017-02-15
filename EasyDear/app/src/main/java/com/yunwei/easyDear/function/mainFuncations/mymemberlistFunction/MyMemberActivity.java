@@ -2,22 +2,17 @@ package com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
 import com.yunwei.easyDear.base.DataApplication;
-import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.CardItemEntity;
-import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.MyCardAdapter;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
@@ -33,7 +28,7 @@ public class MyMemberActivity extends BaseActivity implements PullToRefreshRecyc
 
     private MyMemberAdapter adapter;
 
-    private BusinessPresenter businessPresenter;
+    private MemberBusinessPresenter memberBusinessPresenter;
 
     private int defaultPageSize = 1;
 
@@ -43,7 +38,7 @@ public class MyMemberActivity extends BaseActivity implements PullToRefreshRecyc
         super.setContentView(R.layout.activity_mymember);
         setToolbarTitle("我的会员权益");
         ButterKnife.bind(this);
-        businessPresenter = new BusinessPresenter(this);
+        memberBusinessPresenter = new MemberBusinessPresenter(this);
 
         initRecyclerView();
     }
@@ -63,13 +58,13 @@ public class MyMemberActivity extends BaseActivity implements PullToRefreshRecyc
     @Override
     public void onDownRefresh() {
         defaultPageSize = 1;
-        businessPresenter.reqBusinessListAction();
+        memberBusinessPresenter.reqBusinessListAction();
     }
 
     @Override
     public void onPullRefresh() {
         defaultPageSize++;
-        businessPresenter.reqBusinessListAction();
+        memberBusinessPresenter.reqBusinessListAction();
     }
 
     @Override

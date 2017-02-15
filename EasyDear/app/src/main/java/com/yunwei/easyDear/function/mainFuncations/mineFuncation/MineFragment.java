@@ -20,15 +20,16 @@ import com.yunwei.easyDear.common.dialog.CommPopupWindow;
 import com.yunwei.easyDear.function.account.LoginRegistActivity;
 import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
+import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.adapter.BusinessAdapter;
-import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
+import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MineContact;
+import com.yunwei.easyDear.function.mainFuncations.mycardlistFunction.MyCardActivity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessContract;
-import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.BusinessPresenter;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MemberBusinessPresenter;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MyMemberActivity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
-import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import java.util.List;
@@ -45,7 +46,7 @@ import butterknife.OnClick;
  * @date 2016/11/22 18:12
  */
 
-public class MineFragment extends BaseFragment implements BusinessContract.BusinessView {
+public class MineFragment extends BaseFragment implements MineContact.MineView, BusinessContract.BusinessView {
 
     private static MineFragment fragment;
     @BindView(R.id.mineFragment_login_rigest_layout)
@@ -54,18 +55,10 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
     TextView mineFragmentUserNickTv;
     @BindView(R.id.mineFragment_user_headview_iv)
     ImageView mineFragmentUserHeadviewIv;
-    @BindView(R.id.mineFragment_consumer_coupon_iv)
-    ImageView mineFragmentConsumerCouponIv;
-    @BindView(R.id.mineFragment_consumer_coupon_text)
-    TextView mineFragmentConsumerCouponText;
-    @BindView(R.id.mineFragment_consumer_coupon_container)
-    RelativeLayout mineFragmentConsumerCouponContainer;
-    @BindView(R.id.mineFragment_equity_merchant_iv)
-    ImageView mineFragmentEquityMerchantIv;
-    @BindView(R.id.mineFragment_equity_merchant_text)
-    TextView mineFragmentEquityMerchantText;
-    @BindView(R.id.mineFragment_equity_merchant_container)
-    RelativeLayout mineFragmentEquityMerchantContainer;
+    @BindView(R.id.mine_card_amount)
+    TextView mMineCardAmount;
+    @BindView(R.id.mine_business_amount)
+    TextView mMineBusinessAmount;
     @BindView(R.id.mineFragment_userInfo_layout)
     RelativeLayout mineFragmentUserInfoLayout;
     @BindView(R.id.mineFragment_business_gridView)
@@ -75,7 +68,8 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
 
     private CommPopupWindow commPopupWindow;
 
-    private BusinessPresenter businessPresenter;
+    private MinePresenter minePresenter;
+    private MemberBusinessPresenter memberBusinessPresenter;
 
     private BusinessAdapter businessAdapter;
 
@@ -89,7 +83,8 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        businessPresenter = new BusinessPresenter(this);
+        memberBusinessPresenter = new MemberBusinessPresenter(this);
+        minePresenter = new MinePresenter(this);
     }
 
     @Nullable
@@ -105,6 +100,7 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
     public void onResume() {
         super.onResume();
         initUI();
+        requestMyCardBusinessAmount();
     }
 
     private void initUI() {
@@ -120,16 +116,36 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
         Glide.with(getActivity()).load(BuildConfig.DOMAI + entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(mineFragmentUserHeadviewIv));
     }
 
+    private void requestMyCardBusinessAmount() {
+        UserInfoEntity entity = DataApplication.getInstance().getUserInfoEntity();
+        if (entity == null || mineFragmentUserInfoLayout.getVisibility() == View.GONE) {
+            return;
+        }
+        minePresenter.requestMyCardAmount();
+        minePresenter.requestMyBusinessAmount();
+    }
+
     /**
      * 初始化会员默认列表
      */
     private void initGridView() {
         businessAdapter = new BusinessAdapter(getActivity());
         mineFragmentBusinessGridView.setAdapter(businessAdapter);
-        businessPresenter.reqBusinessListAction();
+        memberBusinessPresenter.reqBusinessListAction();
     }
 
-    @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})
+    @Override
+    public void setCardAmount(CardEntity cardEntity) {
+        mMineCardAmount.setText("" + cardEntity.getCardSize());
+    }
+
+    @Override
+    public void setBusinessAmount(com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BusinessEntity businessEntity) {
+        mMineBusinessAmount.setText("" + businessEntity.getBusinessSize());
+    }
+
+    @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mine_card_amount_container, R.id.mine_business_amount_container,
+            R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mineFragment_login_btn:
@@ -140,6 +156,12 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
                 break;
             case R.id.mineFragment_setting_tv:
                 ISkipActivityUtil.startIntent(getActivity(), SetingInfoActivity.class);
+                break;
+            case R.id.mine_card_amount_container:
+                ISkipActivityUtil.startIntent(getActivity(), MyCardActivity.class);
+                break;
+            case R.id.mine_business_amount_container:
+                ISkipActivityUtil.startIntent(getActivity(), MyMemberActivity.class);
                 break;
             case R.id.mineFragment_all_order_layout:
                 ISkipActivityUtil.startIntent(getActivity(), MyOrderActivity.class);
@@ -206,4 +228,5 @@ public class MineFragment extends BaseFragment implements BusinessContract.Busin
     public int getPageCount() {
         return 4;
     }
+
 }

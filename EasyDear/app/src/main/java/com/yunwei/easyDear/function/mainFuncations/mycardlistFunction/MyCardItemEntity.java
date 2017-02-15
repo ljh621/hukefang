@@ -4,7 +4,7 @@ package com.yunwei.easyDear.function.mainFuncations.mycardlistFunction;
  * Created by LJH on 2017/1/15.
  */
 
-public class CardItemEntity {
+public class MyCardItemEntity {
 
     private String logoUrl;
     private String viceTitle;

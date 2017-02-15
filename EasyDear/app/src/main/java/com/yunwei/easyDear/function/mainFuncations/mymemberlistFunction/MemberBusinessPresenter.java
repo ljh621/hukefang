@@ -2,7 +2,7 @@ package com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction;
 
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.source.BusinessDataSource;
-import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.source.BusinessRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.source.MemberBusinessRemoteRepo;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ import java.util.List;
  * @date 2017/1/21 14:53
  */
 
-public class BusinessPresenter implements BusinessContract.Present,BusinessDataSource.BusinessCallBack{
+public class MemberBusinessPresenter implements BusinessContract.Present,BusinessDataSource.BusinessCallBack{
 
-    private BusinessRemoteRepo remoteRepo;
+    private MemberBusinessRemoteRepo remoteRepo;
     private BusinessContract.BusinessView businessView;
 
-    public BusinessPresenter(BusinessContract.BusinessView businessView){
-        this.remoteRepo=BusinessRemoteRepo.newInstance();
+    public MemberBusinessPresenter(BusinessContract.BusinessView businessView){
+        this.remoteRepo= MemberBusinessRemoteRepo.newInstance();
         this.businessView=businessView;
     }
     @Override

@@ -72,7 +72,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 
-        <activity android:name=".function.mainFuncations.CardDetailFunction.CardDetailActivity"
+        <activity android:name=".function.mainFuncations.cardDetailFunction.CardDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
 

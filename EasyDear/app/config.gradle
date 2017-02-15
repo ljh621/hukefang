@@ -65,6 +65,9 @@ android {
         /**文章详情*/
         buildConfigField "String", "ARTICLE_DETAIL", "\"article/detailById\""
 
+        /**商家详情*/
+        buildConfigField "String", "BUSINESS_DETAIL", "\"business/detailByBusNo\""
+
         /**最新卡券信息*/
         buildConfigField "String", "LATEST_CARD_INFO", "\"card/listByBusNo\""
 
@@ -74,9 +77,13 @@ android {
         /**商家软文列表*/
         buildConfigField "String", "BUSINESS_ARTICLE_LIST", "\"article/listByBusNo\""
 
+        /**获取系统信息列表*/
+        buildConfigField "String", "TUI_MESSAGE_LIST", "\"information/tuiList\""
+
         /**获取商家信息列表*/
         buildConfigField "String", "BUSINESS_MESSAGE_LIST", "\"information/busInforList\""
-        /*信息详情*/
-        buildConfigField "String", "MESSAGE_DETAIL_URL", "\"information/ busDetailInforList\""
+
+        /**单个商家信息详情*/
+        buildConfigField "String", "MESSAGE_DETAIL_URL", "\"information/busDetailInforList\""
     }
 }
