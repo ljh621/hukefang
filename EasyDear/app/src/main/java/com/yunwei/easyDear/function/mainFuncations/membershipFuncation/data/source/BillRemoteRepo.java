@@ -43,7 +43,7 @@ public class BillRemoteRepo implements BillDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     cardCallBack.onCardSuccess(response.body().getData().getCardSize());
                 } else {
-                    cardCallBack.onCardFalire(response.body().getMessage());
+                    cardCallBack.onCardFalire("获取失败");
                 }
             }
 
@@ -63,7 +63,7 @@ public class BillRemoteRepo implements BillDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onBusinessSuccess(response.body().getData().getBusinessSize());
                 } else {
-                    callBack.onBusinessFalire(response.body().getMessage());
+                    callBack.onBusinessFalire("获取失败");
                 }
             }
 
@@ -83,7 +83,7 @@ public class BillRemoteRepo implements BillDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onBillSuccess(response.body().getData().getBillSize());
                 } else {
-                    callBack.onBillFalire(response.body().getMessage());
+                    callBack.onBillFalire("获取失败");
                 }
             }
 

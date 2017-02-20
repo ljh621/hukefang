@@ -88,4 +88,17 @@ public class IUtil {
         }
         return null;
     }
+
+    /**
+     * Url过滤
+     *
+     * @param url
+     * @return
+     */
+    public static String fitterUrl(String url) {
+        if (!url.contains("http://")) {
+            url = "file://" + url;
+        }
+        return url;
+    }
 }

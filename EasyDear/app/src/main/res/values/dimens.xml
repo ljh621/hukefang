@@ -12,6 +12,8 @@
     <dimen name="tab_tilte_selected">17sp</dimen>
     <dimen name="tab_tilte_nor">15sp</dimen>
 
+    <dimen name="recycler_item_space">3dip</dimen>
+
     <dimen name="fixed_height">56dp</dimen>
     <dimen name="fixed_height_top_padding_inactive">2dp
     </dimen><!-- 8(Top Padding) - 12/2(extra padding due to badges) = 2 -->

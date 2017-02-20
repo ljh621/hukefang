@@ -35,8 +35,12 @@ public class BillRemoteRemo implements BillDataSource {
         call.enqueue(new Callback<ResponseModel<String>>() {
             @Override
             public void onResponse(Call<ResponseModel<String>> call, Response<ResponseModel<String>> response) {
-                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
-                    callBack.getBillSuccess(response.body());
+                if (response.isSuccessful()) {
+                    if (response.body().getCode() == Constant.HTTP_SUCESS_CODE){
+                        callBack.getBillSuccess(response.body());
+                    }else {
+                        callBack.getBillFailure("查询失败");
+                    }
                 } else {
                     callBack.getBillFailure(response.body().getMessage());
                 }

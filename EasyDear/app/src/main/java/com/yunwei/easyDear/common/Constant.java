@@ -61,6 +61,13 @@ public class Constant {
     public static final int HTTP_PASSWORD_ERROR_CODE = 400;/*登录账号或密码失败*/
 
     /**
+     * 权限请求
+     */
+    public static final int REQUEST_ACCESS_COARSE_LOCATION = 1000;/*定位权限*/
+    public static final int REQUEST_READ_EXTERNAL_STORAGE = 1001;/*读取外部存储卡权限*/
+    public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1002;/*写入外部存储卡权限*/
+
+    /**
      * 足迹采集方式
      */
     public enum TRACK_RECORD_MODE {

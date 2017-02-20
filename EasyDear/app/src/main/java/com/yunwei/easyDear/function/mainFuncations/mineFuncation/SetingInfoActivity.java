@@ -1,5 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.mineFuncation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -20,10 +21,17 @@ import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.AboutFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
+import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.ModiflyNickFragment;
+import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.ModiflyPasswordFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.TrackSetingFragment;
+import com.yunwei.easyDear.function.pictureFuncation.SelectPictureActivity;
+import com.yunwei.easyDear.function.pictureFuncation.data.PictureEntity;
 import com.yunwei.easyDear.utils.IActivityManage;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +78,7 @@ public class SetingInfoActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.SetingInfoHeadView_layout:
-
+                SelectPictureActivity.startIntent(this,1);
                 break;
             case R.id.SetingInfo_exit_btn:
                 IActivityManage.getInstance().exit();
@@ -79,11 +87,24 @@ public class SetingInfoActivity extends BaseActivity {
             case R.id.setting_info_about_us_container:/*关于我们*/
                 break;
             case R.id.setting_info_change_password_container:/*修改密码*/
+                UpdateActivity.startIntent(this, ModiflyPasswordFragment.MODIFLY_PASSWORD_FLAG,"密码修改",901);
                 break;
             case R.id.setting_info_nickname_container:/*修改Nick*/
+                UpdateActivity.startIntent(this, ModiflyNickFragment.MODIFLY_NICK_FLAG,"昵称修改",900);
                 break;
             case R.id.setting_info_contact_us_container:/*联系我们*/
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==SelectPictureActivity.SELECT_PICTURE_RESULT_CODE){
+            List<PictureEntity> list=(List<PictureEntity>) data.getSerializableExtra("result");
+            if (list!=null&&list.size()>0){
+                Glide.with(this).load(IUtil.fitterUrl(list.get(0).getUrl())).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headImageView));
+            }
         }
     }
 }

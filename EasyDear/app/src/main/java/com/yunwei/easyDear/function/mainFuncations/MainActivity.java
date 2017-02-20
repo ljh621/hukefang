@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
      */
     private void init() {
         initBottomNavigationBar();
-        initPresenter();
+//        initPresenter();
     }
 
     /**

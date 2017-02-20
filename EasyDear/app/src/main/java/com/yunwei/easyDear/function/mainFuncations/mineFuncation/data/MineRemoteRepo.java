@@ -34,7 +34,7 @@ public class MineRemoteRepo implements MineDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.getCardCountSuccess(response.body().getData());
                 } else {
-                    callBack.getCardCountFailure(response.body().getMessage());
+                    callBack.getCardCountFailure("获取卡券数量失败");
                 }
             }
 
@@ -56,7 +56,7 @@ public class MineRemoteRepo implements MineDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.getBusinessCountSuccess(response.body().getData());
                 } else {
-                    callBack.getBusinessCountFailure(response.body().getMessage());
+                    callBack.getBusinessCountFailure("获取商家数量失败");
                 }
             }
 

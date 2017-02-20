@@ -8,7 +8,8 @@ android {
             buildConfigField "boolean", "LOGSWITCH", "true"
         }
         debug {
-            buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
+//            buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
+            buildConfigField "String", "DOMAI", "\"http://www.somember.com/\""
             buildConfigField "boolean", "LOGSWITCH", "false"
         }
     }

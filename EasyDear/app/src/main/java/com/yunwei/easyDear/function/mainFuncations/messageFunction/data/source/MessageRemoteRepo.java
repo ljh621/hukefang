@@ -44,7 +44,7 @@ public class MessageRemoteRepo implements MessageDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onReqTuiMessagesSuccess(response.body().getData());
                 } else {
-                    callBack.onReqTuiMessagesFailure(response.body().getMessage());
+                    callBack.onReqTuiMessagesFailure("获取失败");
                 }
             }
 
@@ -67,7 +67,7 @@ public class MessageRemoteRepo implements MessageDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onReqBusMessagesSuccess(response.body().getData());
                 } else {
-                    callBack.onReqBusMessagesFailure(response.body().getMessage());
+                    callBack.onReqBusMessagesFailure("获取失败");
                 }
             }
 
@@ -92,7 +92,7 @@ public class MessageRemoteRepo implements MessageDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.getMsgSuccess(response.body().getData());
                 } else {
-                    callBack.getMsgFailure(response.body().getCode(), response.body().getMessage());
+                    callBack.getMsgFailure(response.body().getCode(), "获取失败");
                 }
             }
 
