@@ -41,7 +41,7 @@ public class MemberBusinessRemoteRepo implements BusinessDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.getBusinessSuccess(response.body().getData());
                 } else {
-                    callBack.getBusinessFailure(response.body().getMessage());
+                    callBack.getBusinessFailure("获取失败");
                 }
             }
 

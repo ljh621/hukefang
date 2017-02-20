@@ -50,10 +50,14 @@ public class LoginRemoteRepo implements LoginDataSoure {
         call.enqueue(new Callback<ResponseModel<List<UserInfoEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<UserInfoEntity>>> call, Response<ResponseModel<List<UserInfoEntity>>> response) {
-                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
-                    callBack.onLoginSuccess(response.body().getData().get(0));
+                if (response.isSuccessful()) {
+                    if (response.body().getCode() == Constant.HTTP_SUCESS_CODE){
+                        callBack.onLoginSuccess(response.body().getData().get(0));
+                    }else {
+                        callBack.onLoginFailure(response.body().getMessage());
+                    }
                 } else {
-                    callBack.onLoginFailure(response.body().getMessage());
+                    callBack.onLoginFailure(IUtil.getStrToRes(R.string.login_failure));
                 }
             }
 

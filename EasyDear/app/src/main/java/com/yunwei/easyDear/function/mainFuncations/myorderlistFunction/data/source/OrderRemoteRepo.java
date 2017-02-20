@@ -40,7 +40,7 @@ public class OrderRemoteRepo implements OrderDatasource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.getOrderSuccess(response.body().getData());
                 } else {
-                    callBack.getOrderFailure(response.body().getMessage());
+                    callBack.getOrderFailure("获取订单失败");
                 }
             }
 

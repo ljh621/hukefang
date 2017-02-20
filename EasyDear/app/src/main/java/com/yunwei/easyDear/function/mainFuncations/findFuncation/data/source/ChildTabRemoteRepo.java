@@ -40,7 +40,7 @@ public class ChildTabRemoteRepo implements ChildTabDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onGetArticleListSuccess(response.body().getData());
                 } else {
-                    callBack.onGetArticleListFailure(response.body().getCode(), response.body().getMessage());
+                    callBack.onGetArticleListFailure(response.body().getCode(), "获取文章列表失败");
                 }
             }
 

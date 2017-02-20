@@ -18,12 +18,12 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>  <!--闪关灯-->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />  <!--闪关灯-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- unavailable in API 23 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
     <application
@@ -60,57 +60,85 @@
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.account.LoginRegistActivity"
+        <activity
+            android:name=".function.account.LoginRegistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.account.RestPasswordActivity"
+        <activity
+            android:name=".function.account.RestPasswordActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.articleFunction.ArticleActivity"
+        <activity
+            android:name=".function.mainFuncations.articleFunction.ArticleActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.cardDetailFunction.CardDetailActivity"
+        <activity
+            android:name=".function.mainFuncations.cardDetailFunction.CardDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.messageFunction.MessageActivity"
+        <activity
+            android:name=".function.mainFuncations.messageFunction.MessageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.messageFunction.MessageDetailActivity"
+        <activity
+            android:name=".function.mainFuncations.messageFunction.MessageDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.businessFunction.BusinessActivity"
+        <activity
+            android:name=".function.mainFuncations.businessFunction.BusinessActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.myorderlistFunction.MyOrderActivity"
+        <activity
+            android:name=".function.mainFuncations.myorderlistFunction.MyOrderActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.mycardlistFunction.MyCardActivity"
+        <activity
+            android:name=".function.mainFuncations.mycardlistFunction.MyCardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.mymemberlistFunction.MyMemberActivity"
+        <activity
+            android:name=".function.mainFuncations.mymemberlistFunction.MyMemberActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.membercenterFunction.MemberCenterActivity"
+        <activity
+            android:name=".function.mainFuncations.membercenterFunction.MemberCenterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name=".function.mainFuncations.cardpayFunction.CardPayActivity"
+        <activity
+            android:name=".function.mainFuncations.cardpayFunction.CardPayActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
-        <activity android:name="com.google.zxing.client.android.CaptureActivity"
+        <activity
+            android:name="com.google.zxing.client.android.CaptureActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/JK.SwipeBack.Transparent.Theme"/>
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".function.pictureFuncation.SelectPictureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".function.pictureFuncation.ShowPictureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".function.mainFuncations.mineFuncation.UpdateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
 
         <!-- 高德地图配制[吴和志] -->

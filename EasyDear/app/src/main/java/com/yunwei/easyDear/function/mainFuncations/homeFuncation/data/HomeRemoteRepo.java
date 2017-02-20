@@ -36,7 +36,7 @@ public class HomeRemoteRepo implements HomeDataSource {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onGetTopScrollArticlesSuccess(response.body().getData());
                 } else {
-                    callBack.onGetTopScrollArticlesSuccess(response.body().getMessage());
+                    callBack.onGetTopScrollArticlesSuccess("加载失败");
                 }
             }
 
