@@ -31,6 +31,8 @@ public interface LoginDataSoure extends BaseDataSourse {
         String getPassword();
 
         String getMobileKey();
+
+        String getCode();
     }
 
     interface ValidateCallBack {
@@ -41,9 +43,35 @@ public interface LoginDataSoure extends BaseDataSourse {
         String getSendMobile();
     }
 
+    interface UpdatePasswordCallBack {
+        void onUpdatePwdSuccess(String msg);
+
+        void onUpdateFailure(String code);
+
+        String getUserNo();
+
+        String getOldPwd();
+
+        String getNewPwd();
+    }
+
+    interface UpdateNickNameCallBack {
+        String getUserNoToNickName();
+
+        String getNickName();
+
+        void onUpdateNickNameSuccess(String msg);
+
+        void onUpdateNickNameFailure(String error);
+    }
+
     void login(String account, String password, LoginCallBack callBack);
 
     void rigest(RigestCallBack callBack);
 
     void sendValidateCode(ValidateCallBack callBack);
+
+    void updatePassword(UpdatePasswordCallBack callBack);
+
+    void updateNickName(UpdateNickNameCallBack callBack);
 }

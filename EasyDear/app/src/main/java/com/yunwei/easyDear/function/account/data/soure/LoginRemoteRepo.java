@@ -34,6 +34,8 @@ public class LoginRemoteRepo implements LoginDataSoure {
     private Call<ResponseModel<UserInfoEntity>> call;
     private Call<ResponseModel<UserInfoEntity>> rigestCall;
     private Call<ResponseModel<ValidateCodeEntity>> validateCall;
+    private Call<ResponseModel> updatePwdCall;
+    private Call<ResponseModel> updateNickNameCall;
 
     public static LoginRemoteRepo newInstance() {
         if (remoteRepo == null) {
@@ -72,7 +74,7 @@ public class LoginRemoteRepo implements LoginDataSoure {
             callBack.onRigestFailure(IUtil.getStrToRes(R.string.invalid_network));
             return;
         }
-        rigestCall = RetrofitManager.getInstance().getService().registRepo(callBack.getMobile(), callBack.getPassword(), callBack.getMobileKey());
+        rigestCall = RetrofitManager.getInstance().getService().registRepo(callBack.getMobile(), callBack.getPassword(), callBack.getCode(), callBack.getMobileKey());
         rigestCall.enqueue(new Callback<ResponseModel<UserInfoEntity>>() {
             @Override
             public void onResponse(Call<ResponseModel<UserInfoEntity>> call, Response<ResponseModel<UserInfoEntity>> response) {
@@ -106,6 +108,46 @@ public class LoginRemoteRepo implements LoginDataSoure {
             @Override
             public void onFailure(Call<ResponseModel<ValidateCodeEntity>> call, Throwable t) {
                 callBack.onValidateFailure("获取失败");
+            }
+        });
+    }
+
+    @Override
+    public void updatePassword(final UpdatePasswordCallBack callBack) {
+        updatePwdCall = RetrofitManager.getInstance().getService().updatePassword(callBack.getUserNo(), callBack.getOldPwd(), callBack.getNewPwd());
+        updatePwdCall.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.onUpdatePwdSuccess(response.body().getMessage());
+                } else {
+                    callBack.onUpdateFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                callBack.onUpdateFailure("修改失败");
+            }
+        });
+    }
+
+    @Override
+    public void updateNickName(final UpdateNickNameCallBack callBack) {
+        updateNickNameCall=RetrofitManager.getInstance().getService().updateNickName(callBack.getNickName(),callBack.getUserNoToNickName());
+        updateNickNameCall.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.onUpdateNickNameSuccess(response.body().getMessage());
+                } else {
+                    callBack.onUpdateNickNameFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                callBack.onUpdateNickNameFailure("修改失败");
             }
         });
     }

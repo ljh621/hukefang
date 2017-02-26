@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- unavailable in API 23 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 
     <application
@@ -137,6 +138,11 @@
 
         <activity
             android:name=".function.mainFuncations.mineFuncation.UpdateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".function.mainFuncations.mineFuncation.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 

@@ -53,9 +53,9 @@ public class DataApplication extends Application implements MainContract.MainVie
      * @return
      */
     public UserInfoEntity getUserInfoEntity() {
-        if (userInfoEntity == null) {
+//        if (userInfoEntity == null) {
             userInfoEntity = new Gson().fromJson(ISpfUtil.getValue(Constant.USERINFO_KEY, "").toString(), UserInfoEntity.class);
-        }
+//        }
         return userInfoEntity;
     }
 

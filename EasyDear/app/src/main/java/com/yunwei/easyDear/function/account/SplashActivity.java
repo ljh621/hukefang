@@ -3,6 +3,7 @@ package com.yunwei.easyDear.function.account;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,6 +13,7 @@ import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.handler.HandlerValue;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.function.account.data.soure.LoginRemoteRepo;
 import com.yunwei.easyDear.function.mainFuncations.MainActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
@@ -39,7 +41,7 @@ public class SplashActivity extends BaseActivity implements AccountContract.Logi
         super.dispatchMessage(msg);
         switch (msg.what) {
             case HandlerValue.START_PAGE_DELAYED:
-                ISkipActivityUtil.startIntent(this, MainActivity.class);
+                ISkipActivityUtil.startIntent(this, LoginRegistActivity.class);
                 break;
         }
     }
@@ -53,12 +55,12 @@ public class SplashActivity extends BaseActivity implements AccountContract.Logi
         ButterKnife.bind(this);
 //        Glide.with(this).load(R.mipmap.default_welcom).into(splashIv);
         /*重新登录获取新Token*/
-//        if (!TextUtils.isEmpty(ISpfUtil.getValue(Constant.ACCOUNT_KEY, "").toString()) && !TextUtils.isEmpty(ISpfUtil.getValue(Constant.PSSWORD_KEY, "").toString())) {
-//            loginPresenter = new LoginPresenter(LoginRemoteRepo.newInstance(), this);
-//            loginPresenter.login();
-//        } else {
+        if (!TextUtils.isEmpty(ISpfUtil.getValue(Constant.ACCOUNT_KEY, "").toString()) && !TextUtils.isEmpty(ISpfUtil.getValue(Constant.PSSWORD_KEY, "").toString())) {
+            loginPresenter = new LoginPresenter(LoginRemoteRepo.newInstance(), this);
+            loginPresenter.login();
+        } else {
             mHandler.sendEmptyMessageDelayed(HandlerValue.START_PAGE_DELAYED, Constant.THREE_SECONDES);
-//        }
+        }
     }
 
     @Override

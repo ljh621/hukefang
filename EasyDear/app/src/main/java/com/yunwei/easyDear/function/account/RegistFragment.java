@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.yunwei.easyDear.R;
@@ -18,6 +19,9 @@ import com.yunwei.easyDear.function.mainFuncations.MainActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.widget.ResetEditView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +43,11 @@ public class RegistFragment extends BaseFragment implements AccountContract.Regi
     ResetEditView registFragmentPasswordEditView;
     @BindView(R.id.registFragment_validateCode_editText)
     EditText validateCodeEditView;
+    @BindView(R.id.registFragment_send_vaildate_code)
+    Button timeButton;
+
+    private Timer timer = new Timer();
+    private int validateTime = 60;
 
     private Dialog loadDialog;
 
@@ -106,7 +115,6 @@ public class RegistFragment extends BaseFragment implements AccountContract.Regi
 
     @Override
     public void registSuccess() {
-        ToastUtil.showToast(getActivity(), "注册成功");
         ISkipActivityUtil.startIntent(getActivity(), MainActivity.class);
     }
 
@@ -131,8 +139,13 @@ public class RegistFragment extends BaseFragment implements AccountContract.Regi
     }
 
     @Override
+    public String getCode() {
+        return validateCodeEditView.getText().toString();
+    }
+
+    @Override
     public void onStartSendValidateCode() {
-        loadDialog=DialogFactory.createLoadingDialog(getActivity(),"正在发送...");
+        loadDialog = DialogFactory.createLoadingDialog(getActivity(), "正在发送...");
     }
 
     @Override
@@ -144,10 +157,28 @@ public class RegistFragment extends BaseFragment implements AccountContract.Regi
     public void getValidateCodeSuccess(String code) {
         validateCode = code;
         ToastUtil.showToast(getActivity(), "验证码已发送");
+        timer.schedule(task, 1000, 1000);
     }
 
     @Override
     public void getValidateCodeFailure(String error) {
         ToastUtil.showToast(getActivity(), error);
     }
+
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            getActivity().runOnUiThread(new Runnable() {      // UI thread
+                @Override
+                public void run() {
+                    validateTime--;
+                    timeButton.setText(validateTime + "秒后可以获取");
+                    if (validateTime < 0) {
+                        timer.cancel();
+                        timeButton.setText("获取验证码");
+                    }
+                }
+            });
+        }
+    };
 }

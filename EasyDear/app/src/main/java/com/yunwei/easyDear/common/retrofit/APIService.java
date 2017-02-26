@@ -49,7 +49,7 @@ public interface APIService {
      * @return
      */
     @GET(BuildConfig.REGIST_URL)
-    Call<ResponseModel<UserInfoEntity>> registRepo(@Query("mobile") String mobile, @Query("password") String password, @Query("mobileKey") String mobileKey);
+    Call<ResponseModel<UserInfoEntity>> registRepo(@Query("mobile") String mobile, @Query("password") String password, @Query("code") String code, @Query("mobileKey") String mobileKey);
 
     /**
      * 发送验证码
@@ -59,6 +59,27 @@ public interface APIService {
      */
     @GET(BuildConfig.SEND_VALIDATE_CODE)
     Call<ResponseModel<ValidateCodeEntity>> sendValidateCode(@Query("mobile") String MobileCode);
+
+    /**
+     * 密码修改
+     *
+     * @param userNo
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    @GET(BuildConfig.UPDATE_PASSWORD)
+    Call<ResponseModel> updatePassword(@Query("userNo") String userNo, @Query("oldPassword") String oldPassword, @Query("newPassword") String newPassword);
+
+    /**
+     * 昵称修改
+     *
+     * @param nickName
+     * @param userNo
+     * @return
+     */
+    @GET(BuildConfig.UPDATE_NICK_NAME)
+    Call<ResponseModel> updateNickName(@Query("nickName") String nickName, @Query("userNo") String userNo);
 
     /**
      * 订单列表
