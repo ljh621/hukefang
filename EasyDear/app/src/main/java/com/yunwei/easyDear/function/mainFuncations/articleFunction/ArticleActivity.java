@@ -1,10 +1,16 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,9 +19,12 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.common.dialog.CommPopupWindow;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
 import com.yunwei.easyDear.function.mainFuncations.cardDetailFunction.CardDetailActivity;
+import com.yunwei.easyDear.utils.IAppUtil;
+import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.IViewUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
@@ -189,13 +198,33 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
     }
 
     private void shareAction() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-//        intent.setType("image/*");
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
-        intent.putExtra(Intent.EXTRA_TEXT, "http://society.qq.com/a/20161222/035882.htm#p=1");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(Intent.createChooser(intent, "分享到"));
+        List<ResolveInfo> resolveInfos = IAppUtil.getShareAppInfos();
+        final List<AppInfo> appInfoList = IAppUtil.getArticleShareAppInfos(resolveInfos);
+        ShareAppAdapter shareAppAdapter = new ShareAppAdapter(ArticleActivity.this, appInfoList);
+
+        View sharePopWinView = LayoutInflater.from(ArticleActivity.this).inflate(R.layout.dialog_share_popwin_layout, null);
+        GridView shareGridView = (GridView) sharePopWinView.findViewById(R.id.dialog_share_app_gridview);
+        shareGridView.setAdapter(shareAppAdapter);
+
+        final CommPopupWindow commPopupWindow = new CommPopupWindow(sharePopWinView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        commPopupWindow.showAtButton(ArticleActivity.this.findViewById(R.id.activity_article_root));
+
+        shareGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.setComponent(new ComponentName(appInfoList.get(i).getPackageName(), appInfoList.get(i).getActivityName()));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Share");
+                intent.putExtra(Intent.EXTRA_TEXT, "喜欢我就点我吧");
+                intent.putExtra(Intent.EXTRA_TEXT, "http://society.qq.com/a/20161222/035882.htm#p=1");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                startActivity(intent);
+                commPopupWindow.dismiss();
+            }
+        });
+
     }
 
 }
