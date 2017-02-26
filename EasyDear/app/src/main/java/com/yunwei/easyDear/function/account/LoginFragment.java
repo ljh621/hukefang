@@ -101,7 +101,6 @@ public class LoginFragment extends BaseFragment implements AccountContract.Login
 
     @Override
     public void loginSuccess(UserInfoEntity entity) {
-        ToastUtil.showToast(getActivity(), "登录成功");
         ISkipActivityUtil.startIntent(getActivity(), MainActivity.class);
     }
 

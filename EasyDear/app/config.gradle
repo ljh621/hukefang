@@ -44,6 +44,10 @@ android {
         buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
         /*修改用户密码*/
         buildConfigField "String", "UPDATE_USER_PWD_URL", "\"v2/account/changepwd/\""
+        /*修改密码*/
+        buildConfigField "String", "UPDATE_PASSWORD", "\"user/updatePassword\"";
+        /*昵称修改*/
+        buildConfigField "String", "UPDATE_NICK_NAME", "\"user/updateNickName\""
         /*用户订单列表*/
         buildConfigField "String", "BILL_LIST_URL", "\"user/listBillByUserNo\""
         /*会员商家列表*/

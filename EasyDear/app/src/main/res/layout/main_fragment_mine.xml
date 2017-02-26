@@ -14,35 +14,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/mineFragment_login_rigest_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="25dp"
-                android:paddingTop="25dp"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/mineFragment_login_btn"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dip"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:text="登录" />
-
-                <Button
-                    android:id="@+id/mineFragment_regist_btn"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:text="注册" />
-            </LinearLayout>
-
             <RelativeLayout
                 android:id="@+id/mineFragment_userInfo_layout"
                 android:layout_width="match_parent"

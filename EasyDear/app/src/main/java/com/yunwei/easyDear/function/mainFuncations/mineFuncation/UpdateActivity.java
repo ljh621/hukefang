@@ -8,11 +8,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.common.dialog.DialogFactory;
+import com.yunwei.easyDear.function.account.AccountContract;
+import com.yunwei.easyDear.function.account.LoginPresenter;
+import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.ModiflyNickFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.ModiflyPasswordFragment;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.ISpfUtil;
 
 /**
  * Describe:
@@ -22,11 +30,13 @@ import com.yunwei.easyDear.utils.ISkipActivityUtil;
  * Version:1.0
  */
 
-public class UpdateActivity extends BaseActivity {
+public class UpdateActivity extends BaseActivity implements AccountContract.UpdatePasswordView{
     public final static String FROM_FLAG = "from_flag";
     public final static String TITLE_FLAG = "title_flag";
 
     private String fromValue;
+
+    private LoginPresenter updatePwdPresenter;
 
     public static void startIntent(Activity context, String fromFlag, String titleText, int requestCode) {
         Bundle bundle = new Bundle();
@@ -42,6 +52,7 @@ public class UpdateActivity extends BaseActivity {
         setToolbarTitle(getIntent().getStringExtra(TITLE_FLAG));
         fromValue = getIntent().getStringExtra(FROM_FLAG);
         initView();
+        updatePwdPresenter=new LoginPresenter(this);
     }
 
     private void initView() {
@@ -64,17 +75,89 @@ public class UpdateActivity extends BaseActivity {
     public void onClickToolbarRightLayout() {
         super.onClickToolbarRightLayout();
         if (fromValue.equals(ModiflyNickFragment.MODIFLY_NICK_FLAG)) {//昵称修改返回
-            String nick = ModiflyNickFragment.newInstance().getEditViewText();
+            final String nick = ModiflyNickFragment.newInstance().getEditViewText();
             if (!TextUtils.isEmpty(nick)) {
-                showToast(nick);
+               new LoginPresenter(new AccountContract.UpdateNickNameView() {
+                   @Override
+                   public void onShowDialog() {
+                       loadDialog= DialogFactory.createLoadingDialog(UpdateActivity.this,"昵称修改...");
+                   }
+
+                   @Override
+                   public void onDissmisDialog() {
+                       DialogFactory.dimissDialog(loadDialog);
+                   }
+
+                   @Override
+                   public String getUserNo() {
+                       return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+                   }
+
+                   @Override
+                   public String getNickName() {
+                       return nick;
+                   }
+
+                   @Override
+                   public void onUpdateNickNameSuccess(String msg) {
+                       showToast(msg);
+                       UserInfoEntity entity=DataApplication.getInstance().getUserInfoEntity();
+                       entity.setNickName(nick);
+                       ISpfUtil.setValue(Constant.USERINFO_KEY,new Gson().toJson(entity));
+                       finish();
+                   }
+
+                   @Override
+                   public void onUpdateNickNameFaiulure(String error) {
+                       showToast(error);
+                   }
+               }).updateNickName();
             }else {
                 showToast("昵称不能为空");
             }
         } else if (fromValue.equals(ModiflyPasswordFragment.MODIFLY_PASSWORD_FLAG)) {//密码修改返回
             String newPwd = ModiflyPasswordFragment.newInstance().newPasswordText();
             if (!TextUtils.isEmpty(newPwd)) {
-                showToast(newPwd);
+//                showToast(newPwd);
+                updatePwdPresenter.updatePassword();
             }
         }
+    }
+
+    @Override
+    public void onUpdatePasswordFialure(String error) {
+        showToast(error);
+    }
+
+    @Override
+    public void onShowDialog() {
+        loadDialog= DialogFactory.createLoadingDialog(this,"密码修改...");
+    }
+
+    @Override
+    public void onDissmisDialog() {
+        DialogFactory.dimissDialog(loadDialog);
+    }
+
+    @Override
+    public String getUserNo() {
+        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+    }
+
+    @Override
+    public String getOldPwd() {
+        return ISpfUtil.getValue(Constant.PSSWORD_KEY,"").toString();
+    }
+
+    @Override
+    public String getNewPwd() {
+        return ModiflyPasswordFragment.newInstance().newPasswordText();
+    }
+
+    @Override
+    public void onUpdatePasswordSuccess(String msg) {
+        showToast(msg);
+        ISpfUtil.setValue(Constant.PSSWORD_KEY,ModiflyPasswordFragment.newInstance().newPasswordText());
+        finish();
     }
 }

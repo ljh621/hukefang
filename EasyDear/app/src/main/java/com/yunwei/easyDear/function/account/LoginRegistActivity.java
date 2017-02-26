@@ -31,6 +31,10 @@ public class LoginRegistActivity extends BaseActivity implements ViewPager.OnPag
     TextView loginRegistLoginLine;
     @BindView(R.id.loginRegist_regist_line)
     TextView loginRegistRegistLine;
+    @BindView(R.id.loginResist_login_textView)
+    TextView loginResistLoginTextView;
+    @BindView(R.id.loginResist_regist_textView)
+    TextView loginResistRegistTextView;
 
     private LoginRegistPagerViewPagerAdapter adapter;
     private static int currentPage = 0;
@@ -51,7 +55,7 @@ public class LoginRegistActivity extends BaseActivity implements ViewPager.OnPag
 
     private void initViewPager() {
         loginRegistViewPager.setAdapter(new LoginRegistPagerViewPagerAdapter(getSupportFragmentManager()));
-        loginRegistViewPager.setOffscreenPageLimit(10);
+        loginRegistViewPager.setPageMargin(10);
         switchPage(currentPage);
         loginRegistViewPager.addOnPageChangeListener(this);
     }
@@ -91,10 +95,16 @@ public class LoginRegistActivity extends BaseActivity implements ViewPager.OnPag
             case LoginRegistPagerViewPagerAdapter.VALUE_LOGIN:
                 loginRegistLoginLine.setVisibility(View.VISIBLE);
                 loginRegistRegistLine.setVisibility(View.GONE);
+
+                loginResistLoginTextView.setTextColor(getResources().getColor(R.color.colorAccent));
+                loginResistRegistTextView.setTextColor(getResources().getColor(R.color.gray));
                 break;
             case LoginRegistPagerViewPagerAdapter.VALUE_REGIST:
                 loginRegistLoginLine.setVisibility(View.GONE);
                 loginRegistRegistLine.setVisibility(View.VISIBLE);
+
+                loginResistLoginTextView.setTextColor(getResources().getColor(R.color.gray));
+                loginResistRegistTextView.setTextColor(getResources().getColor(R.color.colorAccent));
                 break;
         }
         loginRegistViewPager.setCurrentItem(page);

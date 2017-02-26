@@ -29,7 +29,9 @@ import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MemberBu
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.MyMemberActivity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.MyOrderActivity;
+import com.yunwei.easyDear.utils.IActivityManage;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.ISystemUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
 
 import java.util.List;
@@ -49,8 +51,6 @@ import butterknife.OnClick;
 public class MineFragment extends BaseFragment implements MineContact.MineView, BusinessContract.BusinessView {
 
     private static MineFragment fragment;
-    @BindView(R.id.mineFragment_login_rigest_layout)
-    LinearLayout mineFragmentLoginRigestLayout;
     @BindView(R.id.mineFragment_user_nick_tv)
     TextView mineFragmentUserNickTv;
     @BindView(R.id.mineFragment_user_headview_iv)
@@ -93,6 +93,7 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
         View rootView = inflater.inflate(R.layout.main_fragment_mine, null);
         ButterKnife.bind(this, rootView);
         initGridView();
+        requestMyCardBusinessAmount();
         return rootView;
     }
 
@@ -100,18 +101,10 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
     public void onResume() {
         super.onResume();
         initUI();
-        requestMyCardBusinessAmount();
     }
 
     private void initUI() {
         UserInfoEntity entity = DataApplication.getInstance().getUserInfoEntity();
-        if (entity == null) {
-            mineFragmentLoginRigestLayout.setVisibility(View.VISIBLE);
-            mineFragmentUserInfoLayout.setVisibility(View.GONE);
-            return;
-        }
-        mineFragmentUserInfoLayout.setVisibility(View.VISIBLE);
-        mineFragmentLoginRigestLayout.setVisibility(View.GONE);
         mineFragmentUserNickTv.setText(entity.getNickName());
         Glide.with(getActivity()).load(BuildConfig.DOMAI + entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(mineFragmentUserHeadviewIv));
     }
@@ -144,16 +137,10 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
         mMineBusinessAmount.setText("" + businessEntity.getBusinessSize());
     }
 
-    @OnClick({R.id.mineFragment_login_btn, R.id.mineFragment_regist_btn, R.id.mineFragment_setting_tv, R.id.mine_card_amount_container, R.id.mine_business_amount_container,
+    @OnClick({R.id.mineFragment_setting_tv, R.id.mine_card_amount_container, R.id.mine_business_amount_container,
             R.id.mineFragment_all_order_layout, R.id.mineFragment_all_business_layout, R.id.mineFragment_tontact_layout, R.id.mineFragment_into_business_layout})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.mineFragment_login_btn:
-                LoginRegistActivity.startIntent(getActivity(), LoginRegistPagerViewPagerAdapter.VALUE_LOGIN);
-                break;
-            case R.id.mineFragment_regist_btn:
-                LoginRegistActivity.startIntent(getActivity(), LoginRegistPagerViewPagerAdapter.VALUE_REGIST);
-                break;
             case R.id.mineFragment_setting_tv:
                 ISkipActivityUtil.startIntent(getActivity(), SetingInfoActivity.class);
                 break;
@@ -171,10 +158,24 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
                 break;
             case R.id.mineFragment_tontact_layout:/*联系客户*/
                 View tontactView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_tontact_layout, null);
+                final TextView tell11 = (TextView) tontactView.findViewById(R.id.dialog_tontact_tel1);
+                final TextView tell22 = (TextView) tontactView.findViewById(R.id.dialog_tontact_tel2);
                 tontactView.findViewById(R.id.dialog_tontact_calcel_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         commPopupWindow.dismiss();
+                    }
+                });
+                tell11.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISystemUtil.callTelAction(getContext(), tell11.getText().toString());
+                    }
+                });
+                tell22.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISystemUtil.callTelAction(getContext(), tell22.getText().toString());
                     }
                 });
                 commPopupWindow = new CommPopupWindow(tontactView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -182,10 +183,24 @@ public class MineFragment extends BaseFragment implements MineContact.MineView, 
                 break;
             case R.id.mineFragment_into_business_layout:/*联系商家*/
                 View businessView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_tontact_layout, null);
+                final TextView tell1 = (TextView) businessView.findViewById(R.id.dialog_tontact_tel1);
+                final TextView tell2 = (TextView) businessView.findViewById(R.id.dialog_tontact_tel2);
                 businessView.findViewById(R.id.dialog_tontact_calcel_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         commPopupWindow.dismiss();
+                    }
+                });
+                tell1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISystemUtil.callTelAction(getContext(), tell1.getText().toString());
+                    }
+                });
+                tell2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISystemUtil.callTelAction(getContext(), tell1.getText().toString());
                     }
                 });
                 commPopupWindow = new CommPopupWindow(businessView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

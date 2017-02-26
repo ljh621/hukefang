@@ -15,11 +15,13 @@ import com.yunwei.easyDear.utils.ISpfUtil;
  * @date 2016/11/29 15:21
  */
 
-public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountContract.Presenter, LoginDataSoure.RigestCallBack, LoginDataSoure.ValidateCallBack {
+public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountContract.Presenter, LoginDataSoure.RigestCallBack, LoginDataSoure.ValidateCallBack,LoginDataSoure.UpdatePasswordCallBack ,LoginDataSoure.UpdateNickNameCallBack{
 
     private AccountContract.LoginView loginView;
     private AccountContract.RegistView registView;
     private AccountContract.validateView validateView;
+    private AccountContract.UpdatePasswordView updatePasswordView;
+    private AccountContract.UpdateNickNameView updateNickNameView;
     private LoginDataSoure remoteRepo;
 
     public LoginPresenter(LoginRemoteRepo remoteRepo, AccountContract.LoginView loginView) {
@@ -35,6 +37,16 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     public LoginPresenter(AccountContract.validateView validateView) {
         this.remoteRepo = LoginRemoteRepo.newInstance();
         this.validateView = validateView;
+    }
+
+    public LoginPresenter(AccountContract.UpdatePasswordView updatePasswordView){
+        this.remoteRepo=LoginRemoteRepo.newInstance();
+        this.updatePasswordView=updatePasswordView;
+    }
+
+    public LoginPresenter(AccountContract.UpdateNickNameView updateNickNameView){
+        this.remoteRepo=LoginRemoteRepo.newInstance();
+        this.updateNickNameView=updateNickNameView;
     }
 
     @Override
@@ -53,6 +65,18 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     public void sendValidateCode() {
         validateView.onStartSendValidateCode();
         remoteRepo.sendValidateCode(this);
+    }
+
+    @Override
+    public void updatePassword() {
+        updatePasswordView.onShowDialog();
+        remoteRepo.updatePassword(this);
+    }
+
+    @Override
+    public void updateNickName() {
+        updateNickNameView.onShowDialog();
+        remoteRepo.updateNickName(this);
     }
 
     @Override
@@ -114,6 +138,11 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     }
 
     @Override
+    public String getCode() {
+        return registView.getCode();
+    }
+
+    @Override
     public void onValidateSuccess(String code) {
         validateView.getValidateCodeSuccess(code);
         validateView.onEndSendValidateCode();
@@ -128,5 +157,54 @@ public class LoginPresenter implements LoginDataSoure.LoginCallBack, AccountCont
     @Override
     public String getSendMobile() {
         return validateView.getMobile();
+    }
+
+    @Override
+    public void onUpdatePwdSuccess(String msg) {
+        updatePasswordView.onUpdatePasswordSuccess(msg);
+        updatePasswordView.onDissmisDialog();
+    }
+
+    @Override
+    public void onUpdateFailure(String code) {
+        updatePasswordView.onUpdatePasswordFialure(code);
+        updatePasswordView.onDissmisDialog();
+    }
+
+    @Override
+    public String getUserNo() {
+        return updatePasswordView.getUserNo();
+    }
+
+    @Override
+    public String getOldPwd() {
+        return updatePasswordView.getOldPwd();
+    }
+
+    @Override
+    public String getNewPwd() {
+        return updatePasswordView.getNewPwd();
+    }
+
+    @Override
+    public String getNickName() {
+        return updateNickNameView.getNickName();
+    }
+
+    @Override
+    public void onUpdateNickNameSuccess(String msg) {
+        updateNickNameView.onUpdateNickNameSuccess(msg);
+        updateNickNameView.onDissmisDialog();
+    }
+
+    @Override
+    public void onUpdateNickNameFailure(String error) {
+        updateNickNameView.onUpdateNickNameFaiulure(error);
+        updateNickNameView.onDissmisDialog();
+    }
+
+    @Override
+    public String getUserNoToNickName() {
+        return updateNickNameView.getUserNo();
     }
 }
