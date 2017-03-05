@@ -72,13 +72,12 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
     TextView mCardPrice;
     @BindView(R.id.article_card_old_price)
     TextView mCardOldPrice;
-
     @BindView(R.id.article_listview)
     ListView mArticleListView;
+
     List<ArticleItemEntity> mArticleList;
 
     private ArticlePresenter mArticlePresenter;
-
     private ArticleItemEntity mArticleItemEntity;
     private CardItemEntity cardItemEntity;
 

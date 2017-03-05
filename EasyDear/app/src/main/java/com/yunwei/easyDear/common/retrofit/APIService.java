@@ -7,12 +7,14 @@ import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEn
 import com.yunwei.easyDear.function.account.data.ValidateCodeEntity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessDetailEntity;
+import com.yunwei.easyDear.function.mainFuncations.locationFunction.LocationEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.BillEntity;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.data.CardEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
+import com.yunwei.easyDear.function.mainFuncations.searchFunction.SearchHotEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -220,4 +222,22 @@ public interface APIService {
      */
     @GET(BuildConfig.MESSAGE_DETAIL_URL)
     Call<ResponseModel<List<MessageDetailEntity>>> reqMessageDetail(@Query("userNo") String userNo, @Query("businessNo") String businessNo, @Query("pageSize") int pageSize, @Query("pageCount") int pageCount);
+
+    /**
+     * 搜索热门
+     */
+    @GET(BuildConfig.SEARCH_HOT)
+    Call<ResponseModel<List<SearchHotEntity>>> reqHotSearch();
+
+    /**
+     * 获取城市列表
+     */
+    @GET(BuildConfig.LOCATION_CITY)
+    Call<ResponseModel<List<LocationEntity>>> reqCity();
+
+    /**
+     * 获取区域列表
+     */
+    @GET(BuildConfig.LOCATION_AREA)
+    Call<ResponseModel<List<LocationEntity>>> reqDistrict(@Query("code") String code);
 }
