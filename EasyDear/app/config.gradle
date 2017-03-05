@@ -90,5 +90,12 @@ android {
 
         /**单个商家信息详情*/
         buildConfigField "String", "MESSAGE_DETAIL_URL", "\"information/busDetailInforList\""
+
+        /*搜索热门*/
+        buildConfigField "String", "SEARCH_HOT", "\"search/hotSearch\""
+        /*获取城市列表*/
+        buildConfigField "String", "LOCATION_CITY", "\"city/changeCity\""
+        /*获取区域列表*/
+        buildConfigField "String", "LOCATION_AREA", "\"city/changeArea\""
     }
 }

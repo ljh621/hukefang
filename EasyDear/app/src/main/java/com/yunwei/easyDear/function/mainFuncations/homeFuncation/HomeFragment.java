@@ -5,10 +5,12 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,12 +23,13 @@ import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.locationFunction.LocationActivity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.MessageActivity;
+import com.yunwei.easyDear.function.mainFuncations.searchFunction.SearchActivity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -51,6 +54,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     @BindView(R.id.main_home_location_textView)
     TextView mLocationTextView;
+    @BindView(R.id.main_home_search_editText)
+    EditText mSearchEditText;
     @BindView(R.id.home_scroll_vp)
     ViewPager mScrollViewPager;
     @BindView(R.id.home_scroll_dot_layout)
@@ -120,9 +125,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         }
     }
 
-    @OnClick(R.id.main_home_msg_textView)
+    @OnClick({R.id.main_home_msg_textView, R.id.main_home_search_editText, R.id.main_home_location_textView})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.main_home_location_textView:
+                ISkipActivityUtil.startIntent(getActivity(), LocationActivity.class);
+                break;
+            case R.id.main_home_search_editText:
+                ISkipActivityUtil.startIntent(getActivity(), SearchActivity.class);
+                break;
             case R.id.main_home_msg_textView:
                 ISkipActivityUtil.startIntent(getActivity(), MessageActivity.class);
                 break;

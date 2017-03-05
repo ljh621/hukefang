@@ -72,6 +72,16 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
+            android:name=".function.mainFuncations.searchFunction.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name=".function.mainFuncations.locationFunction.LocationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
             android:name=".function.mainFuncations.articleFunction.ArticleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />

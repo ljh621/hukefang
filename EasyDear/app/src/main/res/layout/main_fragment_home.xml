@@ -54,12 +54,12 @@
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/main_home_msg_textView"
                 android:layout_toRightOf="@+id/main_home_location_textView"
+                android:drawableLeft="@mipmap/icon_search"
+                android:drawablePadding="6dp"
                 android:background="@color/white"
-
                 android:hint="商家名称 商圈 类目"
                 android:padding="8dp"
                 android:singleLine="true"
-
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
                 android:textSize="13sp" />
