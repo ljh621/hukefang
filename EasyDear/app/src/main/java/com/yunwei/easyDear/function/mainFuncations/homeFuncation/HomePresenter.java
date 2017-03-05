@@ -36,4 +36,19 @@ public class HomePresenter implements HomeContract.Presenter, HomeDataSource.Hom
     public void onGetTopScrollArticlesSuccess(String message) {
 
     }
+
+    @Override
+    public String getProvince() {
+        return mHomeView.getProvince();
+    }
+
+    @Override
+    public String getCity() {
+        return mHomeView.getCity();
+    }
+
+    @Override
+    public String getArea() {
+        return mHomeView.getArea();
+    }
 }

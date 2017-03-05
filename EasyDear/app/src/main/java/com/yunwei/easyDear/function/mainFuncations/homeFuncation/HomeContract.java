@@ -12,6 +12,12 @@ public interface HomeContract {
 
     interface HomeView {
         void setTopScrollArticles(ArrayList<ArticleItemEntity> articleItems);
+
+        String getProvince();
+
+        String getCity();
+
+        String getArea();
     }
 
     interface Presenter {
