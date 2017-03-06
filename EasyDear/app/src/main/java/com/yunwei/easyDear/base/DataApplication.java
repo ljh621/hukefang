@@ -9,6 +9,7 @@ import com.yunwei.easyDear.function.account.data.UserInfoEntity;
 import com.yunwei.easyDear.function.mainFuncations.MainContract;
 import com.yunwei.easyDear.function.mainFuncations.MainPresenter;
 import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
+import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISpfUtil;
 
 /**
@@ -62,6 +63,7 @@ public class DataApplication extends Application implements MainContract.MainVie
     @Override
     public void locationSuccess(AMapLocation location) {
         ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
+        ISpfUtil.setValue(Constant.AMAP_LOCATION_ADCODE, location.getAdCode());
         setLocation(location);
     }
 }

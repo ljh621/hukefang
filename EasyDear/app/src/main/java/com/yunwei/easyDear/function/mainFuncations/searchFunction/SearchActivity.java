@@ -1,5 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.searchFunction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.function.mainFuncations.MainActivity;
 import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.MeasuredGridView;
 import com.yunwei.easyDear.view.MeasuredListView;
@@ -132,6 +134,10 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
     }
 
     private void startToSearch(String searchText) {
+        Intent intent = new Intent();
+        intent.putExtra("search_key", searchText);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @OnClick({R.id.search_cancel_textView, R.id.search_start_textView})

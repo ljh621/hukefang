@@ -1,5 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.locationFunction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import com.amap.api.location.AMapLocation;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
-import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.function.mainFuncations.MainContract;
 import com.yunwei.easyDear.function.mainFuncations.MainPresenter;
 import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
@@ -52,7 +52,7 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
     MeasuredListView mGroupedAllCityListView;
 
     private LocationPresenter mLocationPresenter;
-    private AMapLocation mCurrentLocation;
+    //    private AMapLocation mCurrentLocation;
     private AMapLocation mLocatedLocation;
     private LocationAdapter mCurCityDistrictAdapter;
     private LocationAdapter mHotCityAdapter;
@@ -61,18 +61,22 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
     private ArrayList<LocationEntity> mAllCityList;
     private ArrayList<LocationEntity> mGroupedAllCityList;
 
+    private String mCurrentCity;
+    private String mCurrentCityCode;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         setToolbarTitle("选择城市");
         ButterKnife.bind(this);
-        mCurrentLocation = DataApplication.getInstance().getLocation();
         initPresenter();
+        initCurrentCityValue();
         initCurCityDistrictGridView();
         initLocatedCity();
         initHotCityGridView();
         initAllCityListView();
+        requestCurrentCityDistrict();
         requestAllCity();
     }
 
@@ -80,8 +84,18 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
         mLocationPresenter = new LocationPresenter(LocationRemoteRepo.getInstance(), this);
     }
 
+    private void initCurrentCityValue() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("city")) {
+            mCurrentCity = intent.getStringExtra("city");
+            mCurCityTextView.setText("当前: " + mCurrentCity);
+        }
+        if (intent.hasExtra("city_code")) {
+            mCurrentCityCode = intent.getStringExtra("city_code");
+        }
+    }
+
     private void initCurCityDistrictGridView() {
-        mCurCityTextView.setText("当前: " + mCurrentLocation.getCity());
         mCurCityDistrictAdapter = new LocationAdapter(LocationActivity.this);
         mCurCityDistrictGridView.setAdapter(mCurCityDistrictAdapter);
         mCurCityDistrictGridView.setOnItemClickListener(this);
@@ -110,12 +124,20 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.location_switch_district:
-                requestCurrentCityDistricts();
+                if (mCurCityDistrictGridView.getVisibility() == View.GONE) {
+                    mCurCityDistrictGridView.setVisibility(View.VISIBLE);
+                } else {
+                    mCurCityDistrictGridView.setVisibility(View.GONE);
+                }
                 break;
             case R.id.location_locate_city:
                 if (mLocatedLocation != null) {
-                    DataApplication.getInstance().setLocation(mLocatedLocation);
                     ILog.v(TAG, "切换到" + mLocatedLocation.getCity());
+                    Intent intent = new Intent();
+                    intent.putExtra("city", mLocatedLocation.getCity());
+                    intent.putExtra("city_code", mLocatedLocation.getAdCode().substring(0, 4));
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
                 finish();
                 break;
@@ -126,16 +148,10 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
 
     @Override
     public String getCityCode() {
-        String adCode = mCurrentLocation.getAdCode();
-        int len = adCode.length();
-        Log.v(TAG, "getCityCode adCode = " + adCode);
-        if (len >= 4) {
-            return adCode.substring(0, 4);
-        }
-        return adCode;
+        return mCurrentCityCode;
     }
 
-    private void requestCurrentCityDistricts() {
+    private void requestCurrentCityDistrict() {
         mLocationPresenter.requestCurrentCityDistrict();
     }
 
@@ -145,7 +161,6 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
             return;
         }
         mCurCityDistrictList = (ArrayList<LocationEntity>) entities;
-        mCurCityDistrictGridView.setVisibility(View.VISIBLE);
         mCurCityDistrictAdapter.setLocationList(mCurCityDistrictList);
         mCurCityDistrictAdapter.notifyDataSetChanged();
     }
@@ -244,26 +259,39 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.v(TAG, "----------> OnItemClick i = " + i);
+        Log.v(TAG, "OnItemClick i = " + i);
 
-        LocationEntity entity = new LocationEntity();
+        LocationEntity clickedLocation = new LocationEntity();
+        boolean selectDistrict = false;
         switch (adapterView.getId()) {
             case R.id.location_district_gridView:
-                entity = mCurCityDistrictList.get(i);
+                selectDistrict = true;
+                clickedLocation = mCurCityDistrictList.get(i);
                 break;
             case R.id.location_hot_city_gridView:
-                entity = mHotCityList.get(i);
+                clickedLocation = mHotCityList.get(i);
                 break;
             case R.id.location_all_city_listView:
-                entity = mGroupedAllCityList.get(i);
+                clickedLocation = mGroupedAllCityList.get(i);
                 break;
             default:
                 break;
         }
-        // TODO Click Item 后的处理
-        Log.v(TAG, "----------> entity getName = " + entity.getName());
-        Log.v(TAG, "----------> entity getCode = " + entity.getCode());
-        Log.v(TAG, "----------> entity getPing = " + entity.getPing());
-        Log.v(TAG, "----------> entity getIshot = " + entity.getIshot());
+        Log.v(TAG, "Clicked Location Code = " + clickedLocation.getCode());
+        Log.v(TAG, "Clicked Location Name = " + clickedLocation.getName());
+        if (clickedLocation.getCode() != null && !clickedLocation.getCode().isEmpty()) {
+            Intent intent = new Intent();
+            if (selectDistrict) {
+                intent.putExtra("city", mCurrentCity);
+                intent.putExtra("city_code", mCurrentCityCode);
+                intent.putExtra("district", clickedLocation.getName());
+                intent.putExtra("district_code", clickedLocation.getCode());
+            } else {
+                intent.putExtra("city", clickedLocation.getName());
+                intent.putExtra("city_code", clickedLocation.getCode());
+            }
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 }

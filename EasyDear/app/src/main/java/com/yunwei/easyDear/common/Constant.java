@@ -35,6 +35,7 @@ public class Constant {
      * SharedPreference Key
      */
     public static final String AMAP_LOCATION_CITY = "amap_location_city"; /*地图获取城市*/
+    public static final String AMAP_LOCATION_ADCODE = "amap_location_adcode"; /*地图获取Address Code*/
 
     /**
      * 设置通知相关
