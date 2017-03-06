@@ -1,7 +1,9 @@
 package com.yunwei.easyDear.function.mainFuncations;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -57,6 +59,9 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     private MainPresenter mMainPresenter;
 
     private int currentTab=0;
+
+    public static final int HOME_SELECT_CITY_REQUEST_CODE = 1001;
+    public static final int HOME_SEARCH_KEY_REQUEST_CODE = 1002;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,6 +121,26 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     protected void onSaveInstanceState(Bundle outState) {
           /*将这一行注释掉，阻止activity保存fragment的状态*/
 //        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        NoticeEvent event = new NoticeEvent();
+        if (resultCode == RESULT_OK){
+            switch (requestCode) {
+                case HOME_SELECT_CITY_REQUEST_CODE:
+                    event.setFlag(EventConstant.NOTICE_HOME_UPDATE_CITY);
+                    event.setObj(data);
+                    EventBus.getDefault().post(event);
+                    break;
+                case HOME_SEARCH_KEY_REQUEST_CODE:
+                    event.setFlag(EventConstant.NOTICE_HOME_SEARCH);
+                    event.setObj(data);
+                    EventBus.getDefault().post(event);
+                    break;
+            }
+        }
     }
 
     @Override
