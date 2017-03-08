@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.amap.api.location.AMapLocation;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.function.mainFuncations.MainContract;
 import com.yunwei.easyDear.function.mainFuncations.MainPresenter;
 import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
 import com.yunwei.easyDear.utils.ILog;
+import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.MeasuredGridView;
 import com.yunwei.easyDear.view.MeasuredListView;
 
@@ -136,6 +138,8 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
                     Intent intent = new Intent();
                     intent.putExtra("city", mLocatedLocation.getCity());
                     intent.putExtra("city_code", mLocatedLocation.getAdCode().substring(0, 4));
+                    ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY,mLocatedLocation.getCityCode());
+                    ISpfUtil.setValue(Constant.AMAP_LOCATION_ADCODE,mLocatedLocation.getCityCode());
                     setResult(RESULT_OK, intent);
                     finish();
                 }

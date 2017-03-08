@@ -1,5 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -12,14 +13,23 @@ import android.widget.TextView;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.common.eventbus.EventConstant;
+import com.yunwei.easyDear.common.eventbus.NoticeEvent;
+import com.yunwei.easyDear.function.mainFuncations.MainActivity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.locationFunction.LocationActivity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.MessageActivity;
 import com.yunwei.easyDear.function.mainFuncations.searchFunction.SearchActivity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.widget.CoordinatorTabLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -43,6 +53,8 @@ public class HomeFragmentV2 extends BaseFragment implements HomeContract.HomeVie
     @BindView(R.id.HomeFragmentV2_CoordinatorTabLayout)
     CoordinatorTabLayout HomeFragmentV2CoordinatorTabLayout;
 
+    private TextView locationTextView;
+
     private String[] tabNames;
     private HomePresenter mHomePresenter;
 
@@ -56,6 +68,7 @@ public class HomeFragmentV2 extends BaseFragment implements HomeContract.HomeVie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         tabNames = getResources().getStringArray(R.array.tab_tiltle);
     }
 
@@ -90,8 +103,8 @@ public class HomeFragmentV2 extends BaseFragment implements HomeContract.HomeVie
 
     private void initTitlteView(){
         View view=LayoutInflater.from(getContext()).inflate(R.layout.home_title_layout,null);
-        TextView locationTextView=(TextView)view.findViewById(R.id.main_home_location_textView);
-        locationTextView.setText(DataApplication.getInstance().getLocation().getCity());
+        locationTextView=(TextView)view.findViewById(R.id.main_home_location_textView);
+        locationTextView.setText(ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY,"").toString());
         view.findViewById(R.id.main_home_msg_textView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +119,15 @@ public class HomeFragmentV2 extends BaseFragment implements HomeContract.HomeVie
                 HomeFragmentV2CoordinatorTabLayout.requestFocus();
             }
         });
+        locationTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("city", ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY,"").toString());
+                ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, MainActivity.HOME_SELECT_CITY_REQUEST_CODE);
+
+            }
+        });
         HomeFragmentV2CoordinatorTabLayout.setTitleView(view);
     }
 
@@ -113,5 +135,38 @@ public class HomeFragmentV2 extends BaseFragment implements HomeContract.HomeVie
     public void setTopScrollArticles(ArrayList<ArticleItemEntity> articleItems) {
         ScrollPagerAdapter adapter=new ScrollPagerAdapter(getContext(),articleItems);
         HomeFragmentV2CoordinatorTabLayout.setScrollPagerAdapter(adapter,articleItems.size());
+    }
+
+    @Subscribe
+    public void onEventMainThread(NoticeEvent event) {
+        switch (event.getFlag()) {
+            case EventConstant.NOTICE_HOME_UPDATE_CITY:
+                Intent intent = (Intent) event.getObj();
+                String mCity = intent.getStringExtra("city");
+                String mCityCode = intent.getStringExtra("city_code");
+                if (intent.hasExtra("district") && intent.hasExtra("district_code")) {
+                  String  mDistrictCode = intent.getStringExtra("district_code");
+                    String  mDistrict = intent.getStringExtra("district");
+                      locationTextView.setText(mDistrict);
+                } else {
+                    locationTextView.setText(mCity);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public String getProvince() {
+        return null;
+    }
+
+    @Override
+    public String getCity() {
+        return null;
+    }
+
+    @Override
+    public String getArea() {
+        return null;
     }
 }

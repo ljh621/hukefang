@@ -62,8 +62,10 @@ public class DataApplication extends Application implements MainContract.MainVie
 
     @Override
     public void locationSuccess(AMapLocation location) {
-        ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
-        ISpfUtil.setValue(Constant.AMAP_LOCATION_ADCODE, location.getAdCode());
+        if ("".equals(ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY,"").toString())){
+            ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
+            ISpfUtil.setValue(Constant.AMAP_LOCATION_ADCODE, location.getCityCode());
+        }
         setLocation(location);
     }
 }
