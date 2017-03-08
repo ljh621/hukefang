@@ -1,5 +1,7 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation.data;
 
+import android.util.Log;
+
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
@@ -29,14 +31,17 @@ public class HomeRemoteRepo implements HomeDataSource {
 
     @Override
     public void requestHomeTopScrollArticles(final HomeCallBack callBack) {
-        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().reqHomeTopScrollArticleList("", "", "");
+        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().reqHomeTopScrollArticleList(callBack.getProvince(), callBack.getCity(), callBack.getArea());
+        Log.v(TAG, "----------> callBack.getProvince() = " + callBack.getProvince());
+        Log.v(TAG, "----------> callBack.getCity() = " + callBack.getCity());
+        Log.v(TAG, "----------> callBack.getArea() = " + callBack.getArea());
         call.enqueue(new Callback<ResponseModel<ArrayList<ArticleItemEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<ArrayList<ArticleItemEntity>>> call, Response<ResponseModel<ArrayList<ArticleItemEntity>>> response) {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.onGetTopScrollArticlesSuccess(response.body().getData());
                 } else {
-                    callBack.onGetTopScrollArticlesSuccess(response.body().getMessage());
+                    callBack.onGetTopScrollArticlesSuccess("加载失败");
                 }
             }
 

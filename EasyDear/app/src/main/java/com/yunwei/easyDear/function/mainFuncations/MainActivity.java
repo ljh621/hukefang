@@ -1,7 +1,9 @@
 package com.yunwei.easyDear.function.mainFuncations;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -16,6 +18,7 @@ import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
 import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.HomeFragment;
+import com.yunwei.easyDear.function.mainFuncations.homeFuncation.HomeFragmentV2;
 import com.yunwei.easyDear.function.mainFuncations.membershipFuncation.MembershipCodeFragment;
 import com.yunwei.easyDear.function.mainFuncations.mineFuncation.MineFragment;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindFragment;
@@ -57,6 +60,9 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
 
     private int currentTab=0;
 
+    public static final int HOME_SELECT_CITY_REQUEST_CODE = 1001;
+    public static final int HOME_SEARCH_KEY_REQUEST_CODE = 1002;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +85,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
      */
     private void init() {
         initBottomNavigationBar();
-        initPresenter();
+//        initPresenter();
     }
 
     /**
@@ -88,12 +94,12 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     private void initBottomNavigationBar() {
         mainBottomNavigationBar.initConfig(this, R.id.main_container_FrameLayout);
         mainBottomNavigationBar.addTabItem(R.mipmap.icon_main_tab_home_pr, R.string.main_home_tab)
-                .addTabItem(R.mipmap.icon_scan, R.string.main_qr_tab)
+//                .addTabItem(R.mipmap.icon_scan, R.string.main_qr_tab)
                 .addTabItem(R.mipmap.icon_member, R.string.main_code_tab)
                 .addTabItem(R.mipmap.icon_quanyi, R.string.main_find_tab)
                 .addTabItem(R.mipmap.icon_main_tab_mine_pr, R.string.main_mine_tab);
-        mainBottomNavigationBar.addFragment(HomeFragment.newInstance())
-                .addFragment(ScanQrFragment.newInstance())
+        mainBottomNavigationBar.addFragment(HomeFragmentV2.newInstance())
+//                .addFragment(ScanQrFragment.newInstance())
                 .addFragment(MembershipCodeFragment.newInstance())
                 .addFragment(FindFragment.newInstance())
                 .addFragment(MineFragment.newInstance());
@@ -118,28 +124,51 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        NoticeEvent event = new NoticeEvent();
+        if (resultCode == RESULT_OK){
+            switch (requestCode) {
+                case HOME_SELECT_CITY_REQUEST_CODE:
+                    event.setFlag(EventConstant.NOTICE_HOME_UPDATE_CITY);
+                    event.setObj(data);
+                    EventBus.getDefault().post(event);
+                    break;
+                case HOME_SEARCH_KEY_REQUEST_CODE:
+                    event.setFlag(EventConstant.NOTICE_HOME_SEARCH);
+                    event.setObj(data);
+                    EventBus.getDefault().post(event);
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void onTabSelected(int position) {
         switch (position) {
             case TAB_HOME:
                 this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_home_tab);
+                setToolbarVisibility(View.GONE);
                 break;
             case TAB_FIND:
                 setToolbarCenterTitle(R.string.main_find_tab);
-//                ISkipActivityUtil.startIntent(this, CaptureActivity.class);
-//                mainBottomNavigationBar.setFirstSelectedPosition(currentTab).initialise();
+                setToolbarVisibility(View.GONE);
                 break;
             case TAB_TRAINGCODE:
                 this.currentTab=position;
-                setToolbarCenterTitle(R.string.main_code_tab);
+                setToolbarCenterTitle(R.string.main_find_tab);
+                setToolbarVisibility(View.VISIBLE);
                 break;
             case TAB_MESSAGE:
                 this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_message_tab);
+                setToolbarVisibility(View.GONE);
                 break;
             case TAB_MINE:
                 this.currentTab=position;
                 setToolbarCenterTitle(R.string.main_mine_tab);
+                setToolbarVisibility(View.GONE);
                 break;
         }
     }

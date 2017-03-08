@@ -65,16 +65,10 @@ public class ChildTabContentFragment extends BaseFragment implements ChildTabCon
         return rootView;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     /**
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-        mRecyclerView.setPullToRefreshListener(this);
         mRecyclerView.setRecyclerViewAdapter(adapter);
         mRecyclerView.setMode(PullToRefreshRecyclerView.Mode.BOTH);
         mRecyclerView.setPullToRefreshListener(this);
@@ -92,14 +86,9 @@ public class ChildTabContentFragment extends BaseFragment implements ChildTabCon
 
     @Override
     public void onPullRefresh() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                isRefresh = false;
-                defaultPageSize++;
-                mChildTabPresenter.requestRecyclerArticles();
-            }
-        }, 3000);
+        isRefresh = false;
+        defaultPageSize++;
+        mChildTabPresenter.requestRecyclerArticles();
     }
 
     @Override
@@ -129,7 +118,7 @@ public class ChildTabContentFragment extends BaseFragment implements ChildTabCon
             if (adapter.getItemCount() <= 0) {
                 mRecyclerView.setVisibility(View.GONE);
                 emptyTextView.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mRecyclerView.onLoadMoreFinish();
             }
         } else {

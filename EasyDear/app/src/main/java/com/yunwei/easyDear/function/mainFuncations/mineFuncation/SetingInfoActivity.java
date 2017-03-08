@@ -1,11 +1,11 @@
 package com.yunwei.easyDear.function.mainFuncations.mineFuncation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +14,23 @@ import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
 import com.yunwei.easyDear.base.DataApplication;
-import com.yunwei.easyDear.function.account.LoginActivity;
+import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.common.dialog.CommPopupWindow;
 import com.yunwei.easyDear.function.account.LoginRegistActivity;
 import com.yunwei.easyDear.function.account.LoginRegistPagerViewPagerAdapter;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
-import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.AboutFragment;
-import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.MessageSetingFragment;
-import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.TrackSetingFragment;
+import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.ModiflyNickFragment;
+import com.yunwei.easyDear.function.mainFuncations.mineFuncation.fragment.ModiflyPasswordFragment;
+import com.yunwei.easyDear.function.pictureFuncation.SelectPictureActivity;
+import com.yunwei.easyDear.function.pictureFuncation.data.PictureEntity;
 import com.yunwei.easyDear.utils.IActivityManage;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.ISpfUtil;
+import com.yunwei.easyDear.utils.ISystemUtil;
+import com.yunwei.easyDear.utils.IUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +53,8 @@ public class SetingInfoActivity extends BaseActivity {
     @BindView(R.id.setting_info_nickname)
     TextView nickName;
 
+    private CommPopupWindow commPopupWindow;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +62,11 @@ public class SetingInfoActivity extends BaseActivity {
         super.setContentView(R.layout.activity_seting_info);
         setToolbarTitle("设置");
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initUI();
     }
 
@@ -62,7 +76,7 @@ public class SetingInfoActivity extends BaseActivity {
             return;
         }
         nickName.setText(entity.getNickName());
-        nickName.setText(entity.getUserNo());
+        umberText.setText(entity.getMobile());
         Glide.with(this).load(BuildConfig.DOMAI + entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headImageView));
     }
 
@@ -70,20 +84,59 @@ public class SetingInfoActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.SetingInfoHeadView_layout:
-
+                SelectPictureActivity.startIntent(this,1);
                 break;
             case R.id.SetingInfo_exit_btn:
                 IActivityManage.getInstance().exit();
+                ISpfUtil.setValue(Constant.PSSWORD_KEY,"");
                 LoginRegistActivity.startIntent(this, LoginRegistPagerViewPagerAdapter.VALUE_LOGIN);
                 break;
             case R.id.setting_info_about_us_container:/*关于我们*/
+                ISkipActivityUtil.startIntent(this,AboutActivity.class);
                 break;
             case R.id.setting_info_change_password_container:/*修改密码*/
+                UpdateActivity.startIntent(this, ModiflyPasswordFragment.MODIFLY_PASSWORD_FLAG,"密码修改",901);
                 break;
             case R.id.setting_info_nickname_container:/*修改Nick*/
+                UpdateActivity.startIntent(this, ModiflyNickFragment.MODIFLY_NICK_FLAG,"昵称修改",900);
                 break;
             case R.id.setting_info_contact_us_container:/*联系我们*/
+                View businessView = LayoutInflater.from(this).inflate(R.layout.dialog_tontact_layout, null);
+                final TextView tell1=(TextView)businessView.findViewById(R.id.dialog_tontact_tel1);
+                final TextView tell2=(TextView)businessView.findViewById(R.id.dialog_tontact_tel2);
+                businessView.findViewById(R.id.dialog_tontact_calcel_btn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        commPopupWindow.dismiss();
+                    }
+                });
+               tell1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISystemUtil.callTelAction(SetingInfoActivity.this,tell1.getText().toString());
+                    }
+                });
+                tell2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISystemUtil.callTelAction(SetingInfoActivity.this,tell2.getText().toString());
+                    }
+                });
+
+                commPopupWindow = new CommPopupWindow(businessView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                commPopupWindow.showAtButton(findViewById(R.id.Seting_root_view));
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==SelectPictureActivity.SELECT_PICTURE_RESULT_CODE){
+            List<PictureEntity> list=(List<PictureEntity>) data.getSerializableExtra("result");
+            if (list!=null&&list.size()>0){
+                Glide.with(this).load(IUtil.fitterUrl(list.get(0).getUrl())).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headImageView));
+            }
         }
     }
 }

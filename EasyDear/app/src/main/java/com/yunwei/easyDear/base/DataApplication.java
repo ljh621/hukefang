@@ -6,6 +6,10 @@ import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.function.account.data.UserInfoEntity;
+import com.yunwei.easyDear.function.mainFuncations.MainContract;
+import com.yunwei.easyDear.function.mainFuncations.MainPresenter;
+import com.yunwei.easyDear.function.mainFuncations.data.soure.MainRemoteRepo;
+import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISpfUtil;
 
 /**
@@ -16,7 +20,7 @@ import com.yunwei.easyDear.utils.ISpfUtil;
  * @date 2016/11/22 14:59
  */
 
-public class DataApplication extends Application {
+public class DataApplication extends Application implements MainContract.MainView{
 
     private static DataApplication instance;
 
@@ -28,6 +32,8 @@ public class DataApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        //启动获取当前位置信息
+        new MainPresenter(MainRemoteRepo.newInstance(), this).startLocation();
     }
 
     public static DataApplication getInstance() {
@@ -48,9 +54,18 @@ public class DataApplication extends Application {
      * @return
      */
     public UserInfoEntity getUserInfoEntity() {
-        if (userInfoEntity == null) {
+//        if (userInfoEntity == null) {
             userInfoEntity = new Gson().fromJson(ISpfUtil.getValue(Constant.USERINFO_KEY, "").toString(), UserInfoEntity.class);
-        }
+//        }
         return userInfoEntity;
+    }
+
+    @Override
+    public void locationSuccess(AMapLocation location) {
+        if ("".equals(ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY,"").toString())){
+            ISpfUtil.setValue(Constant.AMAP_LOCATION_CITY, location.getCity());
+            ISpfUtil.setValue(Constant.AMAP_LOCATION_ADCODE, location.getCityCode());
+        }
+        setLocation(location);
     }
 }

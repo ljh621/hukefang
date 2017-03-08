@@ -1,14 +1,17 @@
 package com.yunwei.easyDear.function.mainFuncations.homeFuncation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,10 +21,13 @@ import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.eventbus.EventConstant;
 import com.yunwei.easyDear.common.eventbus.NoticeEvent;
+import com.yunwei.easyDear.function.mainFuncations.MainActivity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.findFuncation.FindViewPagerAdater;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.data.HomeRemoteRepo;
+import com.yunwei.easyDear.function.mainFuncations.locationFunction.LocationActivity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.MessageActivity;
+import com.yunwei.easyDear.function.mainFuncations.searchFunction.SearchActivity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.ISpfUtil;
@@ -51,12 +57,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     @BindView(R.id.main_home_location_textView)
     TextView mLocationTextView;
+    @BindView(R.id.main_home_search_textView)
+    TextView mSearchTextView;
     @BindView(R.id.home_scroll_vp)
     ViewPager mScrollViewPager;
     @BindView(R.id.home_scroll_dot_layout)
     LinearLayout mDotLayout;
     @BindView(R.id.home_scroll_container)
     LinearLayout mScrollLayout;
+    @BindView(R.id.home_select_district_textView)
+    TextView mSelectDistrictTextView;
     @BindView(R.id.find_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.find_viewPager)
@@ -68,8 +78,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private HomePresenter mHomePresenter;
     private ArrayList<ArticleItemEntity> mTopScrollArticles;
 
-    private static final int HOME_SCROLL_IMAGE = 1001;
     private List<ImageView> dots = new ArrayList<ImageView>();
+    private static final int HOME_SCROLL_IMAGE = 1010;
+
+    private String mCity;
+    private String mCityCode;
+    private String mDistrict;
+    private String mDistrictCode;
+    private String mSearchKey = "";
 
     public static HomeFragment newInstance() {
         if (fragment == null) {
@@ -81,6 +97,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         tabNames = getResources().getStringArray(R.array.tab_tiltle);
         initPresenter();
     }
@@ -91,15 +108,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         View rootView = inflater.inflate(R.layout.main_fragment_home, null);
         ButterKnife.bind(this, rootView);
 
-        setLocationCity();
+        initLocationCity();
         initTabLayout();
         setScrollViewListener();
+        requestTopScrollArticles();
         return rootView;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -107,6 +126,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
      */
     private void initPresenter() {
         mHomePresenter = new HomePresenter(HomeRemoteRepo.getInstance(), this);
+    }
+
+    private void requestTopScrollArticles() {
         mHomePresenter.requestTopScrollArticles();
     }
 
@@ -115,14 +137,80 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
      */
     @Subscribe
     public void onEventMainThread(NoticeEvent event) {
-        if (event.getFlag() == EventConstant.NOTICE11) {
-            setLocationCity();
+        if (event == null) {
+            return;
+        }
+        switch (event.getFlag()) {
+            case EventConstant.NOTICE11:
+                setLocationCity();
+                break;
+            case EventConstant.NOTICE_HOME_UPDATE_CITY:
+                Intent intent = (Intent) event.getObj();
+                mCity = intent.getStringExtra("city");
+                mCityCode = intent.getStringExtra("city_code");
+                if (intent.hasExtra("district") && intent.hasExtra("district_code")) {
+                    mDistrictCode = intent.getStringExtra("district_code");
+                    mDistrict = intent.getStringExtra("district");
+                    mLocationTextView.setText(mDistrict);
+                    mSelectDistrictTextView.setText(mDistrict);
+                } else {
+                    mLocationTextView.setText(mCity);
+                    mSelectDistrictTextView.setText("");
+                    mDistrict = "";
+                    mDistrictCode = "";
+                }
+                mSearchKey = "";
+                requestTopScrollArticles();
+                break;
+            case EventConstant.NOTICE_HOME_SEARCH:
+                Intent search = (Intent) event.getObj();
+                mSearchKey = search.getStringExtra("search_key");
+                ILog.v(TAG, "Current Search Key = " + mSearchKey);
+                requestTopScrollArticles();
+                break;
+            default:
+                break;
         }
     }
 
-    @OnClick(R.id.main_home_msg_textView)
+    /**
+     * 初始化所在城市
+     */
+    private void initLocationCity() {
+        String adCode = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_ADCODE, "");
+        int len = adCode.length();
+        if (len >= 4) {
+            mCityCode = adCode.substring(0, 4);
+        } else {
+            mCityCode = adCode;
+        }
+        mCity = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
+        mLocationTextView.setText(mCity);
+        ILog.v(TAG, "Init Location City: " + mCity + ", adCode = " + adCode);
+    }
+
+    /**
+     * 设置所在城市
+     */
+    private void setLocationCity() {
+        String city = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
+        mLocationTextView.setText(city);
+        ILog.v(TAG, "setLocationCity: " + city);
+    }
+
+    @OnClick({R.id.main_home_location_textView, R.id.home_select_district, R.id.main_home_search_textView, R.id.main_home_msg_textView})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.main_home_location_textView:
+            case R.id.home_select_district:
+                Bundle bundle = new Bundle();
+                bundle.putString("city", mCity);
+                bundle.putString("city_code", mCityCode);
+                ISkipActivityUtil.startIntentForResult(getActivity(), LocationActivity.class, bundle, MainActivity.HOME_SELECT_CITY_REQUEST_CODE);
+                break;
+            case R.id.main_home_search_textView:
+                ISkipActivityUtil.startIntentForResult(getActivity(), SearchActivity.class, MainActivity.HOME_SEARCH_KEY_REQUEST_CODE);
+                break;
             case R.id.main_home_msg_textView:
                 ISkipActivityUtil.startIntent(getActivity(), MessageActivity.class);
                 break;
@@ -178,16 +266,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             tab.setCustomView(textView);
         }
     }
-
-    /**
-     * 设置所在城市
-     */
-    private void setLocationCity() {
-        String city = (String) ISpfUtil.getValue(Constant.AMAP_LOCATION_CITY, "");
-        mLocationTextView.setText(city);
-        ILog.v(TAG, "setLocationCity: " + city);
-    }
-
 
     /**
      * 设置顶部轮播文章列表
@@ -275,4 +353,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         }
     }
 
+    @Override
+    public String getProvince() {
+        return "";
+    }
+
+    @Override
+    public String getCity() {
+        return mCity;
+    }
+
+    @Override
+    public String getArea() {
+        return mDistrict == null ? "" : mDistrict;
+    }
 }

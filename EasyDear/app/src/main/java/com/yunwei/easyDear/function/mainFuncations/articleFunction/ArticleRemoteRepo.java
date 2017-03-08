@@ -1,10 +1,9 @@
 package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
-import android.util.Log;
-
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 
 import java.util.ArrayList;
 
@@ -31,6 +30,7 @@ public class ArticleRemoteRepo implements ArticleDataSource {
 
     @Override
     public void requestArticleDetail(String articleId, final ArticleDetailCallBack callBack) {
+
         Call<ResponseModel<ArticleItemEntity>> call = RetrofitManager.getInstance().getService().requestArticleDetail(articleId);
         call.enqueue(new Callback<ResponseModel<ArticleItemEntity>>() {
             @Override

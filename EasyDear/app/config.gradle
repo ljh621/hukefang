@@ -8,7 +8,8 @@ android {
             buildConfigField "boolean", "LOGSWITCH", "true"
         }
         debug {
-            buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
+//            buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
+            buildConfigField "String", "DOMAI", "\"http://www.somember.com/\""
             buildConfigField "boolean", "LOGSWITCH", "false"
         }
     }
@@ -43,6 +44,10 @@ android {
         buildConfigField "String", "EDIT_USER_INFO_URL", "\"v2/user/\""
         /*修改用户密码*/
         buildConfigField "String", "UPDATE_USER_PWD_URL", "\"v2/account/changepwd/\""
+        /*修改密码*/
+        buildConfigField "String", "UPDATE_PASSWORD", "\"user/updatePassword\"";
+        /*昵称修改*/
+        buildConfigField "String", "UPDATE_NICK_NAME", "\"user/updateNickName\""
         /*用户订单列表*/
         buildConfigField "String", "BILL_LIST_URL", "\"user/listBillByUserNo\""
         /*会员商家列表*/
@@ -65,6 +70,9 @@ android {
         /**文章详情*/
         buildConfigField "String", "ARTICLE_DETAIL", "\"article/detailById\""
 
+        /**商家详情*/
+        buildConfigField "String", "BUSINESS_DETAIL", "\"business/detailByBusNo\""
+
         /**最新卡券信息*/
         buildConfigField "String", "LATEST_CARD_INFO", "\"card/listByBusNo\""
 
@@ -74,9 +82,20 @@ android {
         /**商家软文列表*/
         buildConfigField "String", "BUSINESS_ARTICLE_LIST", "\"article/listByBusNo\""
 
+        /**获取系统信息列表*/
+        buildConfigField "String", "TUI_MESSAGE_LIST", "\"information/tuiList\""
+
         /**获取商家信息列表*/
         buildConfigField "String", "BUSINESS_MESSAGE_LIST", "\"information/busInforList\""
-        /*信息详情*/
-        buildConfigField "String", "MESSAGE_DETAIL_URL", "\"information/ busDetailInforList\""
+
+        /**单个商家信息详情*/
+        buildConfigField "String", "MESSAGE_DETAIL_URL", "\"information/busDetailInforList\""
+
+        /*搜索热门*/
+        buildConfigField "String", "SEARCH_HOT", "\"search/hotSearch\""
+        /*获取城市列表*/
+        buildConfigField "String", "LOCATION_CITY", "\"city/changeCity\""
+        /*获取区域列表*/
+        buildConfigField "String", "LOCATION_AREA", "\"city/changeArea\""
     }
 }

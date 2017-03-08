@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.base.DataApplication;
@@ -74,7 +75,7 @@ public class MembershipCodeFragment extends BaseFragment {
         if (entity != null) {
             userName.setText(entity.getNickName());
             qrImageView.setImageBitmap(IUtil.createQRImage(entity.getUserNo(), 120, 120));
-            Glide.with(getActivity()).load(entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headView));
+            Glide.with(getActivity()).load(BuildConfig.DOMAI+entity.getImagery()).asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headView));
         } else {
             Glide.with(getContext()).load("http://www.wendu.com/upload/12-02-06/dizhiqr.jpeg").into(qrImageView);
             Glide.with(getContext()).load("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg").asBitmap().centerCrop().error(R.mipmap.homepage_headimg_defaut).into(new RoundedBitmapImageViewTarget(headView));

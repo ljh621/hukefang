@@ -3,11 +3,9 @@ package com.yunwei.easyDear.function.mainFuncations.messageFunction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,19 +13,17 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
-import com.yunwei.easyDear.function.mainFuncations.messagedetailFunction.MessageDetailActivity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by LJH on 2017/1/15.
  */
 
-public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class MessageContentAdapter extends BaseRecyclerViewAdapter<MessageItemEntity> implements BaseRecyclerViewAdapter.OnRecyclerViewItemClickListener {
 
     public MessageContentAdapter(Context context) {
         super(context);
@@ -41,16 +37,26 @@ public class MessageContentAdapter extends BaseRecyclerViewAdapter<BusMessageIte
     }
 
     @Override
-    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBaseViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.timeText.setText(mLists.get(position).getCreateTime());
-        viewHolder.contentText.setText(mLists.get(position).getContent());
-        viewHolder.titleTextView.setText(mLists.get(position).getBusinessName());
-        Glide.with(mContent).load(BuildConfig.DOMAI + mLists.get(position).getLogo()).into(viewHolder.headView);
+        final MessageItemEntity itemEntity = mLists.get(position);
+
+        // BusinessNo 和 BusinessName 为空，为系统消息
+        if (itemEntity.getBusinessNo() == null && itemEntity.getBusinessName() == null) {
+            itemEntity.setBusinessName("易兑消息推送");
+//            viewHolder.headView.setImageResource();
+        }
+        viewHolder.timeText.setText(itemEntity.getCreateTime());
+        viewHolder.contentText.setText(itemEntity.getContent());
+        viewHolder.titleTextView.setText(itemEntity.getBusinessName());
+        Glide.with(mContent).load(BuildConfig.DOMAI + itemEntity.getLogo()).into(viewHolder.headView);
         viewHolder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("businessName", itemEntity.getBusinessName());
+                bundle.putString("businessNo", itemEntity.getBusinessNo());
+                ISkipActivityUtil.startIntent(mContent, MessageDetailActivity.class,bundle);
             }
         });
     }

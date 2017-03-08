@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.base.DataApplication;
-import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.BusMessageItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.source.MessageRemoteRepo;
 import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
@@ -63,6 +63,7 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
         super.onActivityCreated(savedInstanceState);
         adapter = new MessageContentAdapter(getActivity());
         mRecyclerView.setRecyclerViewAdapter(adapter);
+        requestTuiMessageList();
         requestBusinessMessageList();
     }
 
@@ -73,24 +74,40 @@ public class MessageFragment extends BaseFragment implements MessageContact.Mess
     /**
      * 获取系统消息列表
      */
+    private void requestTuiMessageList() {
+        String useNo = DataApplication.getInstance().getUserInfoEntity().getUserNo();
+        mMessagePresenter.requestTuiMessages(useNo);
+    }
+
+    /**
+     * 获取商家消息列表
+     */
     private void requestBusinessMessageList() {
         String useNo = DataApplication.getInstance().getUserInfoEntity().getUserNo();
         mMessagePresenter.requestBusMessages(useNo);
     }
 
     @Override
-    public void setBusinessMessages(ArrayList<BusMessageItemEntity> businessMsgItems) {
+    public void setTuiMessages(ArrayList<MessageItemEntity> tuiMsgItems) {
+        if (tuiMsgItems == null) {
+            return;
+        }
+        adapter.addItems(tuiMsgItems, 0);
+    }
+
+    @Override
+    public void setBusinessMessages(ArrayList<MessageItemEntity> businessMsgItems) {
         if (businessMsgItems == null) {
             return;
         }
         adapter.addItems(businessMsgItems);
     }
 
-    private void initRecyclerView(ArrayList<BusMessageItemEntity> businessMsgItems) {
-        ArrayList<BusMessageItemEntity> list = new ArrayList<BusMessageItemEntity>();
+    private void initRecyclerView(ArrayList<MessageItemEntity> businessMsgItems) {
+        ArrayList<MessageItemEntity> list = new ArrayList<MessageItemEntity>();
         list.addAll(businessMsgItems);
         for (int i = 0; i < 5; i++) {
-            BusMessageItemEntity entity = new BusMessageItemEntity();
+            MessageItemEntity entity = new MessageItemEntity();
             if (i < 2) {
                 entity.setCreateTime("上午8:16");
                 entity.setContent("您有5张一点点奶茶消费券入账，立即查看>>");

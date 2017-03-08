@@ -15,6 +15,12 @@ public interface HomeDataSource {
         void onGetTopScrollArticlesSuccess(ArrayList<ArticleItemEntity> articleItems);
 
         void onGetTopScrollArticlesSuccess(String message);
+
+        String getProvince();
+
+        String getCity();
+
+        String getArea();
     }
 
     void requestHomeTopScrollArticles(HomeCallBack callBack);

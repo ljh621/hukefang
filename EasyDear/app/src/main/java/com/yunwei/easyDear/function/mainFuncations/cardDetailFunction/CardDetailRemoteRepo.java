@@ -1,9 +1,9 @@
-package com.yunwei.easyDear.function.mainFuncations.CardDetailFunction;
+package com.yunwei.easyDear.function.mainFuncations.cardDetailFunction;
 
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
-import com.yunwei.easyDear.function.mainFuncations.articleFunction.CardItemEntity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

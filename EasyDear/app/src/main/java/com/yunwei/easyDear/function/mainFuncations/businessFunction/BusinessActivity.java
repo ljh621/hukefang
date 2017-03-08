@@ -4,20 +4,28 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.common.Constant;
+import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleListAdapter;
 import com.yunwei.easyDear.function.mainFuncations.homeFuncation.ScrollPagerAdapter;
 import com.yunwei.easyDear.function.mainFuncations.membercenterFunction.MemberCenterActivity;
 import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
+import com.yunwei.easyDear.utils.IViewUtil;
+import com.yunwei.easyDear.view.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,77 +38,155 @@ import butterknife.OnClick;
  * Created by LJH on 2017/1/15.
  */
 
-public class BusinessActivity extends BaseActivity {
+public class BusinessActivity extends BaseActivity implements BusinessContact.BusinessView, PullToRefreshRecyclerView.PullToRefreshRecyclerViewListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    @BindView(R.id.business_article_listview)
-    ListView mBusinessArticleListView;
     @BindView(R.id.business_scroll_vp)
     ViewPager mScrollViewPager;
     @BindView(R.id.business_scroll_dot_layout)
     LinearLayout mDotLayout;
 
+    @BindView(R.id.business_address)
+    TextView mBusinessAddress;
+    @BindView(R.id.business_tel)
+    TextView mBusinessTelephone;
+    @BindView(R.id.business_member_container)
+    RelativeLayout mBusinessMemberContainer;
+    @BindView(R.id.business_member_vip_level)
+    TextView mBusinessMemberVipLevel;
+    @BindView(R.id.business_member_card_amount)
+    TextView mBusinessMemberCardAmount;
+    @BindView(R.id.business_member_credit)
+    TextView mBusinessMemberCredit;
+    @BindView(R.id.business_cardlist_recyclerView)
+    PullToRefreshRecyclerView mCardListRecyclerView;
+    @BindView(R.id.business_article_listview)
+    ListView mBusinessArticleListView;
+    List<ArticleItemEntity> mBusinessArticleList;
+
+    private String mBusinessNo;
+    private String mBusinessName;
+    private String mBusinessLogo;
+
+    private BusinessPresenter mBusinessPresenter;
     private static final int BUSINESS_SCROLL_IMAGE = 1001;
     private List<ImageView> dots = new ArrayList<ImageView>();
     private ArrayList<ArticleItemEntity> mArticleItemList;
+    private CardAdapter mCardAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_business);
-        setToolbarTitle(getIntent().getStringExtra("title"));
+        mBusinessNo = getIntent().getStringExtra("businessNo");
+        mBusinessName = getIntent().getStringExtra("businessName");
+        mBusinessLogo = getIntent().getStringExtra("businessLogo");
+
+        setToolbarTitle(mBusinessName);
         setToolbarRightImage(R.mipmap.icon_add);
 //        setSwipeEnabled(false);
         ButterKnife.bind(this);
-        initUI();
+        initPresenter();
+        initCardListRecyclerView();
 
         //TODO To be deleted!
         String[] urls = new String[4];
-        initScrollImages(urls);
-        setScrollViewListener();
+//        initScrollImages(urls);
+//        setScrollViewListener();
+
+        requestBusinessDetail();
+        requestBusinessArticles();
     }
 
-    private void initUI() {
-        setArticleListView();
+    private void initPresenter() {
+        mBusinessPresenter = new BusinessPresenter(BusinessRemoteRepo.getInstance(), this);
     }
 
-    private void setArticleListView() {
+    /**
+     * 初始化CardListRecyclerView
+     */
+    private void initCardListRecyclerView() {
+        mCardAdapter = new CardAdapter(this);
+        mCardListRecyclerView.setPullToRefreshListener(this);
+        mCardListRecyclerView.setRecyclerViewAdapter(mCardAdapter);
+        mCardListRecyclerView.startUpRefresh();
+    }
+
+    @Override
+    public void onDownRefresh() {
+        mBusinessPresenter.requestBusinessCardList();
+    }
+
+    @Override
+    public void onPullRefresh() {
+
+    }
+
+    private void requestBusinessDetail() {
+        mBusinessPresenter.requestBusinessDetail();
+    }
+
+    private void requestBusinessArticles() {
+        mBusinessPresenter.requestBusinessArticles();
+    }
+
+    @Override
+    public void setBusinessDetails(BusinessDetailEntity entity) {
+        if (entity == null) {
+            return;
+        }
+        String address = entity.getProvinceAdd() + entity.getCityAdd() + entity.getAreaAdd() + entity.getAddress();
+        setToolbarTitle(entity.getBusinessName());
+        mBusinessAddress.setText(address);
+        mBusinessTelephone.setText(entity.getTelephone());
+        if (entity.getIsVip().equalsIgnoreCase("Yes") || entity.getIsVip().equalsIgnoreCase("是")) {
+            mBusinessMemberContainer.setVisibility(View.VISIBLE);
+            mBusinessMemberVipLevel.setText(entity.getVipLevel() + "\n认证会员");
+            mBusinessMemberCardAmount.setText("您有" + entity.getCardSize() + "张礼券");
+            mBusinessMemberCredit.setText("您距离会员升级还需" + entity.getIntegral() + "积分");
+        }
+    }
+
+    @Override
+    public void setBusinessCardList(ArrayList<CardItemEntity> cardItems) {
+        mCardAdapter.addItems(cardItems);
+        mCardListRecyclerView.closeDownRefresh();
+        mCardListRecyclerView.onLoadMoreFinish();
+    }
+
+    @Override
+    public void setBusinessArticles(ArrayList<ArticleItemEntity> articleItems) {
+        if (articleItems == null || articleItems.size() == 0) {
+            return;
+        }
+        mBusinessArticleList = articleItems;
         ArticleListAdapter adapter = new ArticleListAdapter(this);
-        List<ArticleItemEntity> articleItemList = new ArrayList<ArticleItemEntity>();
-
-        ArticleItemEntity item1 = new ArticleItemEntity();
-        item1.setType("[促销]");
-        item1.setTitle("现车热卖");
-        item1.setPubTime("10.14");
-        articleItemList.add(item1);
-
-        ArticleItemEntity item2 = new ArticleItemEntity();
-        item2.setType("[促销]");
-        item2.setTitle("购奔驰E级敞篷");
-        item2.setPubTime("10.14");
-        articleItemList.add(item2);
-
-        ArticleItemEntity item3 = new ArticleItemEntity();
-        item3.setType("[促销]");
-        item3.setTitle("现车热卖");
-        item3.setPubTime("10.16");
-        articleItemList.add(item3);
-
-        ArticleItemEntity item4 = new ArticleItemEntity();
-        item4.setType("[促销]");
-        item4.setTitle("现车热卖");
-        item4.setPubTime("10.18");
-        articleItemList.add(item4);
-
-        adapter.setArticleItemList(articleItemList);
+        adapter.setArticleItemList(articleItems);
         mBusinessArticleListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        IViewUtil.setListViewHeightBasedOnChildren(mBusinessArticleListView);
 
-        mArticleItemList = new ArrayList<ArticleItemEntity>();
-        for (ArticleItemEntity entity : articleItemList) {
-            mArticleItemList.add(entity);
-        }
+        mBusinessArticleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                ArticleItemEntity articleItem = mBusinessArticleList.get(i);
+                bundle.putString("id", articleItem.getArticleId());
+                bundle.putString("businessNo", articleItem.getBusinessNO());
+                ISkipActivityUtil.startIntent(BusinessActivity.this, ArticleActivity.class, bundle);
+            }
+        });
+    }
+
+    @Override
+    public String getBusinessNo() {
+        return mBusinessNo;
+    }
+
+    @Override
+    public String getUserNo() {
+        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
     }
 
     /**
@@ -160,13 +246,11 @@ public class BusinessActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.business_back, R.id.business_activity_purchase, R.id.business_become_member})
+    @OnClick({R.id.business_back, R.id.business_become_member})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.business_back:
                 onBackPressed();
-                break;
-            case R.id.business_activity_purchase:
                 break;
             case R.id.business_become_member:
                 ISkipActivityUtil.startIntent(this, MemberCenterActivity.class);
@@ -191,4 +275,5 @@ public class BusinessActivity extends BaseActivity {
                 break;
         }
     }
+
 }

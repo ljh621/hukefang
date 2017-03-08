@@ -1,8 +1,11 @@
 package com.yunwei.easyDear.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 
 /**
  * @author hezhiWu
@@ -46,5 +49,15 @@ public class ISystemUtil {
             e.printStackTrace();
         }
         return versionCode;
+    }
+
+    /**
+     * 打电话
+     * @param context
+     * @param tel
+     */
+    public static void callTelAction(Context context, String tel){
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+tel));
+        context.startActivity(intent);
     }
 }

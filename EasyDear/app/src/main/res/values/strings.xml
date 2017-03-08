@@ -40,6 +40,8 @@
     <string name="login_failure">登录失败</string>
     <string name="account_pwd_error">账号或密码错误</string>
 
+    <string name="title_select_pictrue">图片选择</string>
+
     <!--文章详情-->
     <string name="article_detail_forward">转发&#160;</string>
     <string name="article_old_price">原价&#160;</string>

@@ -43,8 +43,12 @@ public class RequestVerficationRemoteRepo implements RequestVerficationDataSourc
         call.enqueue(new Callback<ResponseModel<List<VerficationEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<VerficationEntity>>> call, Response<ResponseModel<List<VerficationEntity>>> response) {
-                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
-                    callBack.getDownRefreshSuccess(response.body().getData());
+                if (response.isSuccessful()) {
+                    if (response.body().getCode() == Constant.HTTP_SUCESS_CODE){
+                        callBack.getDownRefreshSuccess(response.body().getData());
+                    }else {
+                        callBack.getDownRefreshFailure();
+                    }
                 } else {
                     List<VerficationEntity> entities = new ArrayList<>();
                     callBack.getDownRefreshSuccess(entities);
@@ -64,8 +68,12 @@ public class RequestVerficationRemoteRepo implements RequestVerficationDataSourc
         call.enqueue(new Callback<ResponseModel<List<VerficationEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<VerficationEntity>>> call, Response<ResponseModel<List<VerficationEntity>>> response) {
-                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
-                    callBack.getPullRefreshSuccess(response.body().getData());
+                if (response.isSuccessful()) {
+                    if (response.body().getCode() == Constant.HTTP_SUCESS_CODE){
+                        callBack.getPullRefreshSuccess(response.body().getData());
+                    }else {
+                        callBack.getPullRefreshFailure();
+                    }
                 } else {
                     List<VerficationEntity> entities = new ArrayList<>();
                     callBack.getPullRefreshSuccess(entities);
@@ -85,10 +93,14 @@ public class RequestVerficationRemoteRepo implements RequestVerficationDataSourc
         verficationCall.enqueue(new Callback<ResponseModel<List<VerficationDetailEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<VerficationDetailEntity>>> call, Response<ResponseModel<List<VerficationDetailEntity>>> response) {
-                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
-                    callBack.getDetailSuccess(response.body().getData());
+                if (response.isSuccessful()) {
+                    if ( response.body().getCode() == Constant.HTTP_SUCESS_CODE){
+                        callBack.getDetailSuccess(response.body().getData());
+                    }else {
+                        callBack.getDetailFailure(response.body().getMessage());
+                    }
                 } else {
-                    callBack.getDetailFailure(response.body().getMessage());
+                    callBack.getDetailFailure("获取账单详情失败");
                 }
             }
 
