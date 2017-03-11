@@ -69,81 +69,87 @@
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/search_root_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/search_hot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableLeft="@mipmap/search_hot"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:text="热门搜索"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/search_fresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:drawableLeft="@mipmap/search_fresh"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:text="换一换"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <com.yunwei.easyDear.view.MeasuredGridView
+                    android:id="@+id/search_hot_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:numColumns="2"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
 
                 <TextView
-                    android:id="@+id/search_hot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:drawableLeft="@mipmap/search_hot"
-                    android:drawablePadding="6dp"
-                    android:gravity="center"
-                    android:text="热门搜索"
+                    android:id="@+id/search_history_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="历史搜索"
                     android:textColor="@color/gray"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/search_fresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:drawableLeft="@mipmap/search_fresh"
-                    android:drawablePadding="6dp"
-                    android:gravity="center"
-                    android:text="换一换"
-                    android:textColor="@color/gray"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
-
-            <com.yunwei.easyDear.view.MeasuredGridView
-                android:id="@+id/search_hot_gridView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:numColumns="2"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
-
-            <TextView
-                android:id="@+id/search_history_textView"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="历史搜索"
-                android:textColor="@color/gray"
-                android:textSize="13sp"
-                android:visibility="gone" />
-
-            <com.yunwei.easyDear.view.MeasuredListView
-                android:id="@+id/search_history_listView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:scrollbars="none"
-                android:visibility="gone" />
-        </LinearLayout>
+                <com.yunwei.easyDear.view.MeasuredListView
+                    android:id="@+id/search_history_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:scrollbars="none"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </RelativeLayout>
     </com.yunwei.easyDear.view.ReboundScrollView>
 </LinearLayout>

@@ -14,7 +14,7 @@ import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageI
 import com.yunwei.easyDear.function.mainFuncations.messageFunction.data.MessageDetailEntity;
 import com.yunwei.easyDear.function.mainFuncations.mymemberlistFunction.data.BusinessEntity;
 import com.yunwei.easyDear.function.mainFuncations.myorderlistFunction.data.OrderEntity;
-import com.yunwei.easyDear.function.mainFuncations.searchFunction.SearchHotEntity;
+import com.yunwei.easyDear.function.mainFuncations.searchFunction.SearchEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,7 +227,13 @@ public interface APIService {
      * 搜索热门
      */
     @GET(BuildConfig.SEARCH_HOT)
-    Call<ResponseModel<List<SearchHotEntity>>> reqHotSearch();
+    Call<ResponseModel<List<SearchEntity>>> reqHotSearch();
+
+    /**
+     * 搜索关键字匹配
+     */
+    @GET(BuildConfig.SEARCH_KEY_MATCH)
+    Call<ResponseModel<List<SearchEntity>>> reqKeyMatch(@Query("userNo") String userNo, @Query("key") String key);
 
     /**
      * 获取城市列表

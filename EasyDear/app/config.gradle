@@ -93,6 +93,8 @@ android {
 
         /*搜索热门*/
         buildConfigField "String", "SEARCH_HOT", "\"search/hotSearch\""
+        /*搜索关键字匹配*/
+        buildConfigField "String", "SEARCH_KEY_MATCH", "\"search/historySearchKey\""
         /*获取城市列表*/
         buildConfigField "String", "LOCATION_CITY", "\"city/changeCity\""
         /*获取区域列表*/

@@ -9,12 +9,22 @@ import java.util.List;
 public interface SearchContact {
 
     interface SearchView {
-        void onGetHotSearchSuccess(List<SearchHotEntity> list);
+        void onGetHotSearchSuccess(List<SearchEntity> list);
 
         void onGetHotSearchFailure(String msg);
+
+        void onGetMatchedKeySuccess(List<SearchEntity> list);
+
+        void onGetMatchedKeyFailure(String msg);
+
+        String getUserNo();
+
+        String getKey();
     }
 
     interface Presenter {
         void requestHotSearch();
+
+        void requestKeyMatch();
     }
 }

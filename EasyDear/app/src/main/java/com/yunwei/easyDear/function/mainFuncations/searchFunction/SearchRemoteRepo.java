@@ -1,6 +1,8 @@
 package com.yunwei.easyDear.function.mainFuncations.searchFunction;
 
 
+import android.util.Log;
+
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
@@ -27,10 +29,10 @@ public class SearchRemoteRepo implements SearchDataSource {
 
     @Override
     public void reqHotSearch(final SearchCallBack callBack) {
-        Call<ResponseModel<List<SearchHotEntity>>> call = RetrofitManager.getInstance().getService().reqHotSearch();
-        call.enqueue(new Callback<ResponseModel<List<SearchHotEntity>>>() {
+        Call<ResponseModel<List<SearchEntity>>> call = RetrofitManager.getInstance().getService().reqHotSearch();
+        call.enqueue(new Callback<ResponseModel<List<SearchEntity>>>() {
             @Override
-            public void onResponse(Call<ResponseModel<List<SearchHotEntity>>> call, Response<ResponseModel<List<SearchHotEntity>>> response) {
+            public void onResponse(Call<ResponseModel<List<SearchEntity>>> call, Response<ResponseModel<List<SearchEntity>>> response) {
                 if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
                     callBack.getHotSearchSuccess(response.body().getData());
                 } else {
@@ -39,10 +41,30 @@ public class SearchRemoteRepo implements SearchDataSource {
             }
 
             @Override
-            public void onFailure(Call<ResponseModel<List<SearchHotEntity>>> call, Throwable t) {
+            public void onFailure(Call<ResponseModel<List<SearchEntity>>> call, Throwable t) {
                 callBack.getHotSearchFailure("获取热门搜索失败");
             }
         });
 
+    }
+
+    @Override
+    public void reqKeyMatch(final SearchCallBack callBack) {
+        Call<ResponseModel<List<SearchEntity>>> call = RetrofitManager.getInstance().getService().reqKeyMatch(callBack.getUserNo(), callBack.getKey());
+        call.enqueue(new Callback<ResponseModel<List<SearchEntity>>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<List<SearchEntity>>> call, Response<ResponseModel<List<SearchEntity>>> response) {
+                if (response.isSuccessful() && response.body().getCode() == Constant.HTTP_SUCESS_CODE) {
+                    callBack.getMatchedKeySuccess(response.body().getData());
+                } else {
+                    callBack.getMatchedKeyFailure(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<List<SearchEntity>>> call, Throwable t) {
+                callBack.getMatchedKeyFailure("获取关键字匹配失败");
+            }
+        });
     }
 }

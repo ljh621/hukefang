@@ -253,7 +253,7 @@ public class LocationActivity extends BaseActivity implements LocationContact.Lo
         for (int i = 0; i < size; i++) {
             cityArr[i] = mGroupedAllCityList.get(i).getName();
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(LocationActivity.this, R.layout.item_search_history_layout, cityArr);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(LocationActivity.this, R.layout.item_search_list_layout, cityArr);
         mGroupedAllCityListView.setAdapter(arrayAdapter);
     }
 
