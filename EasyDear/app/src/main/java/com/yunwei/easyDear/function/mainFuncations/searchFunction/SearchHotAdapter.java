@@ -17,14 +17,14 @@ import java.util.ArrayList;
 public class SearchHotAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<SearchHotEntity> mSearchHotList;
+    private ArrayList<SearchEntity> mSearchHotList;
 
     public SearchHotAdapter(Context context) {
         mContext = context;
-        mSearchHotList = new ArrayList<SearchHotEntity>();
+        mSearchHotList = new ArrayList<SearchEntity>();
     }
 
-    public void setSearchHotList(ArrayList<SearchHotEntity> searchHotList) {
+    public void setSearchHotList(ArrayList<SearchEntity> searchHotList) {
         this.mSearchHotList = searchHotList;
     }
 

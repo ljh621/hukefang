@@ -28,7 +28,7 @@
             android:layout_marginLeft="15dp"
             android:layout_toLeftOf="@id/card_pay_business_logo"
             android:lineSpacingMultiplier="1.3"
-            android:text="宁波宝诚宝马-诚信路店"
+            android:text="宁波宝马"
             android:textColor="@color/black"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -83,7 +83,7 @@
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_below="@id/card_pay_base_line"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="6dp"
             android:layout_toRightOf="@id/card_pay_num_text"
             android:gravity="center"
             android:lineSpacingMultiplier="1.3"

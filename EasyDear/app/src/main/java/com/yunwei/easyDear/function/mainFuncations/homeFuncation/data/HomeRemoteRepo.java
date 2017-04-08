@@ -31,10 +31,7 @@ public class HomeRemoteRepo implements HomeDataSource {
 
     @Override
     public void requestHomeTopScrollArticles(final HomeCallBack callBack) {
-        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().reqHomeTopScrollArticleList(callBack.getProvince(), callBack.getCity(), callBack.getArea());
-        Log.v(TAG, "----------> callBack.getProvince() = " + callBack.getProvince());
-        Log.v(TAG, "----------> callBack.getCity() = " + callBack.getCity());
-        Log.v(TAG, "----------> callBack.getArea() = " + callBack.getArea());
+        Call<ResponseModel<ArrayList<ArticleItemEntity>>> call = RetrofitManager.getInstance().getService().reqHomeTopScrollArticleList("", "", "");
         call.enqueue(new Callback<ResponseModel<ArrayList<ArticleItemEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<ArrayList<ArticleItemEntity>>> call, Response<ResponseModel<ArrayList<ArticleItemEntity>>> response) {
