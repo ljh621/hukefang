@@ -3,6 +3,7 @@ package com.yunwei.easyDear.function.pictureFuncation;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -82,7 +83,7 @@ public class SelectPictureActivity extends BaseActivity implements PictureContra
         super.setContentView(R.layout.activity_select_picture);
         setToolbarTitle(R.string.title_select_pictrue);
         ButterKnife.bind(this);
-        if (PermissionHelper.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, Constant.REQUEST_READ_EXTERNAL_STORAGE) && PermissionHelper.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Constant.REQUEST_WRITE_EXTERNAL_STORAGE)) {
+        if (PermissionHelper.checkPermission(this,Manifest.permission.CAMERA, Constant.REQUEST_READ_EXTERNAL_STORAGE) && PermissionHelper.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Constant.REQUEST_WRITE_EXTERNAL_STORAGE)) {
             init();
         }
     }
@@ -164,20 +165,20 @@ public class SelectPictureActivity extends BaseActivity implements PictureContra
 
     @Override
     public void onTackPicture() {
-        path = getExternalFilesDir(Environment.DIRECTORY_DCIM).getPath() + "/IMG_" + System.currentTimeMillis() + ".png";
-        File file = new File(path);
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
+            path = getExternalFilesDir(Environment.DIRECTORY_DCIM).getPath() + "/IMG_" + System.currentTimeMillis() + ".png";
+            File file = new File(path);
+            try {
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-        startActivityForResult(intent, TACK_PICTURE_VALUE);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+            startActivityForResult(intent, TACK_PICTURE_VALUE);
     }
 
     @Override

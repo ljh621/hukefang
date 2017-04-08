@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 
 import com.yunwei.easyDear.common.handler.BaseHandler;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * @author hezhiWu
  * @version V1.0
@@ -27,6 +29,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initHandler();
     }
 

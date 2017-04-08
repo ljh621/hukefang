@@ -4,7 +4,7 @@ android {
      */
     buildTypes {
         release {
-            buildConfigField "String", "DOMAI", "\"http://10.10.10.182/\""
+            buildConfigField "String", "DOMAI", "\"http://www.somember.com/\""
             buildConfigField "boolean", "LOGSWITCH", "true"
         }
         debug {

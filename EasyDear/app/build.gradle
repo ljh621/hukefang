@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply from: 'config.gradle'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.yunwei.easyDear"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0.1"
 
@@ -31,7 +31,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace(".apk", "yunwei_${currentTime()}_V${defaultConfig.versionCode}.${defaultConfig.versionName}.apk")
+                def fileName = outputFile.name.replace(".apk", "EasyDear_${currentTime()}_V${defaultConfig.versionCode}.${defaultConfig.versionName}.apk")
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -48,7 +48,7 @@ android {
         debug {
             signingConfig signingConfigs.config
             minifyEnabled false
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -70,8 +70,8 @@ allprojects {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
     /*依赖注入--吴和志*/
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.jakewharton:butterknife-compiler:8.4.0'
