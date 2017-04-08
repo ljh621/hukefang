@@ -156,6 +156,12 @@ public class HomeFragmentV2 extends BaseFragment implements HomeContract.HomeVie
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public String getProvince() {
         return null;
     }

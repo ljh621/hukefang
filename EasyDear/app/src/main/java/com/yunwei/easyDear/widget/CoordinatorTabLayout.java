@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -33,6 +35,8 @@ import com.yunwei.easyDear.widget.listener.LoadHeaderImagesListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 
@@ -287,8 +291,29 @@ public class CoordinatorTabLayout extends CoordinatorLayout {
         mScrollViewPager.setAdapter(adapter);
         initScrollImagesLayout(total);
         setScrollViewListener();
+        timer.schedule(task, 4000, 4000);
         return this;
     }
+
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+               mScrollViewPager.setCurrentItem(mScrollViewPager.getCurrentItem()+1);
+            }
+            super.handleMessage(msg);
+        }
+    };
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+
+        @Override
+        public void run() {
+            // 需要做的事:发送消息
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }
+    };
 
     /**
      * 设置轮播ViewPager监听

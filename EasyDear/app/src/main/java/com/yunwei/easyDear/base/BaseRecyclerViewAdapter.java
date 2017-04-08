@@ -26,7 +26,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     /**
      * 默认加载个数
      */
-    public final static int DEFAULT_LOAD_SIZE = 6;
+    public final static int DEFAULT_LOAD_SIZE = 10;
     /**
      * 正在刷新
      */

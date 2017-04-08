@@ -159,9 +159,14 @@ public interface APIService {
      * 获取首页文章列表
      */
     @GET(BuildConfig.HOME_ARTICLE_LIST)
-    Call<ResponseModel<ArrayList<ArticleItemEntity>>> reqHomeArticleList(@Query("pageSize") int pageSize, @Query("pageCount") int pageCount,
-                                                                         @Query("key") String key, @Query("type") String type,
-                                                                         @Query("province") String province, @Query("city") String city, @Query("area") String area);
+    Call<ResponseModel<ArrayList<ArticleItemEntity>>> reqHomeArticleList(@Query("pageSize") int pageSize,
+                                                                         @Query("pageCount") int pageCount,
+                                                                         @Query("key") String key,
+                                                                         @Query("type") String type,
+                                                                         @Query("province") String province,
+                                                                         @Query("city") String city,
+                                                                         @Query("area") String area,
+                                                                         @Query("userNo") String userNo);
 
     /**
      * 文章详情

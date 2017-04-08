@@ -31,8 +31,8 @@ import butterknife.ButterKnife;
 
 public class SplashActivity extends BaseActivity implements AccountContract.LoginView {
 
-    @BindView(R.id.splash_iv)
-    ImageView splashIv;
+//    @BindView(R.id.splash_iv)
+//    ImageView splashIv;
 
     private LoginPresenter loginPresenter;
 
@@ -53,7 +53,7 @@ public class SplashActivity extends BaseActivity implements AccountContract.Logi
         setToolbarVisibility(View.GONE);
         setSwipeEnabled(false);
         ButterKnife.bind(this);
-//        Glide.with(this).load(R.mipmap.default_welcom).into(splashIv);
+//        Glide.with(this).load(R.mipmap.welcome).into(splashIv);
         /*重新登录获取新Token*/
         if (!TextUtils.isEmpty(ISpfUtil.getValue(Constant.ACCOUNT_KEY, "").toString()) && !TextUtils.isEmpty(ISpfUtil.getValue(Constant.PSSWORD_KEY, "").toString())) {
             loginPresenter = new LoginPresenter(LoginRemoteRepo.newInstance(), this);

@@ -1,5 +1,6 @@
 package com.yunwei.easyDear.function.mainFuncations.findFuncation.data.source;
 
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.common.Constant;
 import com.yunwei.easyDear.common.retrofit.RetrofitManager;
 import com.yunwei.easyDear.entity.ResponseModel;
@@ -31,7 +32,7 @@ public class ChildTabRemoteRepo implements ChildTabDataSource {
 
     @Override
     public void requestRecyclerArticles(final ChildTabCallBack callBack) {
-        call = RetrofitManager.getInstance().getService().reqHomeArticleList(callBack.getPageSize(), callBack.getPageCount(), callBack.getKey(), callBack.getType(), callBack.getProvince(), callBack.getCity(), callBack.getArea());
+        call = RetrofitManager.getInstance().getService().reqHomeArticleList(callBack.getPageSize(), callBack.getPageCount(), callBack.getKey(), callBack.getType(), callBack.getProvince(), callBack.getCity(), callBack.getArea(), DataApplication.getInstance().getUserInfoEntity().getUserNo());
 //        call = RetrofitManager.getInstance().getService().reqHomeArticleList(1, 5, "", "", "", "", "");
         call.enqueue(new Callback<ResponseModel<ArrayList<ArticleItemEntity>>>() {
 
