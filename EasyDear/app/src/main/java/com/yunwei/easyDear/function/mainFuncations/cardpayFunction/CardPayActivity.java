@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
+import com.yunwei.easyDear.common.alipay.AliPayService;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
@@ -73,10 +74,11 @@ public class CardPayActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.card_pay_backto_business:
-                Bundle bundle = new Bundle();
-                bundle.putString("title", entity.getBusinessName());
-                bundle.putString("businessNo", entity.getBusinessNO());
-                ISkipActivityUtil.startIntent(this, BusinessActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("title", entity.getBusinessName());
+//                bundle.putString("businessNo", entity.getBusinessNO());
+//                ISkipActivityUtil.startIntent(this, BusinessActivity.class, bundle);
+                AliPayService.getInstance().pay(this,"AAA");
                 break;
         }
     }

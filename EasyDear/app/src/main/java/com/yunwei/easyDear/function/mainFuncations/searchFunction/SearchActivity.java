@@ -3,16 +3,21 @@ package com.yunwei.easyDear.function.mainFuncations.searchFunction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
-import com.yunwei.easyDear.function.mainFuncations.MainActivity;
+import com.yunwei.easyDear.base.DataApplication;
+import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISpfUtil;
 import com.yunwei.easyDear.view.MeasuredGridView;
 import com.yunwei.easyDear.view.MeasuredListView;
@@ -31,6 +36,8 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
 
     final String TAG = getClass().getSimpleName();
 
+    @BindView(R.id.search_root_layout)
+    RelativeLayout mSearchRootLayout;
     @BindView(R.id.search_editText)
     EditText mSearchEditText;
     @BindView(R.id.search_hot_gridView)
@@ -40,9 +47,13 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
     @BindView(R.id.search_history_listView)
     MeasuredListView mSearchHistoryListView;
 
+    private View mSearchMatchedView;
+    private MeasuredListView mSearchMatchedListView;
+
     private SearchPresenter mSearchPresenter;
     private SearchHotAdapter mSearchHotAdapter;
     private String mSearchText;
+    private String mMatchText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +63,10 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
         setToolbarVisibility(View.GONE);
         ButterKnife.bind(this);
         initPresenter();
+        setEditTextInputChangeListener();
         initSearchHotGridView();
         initSearchHistoryListView();
+        initSearchKeyMatchedView();
     }
 
     private void initPresenter() {
@@ -68,14 +81,14 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
 
     private void initSearchHistoryListView() {
         String savedHistory = (String) ISpfUtil.getValue("search_history", "");
-        Log.v(TAG, "Saved search history = " + savedHistory);
+        ILog.v(TAG, "Saved search history = " + savedHistory);
         if (!savedHistory.isEmpty()) {
             final String[] savedHisArr = savedHistory.split(";");
             int len = savedHisArr.length;
             if (len > 0) {
                 mSearchHistoryTextView.setVisibility(View.VISIBLE);
                 mSearchHistoryListView.setVisibility(View.VISIBLE);
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SearchActivity.this, R.layout.item_search_history_layout, savedHisArr);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SearchActivity.this, R.layout.item_search_list_layout, savedHisArr);
                 mSearchHistoryListView.setAdapter(arrayAdapter);
                 mSearchHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -87,16 +100,21 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
         }
     }
 
+    private void initSearchKeyMatchedView() {
+        mSearchMatchedView = LayoutInflater.from(this).inflate(R.layout.dialog_search_match_layout, null);
+        mSearchMatchedListView = (MeasuredListView) mSearchMatchedView.findViewById(R.id.search_matched_listView);
+    }
+
     private void requestHotSearch() {
         mSearchPresenter.requestHotSearch();
     }
 
     @Override
-    public void onGetHotSearchSuccess(final List<SearchHotEntity> entities) {
+    public void onGetHotSearchSuccess(final List<SearchEntity> entities) {
         if (entities == null) {
             return;
         }
-        mSearchHotAdapter.setSearchHotList((ArrayList<SearchHotEntity>) entities);
+        mSearchHotAdapter.setSearchHotList((ArrayList<SearchEntity>) entities);
         mSearchHotAdapter.notifyDataSetChanged();
         mSearchHotGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -110,6 +128,43 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
     @Override
     public void onGetHotSearchFailure(String msg) {
 
+    }
+
+    @Override
+    public void onGetMatchedKeySuccess(List<SearchEntity> entities) {
+        if (entities == null || entities.size() <= 0) {
+            ILog.v(TAG, "onGetMatchedKeySuccess: entities empty!");
+            return;
+        }
+
+        int size = entities.size();
+        ILog.v(TAG, "onGetMatchedKeySuccess: entities size = " + size);
+        final String[] searchMatchedArr = new String[size];
+        for (int i = 0; i < size; i++) {
+            searchMatchedArr[i] = entities.get(i).getMsg();
+        }
+        int len = searchMatchedArr.length;
+        if (len > 0) {
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SearchActivity.this, R.layout.item_search_list_layout, searchMatchedArr);
+            mSearchMatchedListView.setAdapter(arrayAdapter);
+
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mSearchRootLayout.removeView(mSearchMatchedView);
+            mSearchRootLayout.addView(mSearchMatchedView, params);
+            mSearchMatchedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ILog.v(TAG, "On Searched Key Clicked: " + searchMatchedArr[i]);
+                    saveAndSearch(searchMatchedArr[i]);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onGetMatchedKeyFailure(String msg) {
+        ILog.v(TAG, "onGetMatchedKeyFailure:: msg = " + msg);
+        mSearchRootLayout.removeView(mSearchMatchedView);
     }
 
     private void saveAndSearch(String search) {
@@ -130,7 +185,7 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
             }
         }
         ISpfUtil.setValue("search_history", newHistory);
-        Log.v(TAG, "Save new history = " + newHistory);
+        ILog.v(TAG, "Save new history = " + newHistory);
     }
 
     private void startToSearch(String searchText) {
@@ -155,4 +210,42 @@ public class SearchActivity extends BaseActivity implements SearchContact.Search
         }
     }
 
+    private void setEditTextInputChangeListener() {
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ILog.v(TAG, "onTextChanged:  charSequence = " + charSequence);
+                mMatchText = charSequence.toString();
+                if (mMatchText == null || mMatchText.isEmpty()) {
+                    mSearchRootLayout.removeView(mSearchMatchedView);
+                    return;
+                }
+                startToMatch(mMatchText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void startToMatch(String matchKey) {
+        mSearchPresenter.requestKeyMatch();
+    }
+
+    @Override
+    public String getUserNo() {
+        return DataApplication.getInstance().getUserInfoEntity().getUserNo();
+    }
+
+    @Override
+    public String getKey() {
+        return mMatchText;
+    }
 }

@@ -85,4 +85,5 @@ dependencies {
     /*Bugly*/
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile 'com.tencent.bugly:crashreport:latest.release'
+    compile files('libs/alipaySdk-20160825.jar')
 }
