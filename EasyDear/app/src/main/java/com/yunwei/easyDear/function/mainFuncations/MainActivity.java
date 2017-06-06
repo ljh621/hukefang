@@ -94,14 +94,14 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
     private void initBottomNavigationBar() {
         mainBottomNavigationBar.initConfig(this, R.id.main_container_FrameLayout);
         mainBottomNavigationBar.addTabItem(R.mipmap.icon_main_tab_home_pr, R.string.main_home_tab)
-//                .addTabItem(R.mipmap.icon_scan, R.string.main_qr_tab)
-                .addTabItem(R.mipmap.icon_member, R.string.main_code_tab)
-                .addTabItem(R.mipmap.icon_quanyi, R.string.main_find_tab)
+                .addTabItem(R.mipmap.ic_dongtai, R.string.main_dynamic_tab)
+                .addTabItem(R.mipmap.ic_car, R.string.main_block_tab)
+                .addTabItem(R.mipmap.ic_scan, R.string.main_qr_tab)
                 .addTabItem(R.mipmap.icon_main_tab_mine_pr, R.string.main_mine_tab);
         mainBottomNavigationBar.addFragment(HomeFragmentV2.newInstance())
-//                .addFragment(ScanQrFragment.newInstance())
                 .addFragment(MembershipCodeFragment.newInstance())
                 .addFragment(FindFragment.newInstance())
+                .addFragment(ScanQrFragment.newInstance())
                 .addFragment(MineFragment.newInstance());
         mainBottomNavigationBar.setDefaultFragment(0);
         mainBottomNavigationBar.setTabSelectedListener(this);
@@ -152,12 +152,12 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 setToolbarVisibility(View.GONE);
                 break;
             case TAB_FIND:
-                setToolbarCenterTitle(R.string.main_find_tab);
+                setToolbarCenterTitle(R.string.main_dynamic_tab);
                 setToolbarVisibility(View.GONE);
                 break;
             case TAB_TRAINGCODE:
                 this.currentTab=position;
-                setToolbarCenterTitle(R.string.main_find_tab);
+                setToolbarCenterTitle(R.string.main_block_tab);
                 setToolbarVisibility(View.VISIBLE);
                 break;
             case TAB_MESSAGE:

@@ -31,7 +31,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace(".apk", "yunwei_${currentTime()}_V${defaultConfig.versionCode}.${defaultConfig.versionName}.apk")
+                def fileName = outputFile.name.replace(".apk", "EasyDear_${currentTime()}_V${defaultConfig.versionCode}.${defaultConfig.versionName}.apk")
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -48,7 +48,7 @@ android {
         debug {
             signingConfig signingConfigs.config
             minifyEnabled false
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -85,4 +85,5 @@ dependencies {
     /*Bugly*/
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile 'com.tencent.bugly:crashreport:latest.release'
+    compile files('libs/alipaySdk-20160825.jar')
 }

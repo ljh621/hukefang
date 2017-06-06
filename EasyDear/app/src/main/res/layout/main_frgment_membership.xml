@@ -67,8 +67,7 @@
                 android:layout_height="120dip"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/scene_2" />
+                android:scaleType="fitXY" />
 
             <RelativeLayout
                 android:id="@+id/MembershipFragment_ll_layout"

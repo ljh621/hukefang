@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">EasyDear</string>
+    <string name="app_name">潮铺</string>
 
     <!--Main Tab-->
     <string name="main_home_tab">首页</string>
-    <string name="main_find_tab">专属权益</string>
-    <string name="main_code_tab">会员码</string>
+    <string name="main_dynamic_tab">动态</string>
+    <string name="main_block_tab">卡包</string>
     <string name="main_message_tab">消息</string>
-    <string name="main_mine_tab">我的易兑</string>
+    <string name="main_mine_tab">我的</string>
     <string name="main_qr_tab">扫一扫</string>
 
     <!--设置-->

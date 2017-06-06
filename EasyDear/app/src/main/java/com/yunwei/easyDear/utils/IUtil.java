@@ -2,6 +2,7 @@ package com.yunwei.easyDear.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.telephony.TelephonyManager;
 
 import com.google.zxing.BarcodeFormat;
@@ -9,9 +10,14 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.exception.WriterException;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.qrcode.encoder.ByteMatrix;
+import com.google.zxing.qrcode.encoder.Encoder;
+import com.google.zxing.qrcode.encoder.QRCode;
 import com.yunwei.easyDear.base.DataApplication;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 
@@ -87,6 +93,45 @@ public class IUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static Bitmap bitMatrix2Bitmap(BitMatrix matrix) {
+        matrix = updateBit(matrix, 0);
+        int w = matrix.getWidth();
+        int h = matrix.getHeight();
+        int[] rawData = new int[w * h];
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int color = Color.WHITE;
+                if (matrix.get(i, j)) {
+                    // 有内容的部分，颜色设置为黑色，当然这里可以自己修改成喜欢的颜色
+                    color = Color.BLACK;
+                }
+                rawData[i + (j * w)] = color;
+            }
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
+        bitmap.setPixels(rawData, 0, w, 0, 0, w, h);
+        return bitmap;
+    }
+
+    private static BitMatrix updateBit(BitMatrix matrix, int margin) {
+        int tempM = margin * 2;
+        int[] rec = matrix.getEnclosingRectangle(); // 获取二维码图案的属性
+        int resWidth = rec[2] + tempM;
+        int resHeight = rec[3] + tempM;
+        BitMatrix resMatrix = new BitMatrix(resWidth, resHeight); // 按照自定义边框生成新的BitMatrix
+        resMatrix.clear();
+        for (int i = margin; i < resWidth - margin; i++) { // 循环，将二维码图案绘制到新的bitMatrix中
+            for (int j = margin; j < resHeight - margin; j++) {
+                if (matrix.get(i - margin + rec[0], j - margin + rec[1])) {
+                    resMatrix.set(i, j);
+                }
+            }
+        }
+        return resMatrix;
     }
 
     /**

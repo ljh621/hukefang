@@ -69,7 +69,9 @@ public class LoginActivity extends BaseActivity implements AccountContract.Login
 
     @OnClick(R.id.loginActivity_login_button)
     public void onClick() {
-        loginAction();
+        ISkipActivityUtil.startIntent(this, MainActivity.class);
+        finish();
+//        loginAction();
 //        ISkipActivityUtil.startIntent(this,MainActivity.class);
     }
 

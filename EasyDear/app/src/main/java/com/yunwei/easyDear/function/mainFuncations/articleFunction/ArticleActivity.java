@@ -2,7 +2,6 @@ package com.yunwei.easyDear.function.mainFuncations.articleFunction;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,11 +19,10 @@ import com.yunwei.easyDear.BuildConfig;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseActivity;
 import com.yunwei.easyDear.common.dialog.CommPopupWindow;
-import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.businessFunction.BusinessActivity;
+import com.yunwei.easyDear.function.mainFuncations.businessFunction.CardItemEntity;
 import com.yunwei.easyDear.function.mainFuncations.cardDetailFunction.CardDetailActivity;
 import com.yunwei.easyDear.utils.IAppUtil;
-import com.yunwei.easyDear.utils.ILog;
 import com.yunwei.easyDear.utils.ISkipActivityUtil;
 import com.yunwei.easyDear.utils.IViewUtil;
 import com.yunwei.easyDear.view.RoundedBitmapImageViewTarget;
@@ -223,7 +221,5 @@ public class ArticleActivity extends BaseActivity implements ArticleContact.Arti
                 commPopupWindow.dismiss();
             }
         });
-
     }
-
 }

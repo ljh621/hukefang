@@ -44,6 +44,9 @@ public class BusinessAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (entities.size()<4){
+            return entities.size();
+        }
         return 4;
     }
 

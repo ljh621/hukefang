@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.yunwei.easyDear.R;
 import com.yunwei.easyDear.base.BaseFragment;
 import com.yunwei.easyDear.base.BaseRecyclerViewAdapter;
+import com.yunwei.easyDear.base.DataApplication;
 import com.yunwei.easyDear.common.dialog.ToastUtil;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleActivity;
 import com.yunwei.easyDear.function.mainFuncations.articleFunction.ArticleItemEntity;

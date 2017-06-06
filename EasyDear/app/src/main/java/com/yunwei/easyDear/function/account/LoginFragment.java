@@ -85,6 +85,9 @@ public class LoginFragment extends BaseFragment implements AccountContract.Login
                     return;
                 }
                 loginPresenter.login();
+
+//                ISkipActivityUtil.startIntent(getContext(), MainActivity.class);
+//                getActivity().finish();
                 break;
         }
     }

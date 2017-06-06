@@ -22,12 +22,37 @@ public class SearchPresenter implements SearchContact.Presenter, SearchDataSourc
     }
 
     @Override
-    public void getHotSearchSuccess(List<SearchHotEntity> list) {
+    public void requestKeyMatch() {
+        mRemoteRepo.reqKeyMatch(this);
+    }
+
+    @Override
+    public void getHotSearchSuccess(List<SearchEntity> list) {
         mSearchView.onGetHotSearchSuccess(list);
     }
 
     @Override
     public void getHotSearchFailure(String msg) {
         mSearchView.onGetHotSearchFailure(msg);
+    }
+
+    @Override
+    public void getMatchedKeySuccess(List<SearchEntity> list) {
+        mSearchView.onGetMatchedKeySuccess(list);
+    }
+
+    @Override
+    public void getMatchedKeyFailure(String msg) {
+        mSearchView.onGetMatchedKeyFailure(msg);
+    }
+
+    @Override
+    public String getUserNo() {
+        return mSearchView.getUserNo();
+    }
+
+    @Override
+    public String getKey() {
+        return mSearchView.getKey();
     }
 }
